@@ -6,12 +6,25 @@
 
 <AuthorizeView>
     <Authorized>
-        <a href="authentication/profile">Hello, @context.User.Identity.Name!</a>
-        <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
+        @*<a href="authentication/profile">Hello, @context.User.Identity.Name!</a>
+        <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>*@
+
+        <div class="row">
+            <div class="col-xs col-sm col-md col-lg col-xl col-xxl">
+                <labe class="text-dark small" title="Manage"> @context.User.Identity.Name</labe>
+            </div>
+            <div class="col-xs col-sm col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                <button type="submit" class="btn btn-sm btn-primary" @onclick="BeginSignOut">Sair</button>
+            </div>
+        </div>
+
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/register">Register</a>
-        <a href="authentication/login">Log in</a>
+        <a class="btn btn-sm btn-light text-dark me-2" href="authentication/register">Register</a>
+        <a class="btn btn-sm btn-primary" href="authentication/login">Log in</a>
+
+        @*<a class="btn btn-sm btn-light text-dark me-2" href="/Identity/Account/Register">Resgitro</a>
+        <a class="btn btn-sm btn-primary" href="/Identity/Account/Login">Login</a>*@
     </NotAuthorized>
 </AuthorizeView>
 
