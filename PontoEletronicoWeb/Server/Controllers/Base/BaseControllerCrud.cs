@@ -74,7 +74,7 @@ namespace PontoEletronicoWeb.Server.Controllers
             {
 
                 if (ModelState.IsValid)
-                    return Ok(await _repositorio.AlterarAsync(objeto,0));
+                    return Ok(await _repositorio.SalvarAsync(objeto,0));
                 else
                     return BadRequest(ModelState.Values
                         .SelectMany(x => x.Errors)
@@ -96,7 +96,7 @@ namespace PontoEletronicoWeb.Server.Controllers
             {
 
                 if (ModelState.IsValid)
-                    return Ok(await _repositorio.SalvarAsync(objeto, 0));
+                    return Ok(await _repositorio.AlterarAsync(objeto, 0));
                 else
                     return BadRequest(ModelState.Values
                         .SelectMany(x => x.Errors)
