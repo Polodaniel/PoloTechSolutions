@@ -34,8 +34,6 @@ namespace PontoEletronicoWeb.Server
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
-
                 options.Password.RequireLowercase =
                 options.Password.RequireUppercase =
                 options.Password.RequireNonAlphanumeric = false;
