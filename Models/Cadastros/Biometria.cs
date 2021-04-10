@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Models.Cadastros
 {
-    public class Biometria : BaseModelDominio, IDominio<Biometria>
+    public class Biometria : BaseModelDominio, IDominio<Biometria>, IBaseView, ISelectView<Biometria>
     {
         #region Construtor
         public Biometria()
@@ -25,6 +25,9 @@ namespace Models.Cadastros
         [ForeignKey(nameof(FuncionarioId))]
         public Funcionario Funcionario { get; set; }
 
+        [NotMapped]
+        public string Descricao { get; set; }
+
         #region Metodos Dominio
         public Biometria GetModel() =>
             this;
@@ -33,6 +36,9 @@ namespace Models.Cadastros
         {
             throw new NotImplementedException();
         }
+
+        public Biometria SelectView() =>
+            this;
 
         public void Update(Biometria Model, int usuarioId)
         {

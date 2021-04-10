@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PontoEletronicoWeb.Server.Data;
 using PontoEletronicoWeb.Server.Models;
+using PontoEletronicoWeb.Server.Repository;
 using System.Linq;
 
 namespace PontoEletronicoWeb.Server
@@ -42,6 +43,17 @@ namespace PontoEletronicoWeb.Server
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+
+            services.AddHttpContextAccessor();
+
+            #region Configurando Injeção de Depêndencia
+            services.AddTransient<IClienteRepository, ClienteRepository>();
+            services.AddTransient<IFolhaPontoRepository, FolhaPontoRepository>();
+            services.AddTransient<IEscalaRepository, EscalaRepository>();
+            services.AddTransient<ITurnoRepository, TurnoRepository>();
+            services.AddTransient<IBiometriaRepository, BiometriaRepository>();
+            services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
+            #endregion
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

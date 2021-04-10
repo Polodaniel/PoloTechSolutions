@@ -32,6 +32,13 @@ namespace PontoEletronicoWeb.Server.Repository
         }
         #endregion
 
+        #region Construtor
+        public BaseRepository(ApplicationDbContext context)
+        {
+            contexto = context;
+        }
+        #endregion
+
         #region Metodos Crud Async
         public async virtual Task<TModel> AlterarAsync(TModel objeto, int usuarioId)
         {

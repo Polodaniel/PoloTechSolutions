@@ -20,9 +20,9 @@ namespace PontoEletronicoWeb.Server.Controllers
         #endregion
 
         #region Construtor
-        public BaseControllerCrud(IHttpContextAccessor contextAccessor) : base(contextAccessor)
+        public BaseControllerCrud(IHttpContextAccessor contextAccessor, ICadastroBase<TModel,TView> repositorio) : base(contextAccessor)
         {
-
+            _repositorio = repositorio;
         }
         #endregion
 
@@ -109,6 +109,7 @@ namespace PontoEletronicoWeb.Server.Controllers
             {
                 return BadRequest($"Ocorreu erro ao Salvar  item. \n {ex.Message}");
             }
-        }
+        }       
+
     }
 }

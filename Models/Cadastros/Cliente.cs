@@ -26,7 +26,6 @@ namespace Models.Cadastros
 
         public override void IsValid()
         {
-            throw new NotImplementedException();
         }
 
         public ClienteView SelectView()
