@@ -2,84 +2,87 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Ponto Eletrônico";
+    Layout = null;
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h4>Login</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+<html>
+<head>
+    <title>PoloTech Solutions - @ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+    <section class="container pt-5 align-self-center">
+
+        <div class="d-flex justify-content-center mb-2 mt-5">
+            <img src="~/img/LogoLogin.png" class="imgLogotipo" />
+        </div>
+
+        <div class="row">
+            <div class="col-xs col-sm col-md col-lg col-xl col-xxl"> </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
+                <section class="card p-3 pt-1 pb-1 d-flex justify-content-center card-sombra">
+                    <form id="account" method="post">
+                        <div class="small">
+                            <div asp-validation-summary="ModelOnly" class="text-danger small pt-3"></div>
+                        </div>
+                        <div class="form-group mb-2 mt-2">
+                            <small><label asp-for="Input.Email" class="small mb-0"></label></small>
+                            <input asp-for="Input.Email" class="form-control form-control-sm mt-0" />
+                            <div class="small">
+                                <span asp-validation-for="Input.Email" class="small text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group mb-1">
+                            <small><label asp-for="Input.Password" class="small mb-0"></label></small>
+                            <input maxlength="9" asp-for="Input.Password" class="form-control form-control-sm mt-0 bg-light" />
+                            <div class="small">
+                                <span asp-validation-for="Input.Password" class="small text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group  mb-1 small mt-3">
+                            <div class="row">
+                                <div class="col-xs col-sm col-md col-lg col-xl col-xxl">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="Input.RememberMe" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs col-sm col-md col-lg col-xl col-xxl">
+                                    <div class="form-group d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-sm btn-secondary text-light">Login</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs col-sm col-md col-lg col-xl col-xxl">
+                                    <div class="form-check">
+                                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Criar Nova Conta</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
-                }
-            }
-        </section>
-    </div>
-</div>
+                </section>
+            </div>
+            <div class="col-xs col-sm col-md col-lg col-xl col-xxl"> </div>
+        </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+        <div class="row mt-3 small">
+            <div class="col-xs col-sm col-md col-lg col-xl col-xxl"> </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5 text-center small text-muted">
+                <span class="small">
+                    © @DateTime.Now.Year - Todos os Direitos Reservados a PoloTech Solutions
+                </span>
+            </div>
+            <div class="col-xs col-sm col-md col-lg col-xl col-xxl"> </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>
