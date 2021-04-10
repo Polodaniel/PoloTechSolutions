@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Models.Cadastros;
+using Models.Ponto;
 using PontoEletronicoWeb.Server.Models;
 using System;
 using System.Collections.Generic;
@@ -17,5 +19,14 @@ namespace PontoEletronicoWeb.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        #region Set Tabelas no Contexto
+        public DbSet<Biometria> Biometria { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Escala> Escala { get; set; }
+        public DbSet<FolhaPonto> FolhaPonto { get; set; }
+        public DbSet<Funcionario> Funcionario { get; set; }
+        public DbSet<Turno> Turno { get; set; }
+        #endregion
     }
 }

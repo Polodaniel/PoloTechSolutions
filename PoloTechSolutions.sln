@@ -3,17 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontoEletronicoWeb.Server", "PontoEletronicoWeb\Server\PontoEletronicoWeb.Server.csproj", "{C03D7461-DE6E-46B9-A14F-5DAA375A2F4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontoEletronicoWeb.Server", "PontoEletronicoWeb\Server\PontoEletronicoWeb.Server.csproj", "{C03D7461-DE6E-46B9-A14F-5DAA375A2F4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontoEletronicoWeb.Client", "PontoEletronicoWeb\Client\PontoEletronicoWeb.Client.csproj", "{E889E5D3-22F4-421C-9325-06184B25C167}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontoEletronicoWeb.Client", "PontoEletronicoWeb\Client\PontoEletronicoWeb.Client.csproj", "{E889E5D3-22F4-421C-9325-06184B25C167}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontoEletronicoWeb.Shared", "PontoEletronicoWeb\Shared\PontoEletronicoWeb.Shared.csproj", "{2CC9C3A2-56A6-48E3-A2C5-DA5C432CF6C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontoEletronicoWeb.Shared", "PontoEletronicoWeb\Shared\PontoEletronicoWeb.Shared.csproj", "{2CC9C3A2-56A6-48E3-A2C5-DA5C432CF6C9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PontoEletronico", "PontoEletronico", "{30B3EA92-D0DC-4A68-8ED6-743BA766C75B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{FE698F1C-A6C0-409F-81CD-154D662ED686}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{138BEB5B-0ACE-49E8-AE73-9A4CE7296FB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{14292F9E-1DDC-4912-A199-31020858EF9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{F69BDE63-E6E8-498B-A4AD-AB992E7CAEC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,10 @@ Global
 		{2CC9C3A2-56A6-48E3-A2C5-DA5C432CF6C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CC9C3A2-56A6-48E3-A2C5-DA5C432CF6C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CC9C3A2-56A6-48E3-A2C5-DA5C432CF6C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F69BDE63-E6E8-498B-A4AD-AB992E7CAEC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F69BDE63-E6E8-498B-A4AD-AB992E7CAEC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F69BDE63-E6E8-498B-A4AD-AB992E7CAEC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F69BDE63-E6E8-498B-A4AD-AB992E7CAEC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +51,8 @@ Global
 		{2CC9C3A2-56A6-48E3-A2C5-DA5C432CF6C9} = {FE698F1C-A6C0-409F-81CD-154D662ED686}
 		{FE698F1C-A6C0-409F-81CD-154D662ED686} = {30B3EA92-D0DC-4A68-8ED6-743BA766C75B}
 		{138BEB5B-0ACE-49E8-AE73-9A4CE7296FB9} = {30B3EA92-D0DC-4A68-8ED6-743BA766C75B}
+		{14292F9E-1DDC-4912-A199-31020858EF9A} = {30B3EA92-D0DC-4A68-8ED6-743BA766C75B}
+		{F69BDE63-E6E8-498B-A4AD-AB992E7CAEC9} = {14292F9E-1DDC-4912-A199-31020858EF9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5AEB7DD-ADE3-4DBF-9DA0-B07D7C97E1E5}
