@@ -29,13 +29,17 @@ namespace Models.Cadastros
 
         public override void IsValid()
         {
-            throw new NotImplementedException();
+            
         }
 
-        public FuncionarioView SelectView()
-        {
-            throw new NotImplementedException();
-        }
+        public FuncionarioView SelectView() =>
+            new FuncionarioView
+            {
+                Id = this.Id,
+                Nome = this.Nome,
+                PossuiBiometria = this.PossuiBiometria,
+                Status = this.Status,
+            };
 
         public void Update(Funcionario Model, int usuarioId)
         {

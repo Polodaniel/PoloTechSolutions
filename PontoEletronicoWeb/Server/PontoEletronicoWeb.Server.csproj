@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>PontoEletronicoWeb.Server-921CE9A6-6E37-46A6-B209-EC1083B90361</UserSecretsId>
+    <Configurations>Debug;Release;AAA</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

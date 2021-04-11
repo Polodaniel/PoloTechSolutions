@@ -1,7 +1,60 @@
-﻿@page "/Funcionario/" 
+﻿@page "/Funcionario/"
 
-<PageConsulta NomeTela="Funcinário" RotaHome="Funcionario"/>
+@inherits FuncionarioConsultaBase
+
+<PageConsulta NomeTela="Funcinário" RotaHome="Funcionario" />
+
+<!-- MessageBox -->
+@*<MessageBox Mensagem="@MensageBox"
+    SubMensagem="@SubMensagem"
+    VisualizaMessage="@FlagVisualizaMessage"
+    ConfirmarCallback="ConfirmaExclusao"
+    CancelarCallback="CancelaExclusao" />*@
+<!-- Fim MessageBox-->
+
 
 <section id="ConsultaFuncionarioID">
+
+    @if (!Equals(ModelsTmp, null) && ModelsTmp.Count > 0)
+    {
+        <div class="card p-2">
+            <table class="table table-sm">
+                <thead class="thead-light small">
+                    <tr>
+                        <th class="small">Código</th>
+                        <th class="small">Nome</th>
+                        <th class="small">Situação</th>
+                        <th class="small">Possui Biometria ?</th>
+                        <th class="small"></th>
+                    </tr>
+                </thead>
+                <tbody class="small">
+                    @foreach (var item in ModelsTmp)
+                    {
+                        <tr>
+                            <td class=" small pt-2">@item.CodigoString</td>
+                            <td class=" small pt-2">@item.Nome</td>
+                            <td class=" small pt-2">@item.Situacao</td>
+                            <td class=" small pt-2">@item.Biometria</td>
+                            <td class="text-end">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a class="btn btn-sm btn-light" @onclick="() => InicializaRotaVisualizar(item.Id)"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-sm btn-light" @onclick="() => InicializaRotaEditar(item.Id)"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-sm btn-light" @onclick="() => InicializaRotaExcluir(item.Id)"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-primary text-center mt-2 small fw-bold">
+            Sem informação !
+        </div>
+    }
 
 </section>
