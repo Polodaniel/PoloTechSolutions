@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PontoEletronicoWeb.Client.Pages.Funcionario
+namespace PontoEletronicoWeb.Client.Pages.Turno
 {
-    public class FuncionarioConsultaBase : ConsultaComponentBase<FuncionarioView>
+    public class TurnoConsultaBase : ConsultaComponentBase<TurnoView>
     {
         #region Inject
         [Inject]
@@ -17,7 +17,7 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
 
         #region Parametros
         [Parameter]
-        public string Mensagem { get; set; } = "Excluir o funcionário cadastrado";
+        public string Mensagem { get; set; } = "Excluir o turno cadastrado";
 
         public string SubMensagem { get; set; }
 
@@ -32,7 +32,7 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
         #endregion
 
         #region Eventos
-        protected override List<FuncionarioView> FiltrarCampos(List<FuncionarioView> listaTmp)
+        protected override List<TurnoView> FiltrarCampos(List<TurnoView> listaTmp)
         {
             throw new NotImplementedException();
         }
@@ -64,12 +64,12 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
         protected string StyleVisualizaMessage { get; set; } = "display: none;";
         #endregion
 
-        public FuncionarioConsultaBase()
+        public TurnoConsultaBase()
         {
-            Titulo = "Funcionário";
-            ControllerName = "Funcionario";
+            Titulo = "Turno";
+            ControllerName = "Turno";
 
-            MensageBox = "Excluir o Funcionário.";
+            MensageBox = "Excluir o Turno.";
         }
 
         public void InicializaRotaVisualizar(int ID)
