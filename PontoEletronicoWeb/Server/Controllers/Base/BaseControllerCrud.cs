@@ -26,7 +26,7 @@ namespace PontoEletronicoWeb.Server.Controllers
         }
         #endregion
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             try

@@ -26,7 +26,11 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
         #endregion
 
         #region Propriedades
+        protected bool ErroNomeFuncionario { get; set; } = false;
 
+        protected string ErroMsgNomeFuncionario { get; set; }
+
+        protected ElementReference NomeFuncionarioInput { get; set; }
         #endregion
 
         #region Contrutor
@@ -38,7 +42,6 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
 
             #region Define as Rotas
             Api = "api/Funcionario";
-            //Api = "Funcionario";
             RotaConsulta = string.Concat("/Funcionario/");
             #endregion
 
@@ -73,17 +76,13 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
 
         private void MontarObjetoGravado(FuncionarioModel model)
         {
-            //var DataIni = new DateTime(model.HoraInicioTicks);
-            //var DataFim = new DateTime(model.HoraTerminoTicks);
 
-            //HoraInicio = DataIni;
-            //HoraTermino = DataFim;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            //if (firstRender)
-            //    await DescricaoInput.FocusAsync();
+            if (firstRender)
+                await NomeFuncionarioInput.FocusAsync();
         }
 
         protected override async void NovaInstanciaModel()
@@ -95,6 +94,42 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
             StateHasChanged();
             #endregion
         }
+
+        protected void SalvarInformacoes()
+        {
+            if (!ValidaInformacoes())
+                return;
+
+            SalvarEditar();
+        }
+
+
+        private bool ValidaInformacoes()
+        {
+            #region Reseta Variaveis
+            ErroNomeFuncionario = false;
+            #endregion
+
+            #region Variavel de Controle
+            var result = true;
+            #endregion
+
+            #region Validações
+            if (string.IsNullOrEmpty(model.Nome))
+            {
+                ErroNomeFuncionario = true;
+                ErroMsgNomeFuncionario = "Informe o nome do funcionário !";
+                
+                return false;
+            }
+            #endregion
+
+            #region Return
+            return true;
+            #endregion
+        }
+
+
         #endregion
     }
 }

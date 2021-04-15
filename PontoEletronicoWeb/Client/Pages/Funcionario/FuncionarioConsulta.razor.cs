@@ -116,5 +116,23 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
             FlagVisualizaMessage = !FlagVisualizaMessage;
             StateHasChanged();
         }
+
+        protected override void ExcluirItemLista(int ID)
+        {
+            var obj = ModelsTmp.Where(x => x.Id == ID).FirstOrDefault();
+
+            foreach (var item in ModelsTmp)
+            {
+                Console.WriteLine(item.Id);
+                Console.WriteLine(item.Descricao);
+            }
+
+            if (!Equals(obj))
+            {
+                ModelsTmp.Remove(obj);
+
+                StateHasChanged();
+            }
+        }
     }
 }

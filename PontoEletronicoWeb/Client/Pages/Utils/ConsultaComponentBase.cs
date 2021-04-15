@@ -127,10 +127,25 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
 
             if (result.IsSuccessStatusCode)
             {
+                ExcluirItemLista(ID);
+            }
+        }
 
-                Models.Remove(Models.First(x => x.Id == ID));
+        protected virtual void ExcluirItemLista(int ID)
+        {
+            var obj = ModelsTmp.Where(x => x.Id == ID).FirstOrDefault();
 
-                ModelsTmp = Models;
+            foreach (var item in ModelsTmp)
+            {
+                Console.WriteLine(item.Id);
+                Console.WriteLine(item.Descricao);
+            }
+
+            if (!Equals(obj))
+            {
+                ModelsTmp.Remove(obj);
+
+                //ModelsTmp = Models;
 
                 StateHasChanged();
             }
