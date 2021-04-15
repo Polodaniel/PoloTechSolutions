@@ -25,7 +25,6 @@
     <Folder Include="Pages\Cliente\" />
     <Folder Include="Pages\Escala\" />
     <Folder Include="Pages\FolhaPonto\" />
-    <Folder Include="Pages\Turno\" />
   </ItemGroup>
 
 </Project>

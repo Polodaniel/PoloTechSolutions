@@ -1,8 +1,8 @@
-﻿@page "/Funcionario/"
+﻿@page "/Turno/"
 
-@inherits FuncionarioConsultaBase
+@inherits TurnoConsultaBase
 
-<PageConsulta NomeTela="Funcionário" RotaHome="Funcionario" />
+<PageConsulta NomeTela="Turno" RotaHome="Turno" />
 
 <!-- MessageBox -->
 <MessageBox Mensagem="@MensageBox"
@@ -19,13 +19,15 @@
     {
         <div class="card p-0 mt-3">
             <div class="table-responsive-sm">
-                <table class="table table-sm mb-0 table-hover">
+                <table class="table table-sm mb-0 table-hover" id="TabelaTurno">
                     <thead class="bg-secondary text-light small">
                         <tr>
                             <th style="width: 50px;" class="small">Código</th>
                             <th style="" class="small">Nome</th>
-                            <th style="width: 100px;" class="small text-center">Situação</th>
-                            <th style="width: 150px;" class="small text-center">Possui Biometria ?</th>
+                            <th style="width: 100px;" class="small text-center">Hora Inicio</th>
+                            <th style="width: 100px;" class="small text-center">Hora Fim</th>
+                            <th style="width: 100px;" class="small text-center">Per Noite</th>
+                            <th style="width: 100px;" class="small text-center">Status</th>
                             <th style="width: 100px;" class="small"></th>
                         </tr>
                     </thead>
@@ -34,9 +36,11 @@
                         {
                             <tr>
                                 <td class=" small pt-2">@item.CodigoString</td>
-                                <td class=" small pt-2">@item.Nome</td>
+                                <td class=" small pt-2">@item.Descricao</td>
+                                <td class=" small pt-2 text-center">@item.HoraInicioString</td>
+                                <td class=" small pt-2 text-center">@item.HoraFimString</td>
+                                <td class=" small pt-2 text-center">@item.PerNoiteString</td>
                                 <td class=" small pt-2 text-center">@item.Situacao</td>
-                                <td class=" small pt-2 text-center">@item.Biometria</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <a style="font-size: 10px;" class="btn btn-sm btn-light" @onclick="() => InicializaRotaVisualizar(item.Id)"><i class="far fa-eye"></i></a>
