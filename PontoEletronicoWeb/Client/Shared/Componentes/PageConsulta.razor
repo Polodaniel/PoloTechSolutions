@@ -1,0 +1,23 @@
+﻿@inherits PageConsultaBase
+<!-- Botão Novo -->
+<section class="">
+
+    <div class="row">
+        <div class="col-sm col-sm col-md col-lg col-xl col-xxl">
+            <h5 class="text-muted">
+                Consultar @NomeTela
+            </h5>
+        </div>
+        <div class="col-sm col-sm col-md col-lg col-xl col-xxl text-end">
+            @if (DescTipoBotao)
+            {
+                <a style="font-size: 10px;" class="btn btn-sm btn-primary" href="@RotaHome/Novo"><i class="fas fa-plus pe-2"></i>Novo @NomeTela</a> 
+            }
+            else
+            {
+                <a style="font-size: 10px;" class="btn btn-sm btn-primary" href="@RotaHome/Nova"><i class="fas fa-plus pe-2"></i>Nova @NomeTela</a>
+            }
+        </div>
+    </div>
+</section>
+<!-- Fim do Botão Novo -->

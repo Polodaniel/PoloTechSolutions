@@ -1,0 +1,46 @@
+﻿@page "/Funcionario/Visualizar/{id:int}"
+
+@inherits FuncionarioVisualizacaoBase
+
+<section>
+    <div>
+        <h5 class="text-muted mb-3">Consultar Funcionário</h5>
+    </div>
+
+    <div>
+        <div class="m-2">
+            <div class="row">
+                <div class="col-xs col-sm col-md col-lg col-xl col-xxl">
+                    <div class="form-group mb-2">
+                        <small><label asp-for="" class="small mb-0">Nome</label></small>
+                        <input maxlength="100" @bind="model.Nome" class="form-control form-control-sm" placeholder="Digite o Nome do Funcionário" disabled/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md col-lg col-xl col-xxl">
+                    <div class="form-group mb-2">
+                        <small><label asp-for="" class="small mb-0">CPF</label></small>
+                        <input @bind="model.Cpf" class="form-control form-control-sm" placeholder="CPF não informado." disabled/>
+
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
+                    <div class="form-group mb-2">
+                        <small><label asp-for="" class="small mb-0">Pis/Pasep</label></small>
+                        <input @bind="model.Pis" class="form-control form-control-sm" placeholder="Pis/Pasep não informado." disabled/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-1 mb-3">
+                <div class="col-xs col-sm col-md col-lg col-xl col-xxl d-flex justify-content-end">
+                    <a href="Funcionario" class="btn btn-sm btn-outline-warning ms-2">Voltar</a>
+                    <a href="Funcionario/Novo/@model.Id" class="btn btn-sm btn-primary ms-2">Editar</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

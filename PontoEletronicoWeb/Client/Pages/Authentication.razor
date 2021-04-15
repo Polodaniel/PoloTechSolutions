@@ -1,6 +1,43 @@
 ﻿@page "/authentication/{action}"
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-<RemoteAuthenticatorView Action="@Action" />
+
+@inject NavigationManager Navigation
+
+<RemoteAuthenticatorView Action="@Action">
+
+    <CompletingLoggingIn>
+        <div class="container mt-5 pt-5">
+            <div class="d-flex justify-content-center mb-2 mt-5">
+                <img src="./img/Logo1.png" class="imgLogotipo" />
+            </div>
+            <div class="d-flex justify-content-center mb-2 mt-5">
+                <div class="card p-3 small fw-bold text-center" style="width: 302px;">
+                    Carregando as informações...
+                </div>
+            </div>
+        </div>
+    </CompletingLoggingIn>
+
+    <CompletingLogOut>
+        <div class="container mt-5 pt-5">
+            <div class="d-flex justify-content-center mb-2 mt-5">
+                <img src="./img/Logo1.png" class="imgLogotipo" />
+            </div>
+            <div class="d-flex justify-content-center mb-2 mt-5">
+                <div class="card p-3 small fw-bold text-center" style="width: 302px;">
+                    Carregando as informações...
+                </div>
+            </div>
+        </div>
+    </CompletingLogOut>
+
+    <LogOutSucceeded>
+        <div>
+            @{ Navigation.NavigateTo(Navigation.BaseUri.ToString()); }
+        </div>
+    </LogOutSucceeded>
+
+</RemoteAuthenticatorView>
 
 @code{
     [Parameter] public string Action { get; set; }
