@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using Models.View;
 using PontoEletronicoWeb.Client.Pages.Utils;
 using System;
@@ -134,5 +135,11 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
                 StateHasChanged();
             }
         }
+
+        //protected override async Task OnAfterRenderAsync(bool firstRender)
+        //{
+        //    await JS.InvokeAsync<object>("TestDataTablesAdd", "#TabelaTurno");
+        //}
+
     }
 }
