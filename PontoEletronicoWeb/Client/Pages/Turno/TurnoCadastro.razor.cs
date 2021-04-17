@@ -14,7 +14,7 @@ using TurnoModel = Models.Cadastros.Turno;
 
 namespace PontoEletronicoWeb.Client.Pages.Turno
 {
-    public class TurnoCadastroBase : CadastroEditarVisualizarComponentBase<TurnoModel, FuncionarioView>
+    public class TurnoCadastroBase : CadastroEditarVisualizarComponentBase<TurnoModel, TurnoView>
     {
         #region Parametros
         [Parameter]

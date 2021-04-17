@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Cliente\" />
     <Folder Include="Pages\Escala\" />
     <Folder Include="Pages\FolhaPonto\" />
   </ItemGroup>

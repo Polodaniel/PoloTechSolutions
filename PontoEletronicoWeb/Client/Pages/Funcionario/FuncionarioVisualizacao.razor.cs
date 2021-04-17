@@ -27,7 +27,7 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
 
             #region Define as Rotas
             Api = "api/funcionario";
-            RotaConsulta = "/Funcionario";
+            RotaConsulta = "Funcionario";
             #endregion
         }
         #endregion
@@ -47,5 +47,4 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
         }
         #endregion
     }
-
 }

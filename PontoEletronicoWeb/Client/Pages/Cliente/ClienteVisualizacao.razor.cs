@@ -7,11 +7,11 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-using TurnoModel = Models.Cadastros.Turno;
+using ClienteModel = Models.Cadastros.Cliente;
 
-namespace PontoEletronicoWeb.Client.Pages.Turno
+namespace PontoEletronicoWeb.Client.Pages.Cliente
 {
-    public class TurnoVisualizacaoBase : CadastroEditarVisualizarComponentBase<TurnoModel, TurnoView>
+    public class ClienteVisualizacaoBase : CadastroEditarVisualizarComponentBase<ClienteModel, ClienteView>
     {
         #region Parametros
         [Parameter]
@@ -19,15 +19,15 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
         #endregion
 
         #region Construtor
-        public TurnoVisualizacaoBase()
+        public ClienteVisualizacaoBase()
         {
-            #region Instancia Funcionario
-            model = new TurnoModel();
+            #region Instancia
+            model = new ClienteModel();
             #endregion
 
             #region Define as Rotas
-            Api = "api/turno";
-            RotaConsulta = "Turno";
+            Api = "api/cliente";
+            RotaConsulta = "Cliente";
             #endregion
         }
         #endregion
@@ -37,7 +37,7 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
         {
             if (id > 0)
             {
-                model = await Http.GetFromJsonAsync<TurnoModel>($"{Api}/{id}");
+                model = await Http.GetFromJsonAsync<ClienteModel>($"{Api}/{id}");
             }
         }
 

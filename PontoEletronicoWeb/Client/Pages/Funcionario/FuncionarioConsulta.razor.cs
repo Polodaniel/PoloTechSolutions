@@ -121,12 +121,6 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
         {
             var obj = ModelsTmp.Where(x => x.Id == ID).FirstOrDefault();
 
-            foreach (var item in ModelsTmp)
-            {
-                Console.WriteLine(item.Id);
-                Console.WriteLine(item.Descricao);
-            }
-
             if (!Equals(obj))
             {
                 ModelsTmp.Remove(obj);

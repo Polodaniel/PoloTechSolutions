@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PontoEletronicoWeb.Client.Pages.Turno
+namespace PontoEletronicoWeb.Client.Pages.Cliente
 {
-    public class TurnoConsultaBase : ConsultaComponentBase<TurnoView>
+    public class ClienteConsultaBase : ConsultaComponentBase<ClienteView>
     {
         #region Inject
         [Inject]
@@ -18,7 +18,7 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
 
         #region Parametros
         [Parameter]
-        public string Mensagem { get; set; } = "Excluir o turno cadastrado";
+        public string Mensagem { get; set; } = "Excluir o cliente cadastrado";
 
         public string SubMensagem { get; set; }
 
@@ -33,7 +33,7 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
         #endregion
 
         #region Eventos
-        protected override List<TurnoView> FiltrarCampos(List<TurnoView> listaTmp)
+        protected override List<ClienteView> FiltrarCampos(List<ClienteView> listaTmp)
         {
             throw new NotImplementedException();
         }
@@ -65,12 +65,12 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
         protected string StyleVisualizaMessage { get; set; } = "display: none;";
         #endregion
 
-        public TurnoConsultaBase()
+        public ClienteConsultaBase()
         {
-            Titulo = "Turno";
-            ControllerName = "Turno";
+            Titulo = "Clientes";
+            ControllerName = "Cliente";
 
-            MensageBox = "Excluir o Turno.";
+            MensageBox = "Excluir o Cliente.";
         }
 
         public void InicializaRotaVisualizar(int ID)
@@ -129,11 +129,5 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
                 StateHasChanged();
             }
         }
-
-        //protected override async Task OnAfterRenderAsync(bool firstRender)
-        //{
-        //    await JS.InvokeAsync<object>("TestDataTablesAdd", "#TabelaTurno");
-        //}
-
     }
 }

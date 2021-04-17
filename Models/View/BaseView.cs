@@ -10,5 +10,15 @@ namespace Models.View
         public int Id { get; set; }
         public string Descricao { get; set; }
         public bool Status { get; set; }
+
+        public string CodigoString
+        {
+            get => Id.ToString().PadLeft(4, '0');
+        }
+
+        public string Situacao
+        {
+            get => Status ? "Ativado" : "Desativado";
+        }
     }
 }
