@@ -50,6 +50,7 @@ namespace PontoEletronicoWeb.Server
             services.AddTransient<IClienteRepository, ClienteRepository>();
             services.AddTransient<IFolhaPontoRepository, FolhaPontoRepository>();
             services.AddTransient<IEscalaRepository, EscalaRepository>();
+            services.AddTransient<IEscalaFuncionarioRepository, EscalaFuncionarioRepository>();
             services.AddTransient<ITurnoRepository, TurnoRepository>();
             services.AddTransient<IBiometriaRepository, BiometriaRepository>();
             services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();

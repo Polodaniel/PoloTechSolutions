@@ -30,12 +30,12 @@ namespace Models.Ponto
 
         public override void IsValid()
         {
-            throw new NotImplementedException();
+           
         }
 
         public EscalaFuncionarioView SelectView()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public void Update(EscalaFuncionario Model, int usuarioId)
