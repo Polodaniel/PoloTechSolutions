@@ -1,0 +1,62 @@
+﻿@page "/Escala/"
+
+@inherits EscalaConsultaBase
+
+<PageConsulta NomeTela="Escala" RotaHome="Escala" />
+
+<!-- MessageBox -->
+<MessageBox Mensagem="@MensageBox"
+            SubMensagem="@SubMensagem"
+            VisualizaMessage="@FlagVisualizaMessage"
+            ConfirmarCallback="ConfirmaExclusao"
+            CancelarCallback="CancelaExclusao" />
+<!-- Fim MessageBox-->
+
+
+<section id="ConsultaFuncionarioID">
+
+    @if (!Equals(ModelsTmp, null) && ModelsTmp.Count > 0)
+    {
+        <div class="card p-0 mt-3">
+            <div class="table-responsive-sm">
+                <table class="table table-sm mb-0 table-hover" id="TabelaTurno">
+                    <thead class="bg-secondary text-light small">
+                        <tr>
+                            <th style="width: 50px;" class="small">Código</th>
+                            <th style="" class="small">Data</th>
+                            <th style="" class="small">Turno</th>
+                            <th style="" class="small">Cliente</th>
+                            <th style="width: 100px;" class="small"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="small">
+                        @foreach (var item in ModelsTmp)
+                        {
+                            <tr>
+                                <td class=" small pt-2">@item.CodigoString</td>
+                                <td class=" small pt-2">@item.Descricao</td>
+                                <td class=" small pt-2 text-center"></td>
+                                <td class=" small pt-2 text-center">@item.Situacao</td>
+                                <td class="text-end">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a style="font-size: 10px;" class="btn btn-sm btn-light" @onclick="() => InicializaRotaVisualizar(item.Id)"><i class="far fa-eye"></i></a>
+                                        <a style="font-size: 10px;" class="btn btn-sm btn-light" @onclick="() => InicializaRotaEditar(item.Id)"><i class="fas fa-edit"></i></a>
+                                        <a style="font-size: 10px;" class="btn btn-sm btn-light" @onclick="() => InicializaRotaExcluir(item.Id)"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-primary text-center mt-2 small fw-bold">
+            Sem informação !
+        </div>
+    }
+
+</section>

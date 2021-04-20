@@ -9,10 +9,12 @@ namespace Models.View
         public string Nome { get; set; }
 
         public bool PossuiBiometria { get; set; }
-        
+
         public string Biometria
         {
             get => PossuiBiometria ? "Sim" : "Não";
         }
+
+        public bool Selecionado { get; set; }
     }
 }

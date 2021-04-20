@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PontoEletronicoWeb.Server.Data;
 
 namespace PontoEletronicoWeb.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210419231322_Add_ClienteId_Escala")]
+    partial class Add_ClienteId_Escala
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -404,11 +406,11 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataEscala")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("DtaAtualizacao")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("FuncionarioId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -423,40 +425,11 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
 
                     b.HasIndex("ClienteId");
 
+                    b.HasIndex("FuncionarioId");
+
                     b.HasIndex("TurnoId");
 
                     b.ToTable("Escala");
-                });
-
-            modelBuilder.Entity("Models.Ponto.EscalaFuncionario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DtaAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EscalaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FuncionarioId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EscalaId");
-
-                    b.HasIndex("FuncionarioId");
-
-                    b.ToTable("EscalaFuncionario");
                 });
 
             modelBuilder.Entity("Models.Ponto.FolhaPonto", b =>
@@ -628,6 +601,12 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Models.Cadastros.Funcionario", "Funcionario")
+                        .WithMany()
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Models.Cadastros.Turno", "Turno")
                         .WithMany()
                         .HasForeignKey("TurnoId")
@@ -636,26 +615,9 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
 
                     b.Navigation("Cliente");
 
-                    b.Navigation("Turno");
-                });
-
-            modelBuilder.Entity("Models.Ponto.EscalaFuncionario", b =>
-                {
-                    b.HasOne("Models.Ponto.Escala", "Escala")
-                        .WithMany("Funcionarios")
-                        .HasForeignKey("EscalaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Cadastros.Funcionario", "Funcionario")
-                        .WithMany()
-                        .HasForeignKey("FuncionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Escala");
-
                     b.Navigation("Funcionario");
+
+                    b.Navigation("Turno");
                 });
 
             modelBuilder.Entity("Models.Ponto.FolhaPonto", b =>
@@ -680,11 +642,6 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
             modelBuilder.Entity("Models.Cadastros.Funcionario", b =>
                 {
                     b.Navigation("Biometrias");
-                });
-
-            modelBuilder.Entity("Models.Ponto.Escala", b =>
-                {
-                    b.Navigation("Funcionarios");
                 });
 #pragma warning restore 612, 618
         }

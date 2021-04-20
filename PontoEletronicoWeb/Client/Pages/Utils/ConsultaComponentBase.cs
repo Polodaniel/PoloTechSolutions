@@ -58,19 +58,19 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
         #region Virtuais
         protected override async Task OnInitializedAsync()
         {
-            if (Status)
-            {
-                var URI = string.Concat(UrlApi, "?ativo=true");
+            //if (Status)
+            //{
+            //    var URI = string.Concat(UrlApi, "?ativo=true");
 
-                Models = await Http.GetFromJsonAsync<List<U>>(URI);
-            }
-            else
-                Models = await Http.GetFromJsonAsync<List<U>>(UrlApi);
+            //    Models = await Http.GetFromJsonAsync<List<U>>(URI);
+            //}
+            //else
+            //    Models = await Http.GetFromJsonAsync<List<U>>(UrlApi);
 
-            if (Models == null)
-                Models = new List<U>();
+            //if (Models == null)
+            //    Models = new List<U>();
 
-            ModelsTmp = Models.ToList();
+            //ModelsTmp = Models.ToList();
 
             //Filtrar();
         }

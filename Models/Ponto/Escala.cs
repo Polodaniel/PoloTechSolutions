@@ -10,13 +10,23 @@ namespace Models.Ponto
 {
     public class Escala : BaseModelDominio, IDominio<Escala>, ISelectView<EscalaView>
     {
+        public Escala() 
+        {
+            Funcionarios = new List<EscalaFuncionario>();
+            DataEscala = DateTime.Now;
+        }
+
+        public DateTime DataEscala { get; set; }
+
         public int TurnoId { get; set; }
         public Turno Turno { get; set; }
 
-        public int FuncionarioId { get; set; }
+        public int ClienteId { get; set; }
 
-        [ForeignKey(nameof(FuncionarioId))]
-        public Funcionario Funcionario { get; set; }
+        [ForeignKey(nameof(ClienteId))]
+        public Cliente Cliente { get; set; }
+
+        public List<EscalaFuncionario> Funcionarios { get; set; }
 
         #region Metodos Dominio
         public Escala GetModel() =>
@@ -35,7 +45,7 @@ namespace Models.Ponto
         public void Update(Escala Model, int usuarioId)
         {
             this.TurnoId = Model.TurnoId;
-            this.FuncionarioId = Model.FuncionarioId;
+            this.ClienteId = Model.ClienteId;
 
             this.RegistraAlteracao(usuarioId);
         }

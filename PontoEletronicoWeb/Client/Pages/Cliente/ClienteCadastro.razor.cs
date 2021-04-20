@@ -25,7 +25,6 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
 
         [Parameter]
         public string NomePagina { get; set; }
-
         #endregion
 
         #region Propriedades
