@@ -34,12 +34,11 @@ namespace Models.Ponto
 
         public override void IsValid()
         {
-            throw new NotImplementedException();
         }
 
         public EscalaView SelectView()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public void Update(Escala Model, int usuarioId)
@@ -48,6 +47,17 @@ namespace Models.Ponto
             this.ClienteId = Model.ClienteId;
 
             this.RegistraAlteracao(usuarioId);
+        }
+
+        public void UpdateFuncionariosEscala(List<EscalaFuncionario> funcionarios, int usuarioId)
+        {
+            if(funcionarios?.Count > 0 && this.Funcionarios?.Count > 0)
+            {
+                funcionarios.ForEach(func => 
+                {
+                    this.Funcionarios
+                });
+            }
         }
         #endregion
     }
