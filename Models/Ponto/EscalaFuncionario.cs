@@ -43,6 +43,7 @@ namespace Models.Ponto
             //this.TurnoId = Model.TurnoId;
             //this.FuncionarioId = Model.FuncionarioId;
             //this.ClienteId = Model.ClienteId;
+            this.Status = Model.Status;
 
             this.RegistraAlteracao(usuarioId);
         }
