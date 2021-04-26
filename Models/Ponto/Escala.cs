@@ -48,17 +48,6 @@ namespace Models.Ponto
 
             this.RegistraAlteracao(usuarioId);
         }
-
-        public void UpdateFuncionariosEscala(List<EscalaFuncionario> funcionarios, int usuarioId)
-        {
-            if(funcionarios?.Count > 0 && this.Funcionarios?.Count > 0)
-            {
-                funcionarios.ForEach(func => 
-                {
-                    this.Funcionarios
-                });
-            }
-        }
         #endregion
     }
 }
