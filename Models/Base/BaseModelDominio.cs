@@ -8,6 +8,7 @@ namespace Models
 {
     public abstract class BaseModelDominio : BaseModel
     {
+
         [Key]
         public int Id { get; set; }
         public bool Status { get; set; }

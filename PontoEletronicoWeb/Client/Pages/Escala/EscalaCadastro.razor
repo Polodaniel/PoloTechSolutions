@@ -13,7 +13,7 @@
 
     <div>
         @*<EditForm Model="model" OnValidSubmit="SalvarInformacoes">*@
-        <EditForm Model="model" OnValidSubmit="SalvarEditar">
+        <EditForm Model="model" OnValidSubmit="SalvarInformacoesAsync">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-2">
                     <div class="card p-3">
@@ -21,6 +21,12 @@
                             <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xxl-2 mb-1">
                                 <small><label asp-for="" class="small mb-0">Data</label></small>
                                 <input type="date" @bind="model.DataEscala" class="form-control form-control-sm" />
+                                @if (ErroDataEscala)
+                                {
+                                    <div class="small">
+                                        <span class="small text-danger">@ErroDataEscalaMsg</span>
+                                    </div>
+                                }
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md col-lg col-xl col-xxl mb-1">
                                 <small><label asp-for="" class="small mb-0">Cliente</label></small>
@@ -34,6 +40,12 @@
                                             <option value="@item.Id">@item.Nome</option>
                                         }
                                     </select>
+                                    @if (ErroCliente)
+                                    {
+                                        <div class="small">
+                                            <span class="small text-danger">@ErroClienteMsg</span>
+                                        </div>
+                                    }
                                 }
                                 else
                                 {
@@ -64,6 +76,12 @@
                                             <option value="@item.Id">@item.Descricao</option>
                                         }
                                     </select>
+                                    @if (ErroTurno)
+                                    {
+                                        <div class="small">
+                                            <span class="small text-danger">@ErroTurnoMsg</span>
+                                        </div>
+                                    }
                                 }
                                 else
                                 {
@@ -85,7 +103,12 @@
                                     </div>
                                     <div class="col col-sm col-md col-lg col-xl col-xxl pe-4">
                                         <div class="input-group">
-                                            <input style="font-size: 10px;" class="form-control form-control-sm mb-2" placeholder="Pesquisar Funcionário" />
+                                            <input style="font-size: 10px;"
+                                                   class="form-control form-control-sm mb-2"
+                                                   placeholder="Pesquisar Funcionário"
+                                                   @bind="SearchText"
+                                                   @oninput="FilterText"
+                                                   @onkeydown="EnterDown" />
                                             <span class="input-group-text small" style="height: 25px;"><i class="fas fa-search small text-muted"></i></span>
                                         </div>
                                     </div>
@@ -99,7 +122,7 @@
                                             @foreach (var item in ListaFuncionarios)
                                             {
                                                 <tr>
-                                                    <td class="p-0 px-4 pt-1 pb-1">
+                                                    <td class="p-0 px-4 pt-1 pb-1" style="@item.Display">
                                                         <div class="form-check">
                                                             <input type="checkbox" class="form-check-input" id="@item.Id" @onchange="eventChange => ChangeSelectedItens(item, (bool)eventChange.Value)" checked="@item.Selecionado" />
                                                             <label class="form-check-label small" style="" for="@item.Id" data-toggle="tooltip" title="@item.Nome">
@@ -111,16 +134,15 @@
                                                     </td>
                                                 </tr>
                                             }
-
                                         </table>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="alert alert-info m-0 p-0 p-2 pl-4 pr-4 small">
+                                    <div class="alert alert-info m-0 p-0 p-2 px-3 small">
                                         <div class="d-flex align-items-center text-muted small">
                                             <strong class="text-muted">Buscando Informações, Aguarde...</strong>
-                                            <div class="spinner-border ms-auto small" role="status" aria-hidden="true"></div>
+                                            <div class="spinner-border spinner-border-sm ms-auto small" role="status" aria-hidden="true"></div>
                                         </div>
                                     </div>
                                 }
@@ -132,7 +154,22 @@
                     <div class="card p-3">
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ol-xxl-12">
-                                <small><label asp-for="" class="small mb-0">Funcionário Selecionados</label></small>
+                                <div class="row">
+                                    <div class="col col-sm col-md col-lg col-xl col-xxl">
+                                        <small><label asp-for="" class="small mb-0 pt-1">Funcionários Selecionados</label></small>
+                                    </div>
+                                    <div class="col col-sm col-md col-lg col-xl col-xxl pe-4">
+                                        <div class="input-group">
+                                            <input style="font-size: 10px;"
+                                                   class="form-control form-control-sm mb-2"
+                                                   placeholder="Pesquisar Funcionário"
+                                                   @bind="SearchText"
+                                                   @oninput="FilterTextDois"
+                                                   @onkeydown="EnterDown" />
+                                            <span class="input-group-text small" style="height: 25px;"><i class="fas fa-search small text-muted"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ol-xxl-12">
 
@@ -144,7 +181,7 @@
                                             <table class="table table-bordered table-sm">
                                                 @foreach (var item in ListaFuncionarios.Where(x => x.Selecionado == true))
                                                 {
-                                                    <tr>
+                                                    <tr style="@item.DisplayDois">
                                                         <td class="p-0 px-4 pt-1 pb-1">
                                                             <div class="form-check">
                                                                 <label class="form-check-label small" data-toggle="tooltip" title="@item.Nome">
@@ -164,10 +201,10 @@
                                     }
                                     else
                                     {
-                                        <div class="alert alert-info m-0 p-0 p-2 pl-4 pr-4 small">
+                                        <div class="alert alert-info m-0 p-0 p-2 px-3 small">
                                             <div class="d-flex align-items-center text-muted small">
                                                 <strong class="text-muted">Buscando Informações, Aguarde...</strong>
-                                                <div class="spinner-border ms-auto small" role="status" aria-hidden="true"></div>
+                                                <div class="spinner-border spinner-border-sm ms-auto small" role="status" aria-hidden="true"></div>
                                             </div>
                                         </div>
                                     }
@@ -175,6 +212,28 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="row mt-1 mb-3">
+                <div class="col-xs col-sm col-md col-lg col-xl col-xxl d-flex justify-content-end">
+                    <a href="/Escala/" class="btn btn-sm btn-outline-warning ms-2">Voltar</a>
+
+                    @if (!Equals(ListaFuncionarios, null) && ListaFuncionarios.Count > 0)
+                    {
+                        if (ListaFuncionarios.Where(x => x.Selecionado).Count() > 0)
+                        {
+                            <button type="submit" class="btn btn-sm btn-success ms-2">Salvar</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-sm btn-success ms-2" disabled>Salvar</button>
+                        }
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-sm btn-success ms-2" disabled>Salvar</button>
+                    }
                 </div>
             </div>
         </EditForm>

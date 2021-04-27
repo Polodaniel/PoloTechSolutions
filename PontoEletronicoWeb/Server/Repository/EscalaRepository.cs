@@ -2,6 +2,7 @@
 using Models.Ponto;
 using Models.View;
 using PontoEletronicoWeb.Server.Data;
+using PontoEletronicoWeb.Shared.Auxiliares;
 using PontoEletronicoWeb.Shared.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,16 @@ namespace PontoEletronicoWeb.Server.Repository
     #region Interfaces
     public interface IEscalaRepository : ICadastroBase<Escala, EscalaView>
     {
-
+        Task<List<EscalaView>> RetornaListViewEscala(FiltroEscala filtro);
     }
     #endregion
 
-    public class EscalaRepository : BaseRepository<Escala,EscalaView>, IEscalaRepository
+    public class EscalaRepository : BaseRepository<Escala, EscalaView>, IEscalaRepository
     {
         #region Construtor
-        public EscalaRepository(ApplicationDbContext context):base(context)
+        public EscalaRepository(ApplicationDbContext context) : base(context)
         {
+
         }
         #endregion
 
@@ -35,7 +37,7 @@ namespace PontoEletronicoWeb.Server.Repository
             var entidade = dbSet.Add(model);
             await contexto.SaveChangesAsync();
 
-            return await Task.FromResult(entidade.Entity);
+            return await Task.FromResult(new Escala());
         }
 
         public async override Task<Escala> AlterarAsync(Escala objeto, int usuarioId)
@@ -67,6 +69,54 @@ namespace PontoEletronicoWeb.Server.Repository
             await contexto.SaveChangesAsync();
 
             return objeto;
+        }
+        #endregion
+
+        #region Metodos EscalaRestaurante
+        public async Task<List<EscalaView>> RetornaListViewEscala(FiltroEscala filtro)
+        {
+            var query = dbSetAsQueryable.Include(x => x.Cliente)
+                                        .Include(x => x.Turno)
+                                        .Include(x => x.Funcionarios)
+                                            .ThenInclude(y => y.Funcionario)
+                                        .AsEnumerable();
+
+            #region Montando Filtro           
+
+            if (filtro != null)
+            {
+                if (filtro.Status == true)
+                    query = query.Where(x => x.Status == false);
+                else
+                    query = query.Where(x => x.Status == true);
+
+                if (filtro.DataInicio.HasValue)
+                    query = query.Where(x => x.DataEscala >= filtro.DataInicio.Value);
+
+                if (filtro.DataFim.HasValue)
+                    query = query.Where(x => x.DataEscala <= filtro.DataFim.Value);
+
+                if (filtro.TurnoId > 0)
+                    query = query.Where(x => x.TurnoId == filtro.TurnoId);
+
+                if (filtro.ClienteId > 0)
+                    query = query.Where(x => x.ClienteId == filtro.ClienteId);
+
+            }
+            #endregion
+
+            var lstView = query.ToList().Select(escala => new EscalaView
+            {
+                Id = escala.Id,
+                Status = escala.Status,
+                DataEscala = escala.DataEscala,
+                Turno = escala.Turno.Descricao,
+                HoraTurno = string.Concat(escala.Turno.HoraInicio.ToShortTimeString(), " - ", escala.Turno.HoraioFim.ToShortTimeString()),
+                Cliente = escala.Cliente.Nome,
+                ListaFuncionarios = escala.Funcionarios.Select(y => y.Funcionario.Nome).ToList()
+            }).ToList();
+
+            return await Task.FromResult(lstView);
         }
         #endregion
     }

@@ -12,6 +12,8 @@ using System.Net.Http.Json;
 
 using EscalaModel = Models.Ponto.Escala;
 using Models.Ponto;
+using Microsoft.AspNetCore.Components.Web;
+using static PontoEletronicoWeb.Client.Pages.Utils.ValidacaoLista;
 
 namespace PontoEletronicoWeb.Client.Pages.Escala
 {
@@ -26,6 +28,9 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         #endregion
 
         #region Propriedades
+        protected string SearchText { get; set; }
+        protected string SearchTextDois { get; set; }
+
         public List<FuncionarioView> ListaFuncionarioAdicionados { get; set; }
         public string ApiTurno { get; }
         public string ApiCliente { get; }
@@ -33,6 +38,10 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         public List<TurnoView> ListaTurnos { get; private set; }
         public List<ClienteView> ListaClientes { get; private set; }
         public List<FuncionarioView> ListaFuncionarios { get; private set; }
+        public bool ErroTurno { get; set; } = false;
+        public bool ErroCliente { get; set; } = false;
+        public bool ErroFuncionario { get; set; } = false;
+        public bool ErroDataEscala { get; set; } = false;
         public string ErroTurnoMsg { get; private set; }
         public string ErroClienteMsg { get; private set; }
         public string ErroFuncionarioMsg { get; private set; }
@@ -61,6 +70,7 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
                 StateHasChanged();
             }
         }
+
         #endregion
 
         public EscalaCadastroBase()
@@ -72,7 +82,7 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
             #endregion
 
             #region Define as Rotas
-            Api = "api/EscalaRestaurante";
+            Api = "api/Escala";
 
             ApiTurno = "api/turno";
             ApiCliente = "api/cliente";
@@ -127,11 +137,6 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
             #endregion
         }
 
-        protected override void NovaInstanciaModel()
-        {
-            throw new NotImplementedException();
-        }
-
         protected void ChangeSelectedItens(FuncionarioView Obj, bool IsSelected)
         {
             if (Obj.Selecionado == IsSelected)
@@ -145,5 +150,144 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         public void RemoverFuncionario(FuncionarioView funcinario) =>
             funcinario.Selecionado = !funcinario.Selecionado;
 
+        protected void FilterText(ChangeEventArgs args)
+        {
+            SearchText = (string)args.Value;
+
+            Filtrar();
+        }
+
+        protected void FilterTextDois(ChangeEventArgs args)
+        {
+            SearchTextDois = (string)args.Value;
+
+            FiltrarDois();
+        }
+
+        private void Filtrar()
+        {
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                var _filteredList = ListaFuncionarios.Where(x => x.Nome.ToLower().Contains(SearchText.ToLower())
+                                                              || x.CodigoString.ToLower().Contains(SearchText.ToLower())).ToList();
+
+                ListaFuncionarios.ForEach(x => x.Display = "display: none;");
+
+                if (!Equals(_filteredList, null) && _filteredList.Count > 0)
+                    foreach (var item in _filteredList)
+                    {
+                        var _itemEdit = ListaFuncionarios.Where(x => x.Id == item.Id).FirstOrDefault();
+
+                        if (!Equals(_itemEdit, null))
+                            _itemEdit.Display = string.Empty;
+                    }
+            }
+            else
+                ListaFuncionarios.ForEach(x => x.Display = string.Empty);
+
+        }
+
+        private void FiltrarDois()
+        {
+            if (!string.IsNullOrEmpty(SearchTextDois))
+            {
+                var _filteredList = ListaFuncionarios.Where(x => x.Nome.ToLower().Contains(SearchTextDois.ToLower())
+                                                              || x.CodigoString.ToLower().Contains(SearchTextDois.ToLower())).ToList();
+
+                ListaFuncionarios.ForEach(x => x.DisplayDois = "display: none;");
+
+                if (!Equals(_filteredList, null) && _filteredList.Count > 0)
+                    foreach (var item in _filteredList)
+                    {
+                        var _itemEdit = ListaFuncionarios.Where(x => x.Id == item.Id).FirstOrDefault();
+
+                        if (!Equals(_itemEdit, null))
+                            _itemEdit.DisplayDois = string.Empty;
+                    }
+            }
+            else
+                ListaFuncionarios.ForEach(x => x.DisplayDois = string.Empty);
+
+        }
+
+        protected async void EnterDown(KeyboardEventArgs e)
+        {
+
+        }
+
+        protected async Task SalvarInformacoesAsync()
+        {
+            if (!ValidaInformacoes())
+                return;
+
+            MontaObjetoSalvar();
+
+            await SalvarEditar();
+        }
+
+        private void MontaObjetoSalvar()
+        {
+            var FuncionarioSelecionado = ListaFuncionarios.Where(x => x.Selecionado == true).ToList();
+
+            if (ValidacaoList.ListaValida(FuncionarioSelecionado))
+            {
+                FuncionarioSelecionado.ForEach(funcionario =>
+                {
+                    model.Funcionarios.Add(new EscalaFuncionario(funcionario));
+                });
+            }
+        }
+
+        private bool ValidaInformacoes()
+        {
+            #region Reseta Variaveis
+            ErroTurno = false;
+            ErroCliente = false;
+            ErroDataEscala = false;
+            ErroFuncionario = false;
+            #endregion
+
+            #region Variavel de Controle
+            var result = true;
+            #endregion
+
+            #region Validações
+            if (string.IsNullOrEmpty(model.DataEscala.ToString()))
+            {
+                ErroDataEscala = true;
+                return false;
+            }
+
+            if (model.ClienteId == 0)
+            {
+                ErroCliente = true;
+                return false;
+            }
+
+            if (model.TurnoId == 0)
+            {
+                ErroTurno = true;
+                return false;
+            }
+            #endregion
+
+            #region Return
+            return true;
+            #endregion
+        }
+
+        protected override async void NovaInstanciaModel()
+        {
+            model = new EscalaModel();
+            model.Status = true;
+
+            Turno = new TurnoView();
+
+            ListaFuncionarios.ForEach(x => x.Selecionado = false);
+
+            #region Atualizar View
+            StateHasChanged();
+            #endregion
+        }
     }
 }

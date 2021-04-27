@@ -16,5 +16,8 @@ namespace Models.View
         }
 
         public bool Selecionado { get; set; }
+
+        public string Display { get; set; }
+        public string DisplayDois { get; set; }
     }
 }

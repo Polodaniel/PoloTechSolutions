@@ -1,5 +1,6 @@
 ﻿using Models.Cadastros;
 using Models.Interfaces;
+using Models.View;
 using Models.View.Ponto;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,15 @@ namespace Models.Ponto
 {
     public class EscalaFuncionario : BaseModelDominio, IDominio<EscalaFuncionario>, ISelectView<EscalaFuncionarioView>
     {
+        public EscalaFuncionario() =>
+            DtaAtualizacao = DateTime.Now;
+
+        public EscalaFuncionario(FuncionarioView funcionario)
+        {
+            this.FuncionarioId = funcionario.Id;
+            this.Status = true;
+        }
+
         #region Fucionario
         public int FuncionarioId { get; set; }
 
@@ -30,7 +40,7 @@ namespace Models.Ponto
 
         public override void IsValid()
         {
-           
+
         }
 
         public EscalaFuncionarioView SelectView()

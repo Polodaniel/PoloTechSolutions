@@ -13,50 +13,194 @@
 <!-- Fim MessageBox-->
 
 
+<section class="pt-2 mb-4">
+
+    <Card ID="PessoaJuridica" Position="top">
+        <div class="m-2">
+            <label class="fw-bold text-muted">Filtros</label>
+            <hr class="mt-2 mb-3" />
+
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
+                    <div class="form-group mb-2">
+                        <small><label asp-for="" class="small mb-0">Data de Inicio</label></small>
+                        <input @bind="Filtro.DataInicio" type="date" class="form-control form-control-sm mt-0" placeholder="" />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
+                    <div class="form-group mb-2">
+                        <small><label asp-for="" class="small mb-0">Data de Termino</label></small>
+                        <input @bind="Filtro.DataFim" type="date" class="form-control form-control-sm mt-0" placeholder="" />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
+                    <small><label asp-for="" class="small mb-0">Cliente</label></small>
+                    @if (!Equals(ListaClientes, null) && ListaClientes.Count > 0)
+                    {
+                        <select @bind="Filtro.ClienteId" class="form-control form-control-sm">
+                            <option value="0">Selecione um Cliente...</option>
+
+                            @foreach (var item in ListaClientes)
+                            {
+                                <option value="@item.Id">@item.Nome</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select class="form-control form-control-sm" disabled>
+                            <option>Aguarde, Carregando...</option>
+                        </select>
+                    }
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
+                    <div class="form-group mb-2">
+                        <small><label asp-for="" class="small mb-0">Turno</label></small>
+                        @if (!Equals(ListaTurnos, null) && ListaTurnos.Count > 0)
+                        {
+                            <select @bind="Filtro.TurnoId" class="form-control form-control-sm">
+                                <option value="0">Selecione um Turno...</option>
+
+                                @foreach (var item in ListaTurnos)
+                                {
+                                    <option value="@item.Id">@item.Descricao</option>
+                                }
+                            </select>
+                        }
+                        else
+                        {
+                            <select class="form-control form-control-sm" disabled>
+                                <option>Aguarde, Carregando...</option>
+                            </select>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row text-end">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                    <a @onclick="LimparFiltro" class="btn btn-sm btn-outline-warning mt-4"><i class="fas fa-eraser pe-2"></i>Limpar</a>
+                    <a @onclick="RealizarBusca" class="btn btn-sm btn-success mt-4"><i class="fas fa-search pe-2"></i>Busca</a>
+                </div>
+            </div>
+
+        </div>
+    </Card>
+</section>
+
+
 <section id="ConsultaFuncionarioID">
 
-    @if (!Equals(ModelsTmp, null) && ModelsTmp.Count > 0)
+    @if (!Equals(ModelsTmp, null) && ModelsTmp.Count > 0 && !RealizandoBusca)
     {
-        <div class="card p-0 mt-3">
-            <div class="table-responsive-sm">
-                <table class="table table-sm mb-0 table-hover" id="TabelaTurno">
-                    <thead class="bg-secondary text-light small">
-                        <tr>
-                            <th style="width: 50px;" class="small">Código</th>
-                            <th style="" class="small">Data</th>
-                            <th style="" class="small">Turno</th>
-                            <th style="" class="small">Cliente</th>
-                            <th style="width: 100px;" class="small"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="small">
-                        @foreach (var item in ModelsTmp)
-                        {
-                            <tr>
-                                <td class=" small pt-2">@item.CodigoString</td>
-                                <td class=" small pt-2">@item.Descricao</td>
-                                <td class=" small pt-2 text-center"></td>
-                                <td class=" small pt-2 text-center">@item.Situacao</td>
-                                <td class="text-end">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a style="font-size: 10px;" class="btn btn-sm btn-light" @onclick="() => InicializaRotaVisualizar(item.Id)"><i class="far fa-eye"></i></a>
-                                        <a style="font-size: 10px;" class="btn btn-sm btn-light" @onclick="() => InicializaRotaEditar(item.Id)"><i class="fas fa-edit"></i></a>
-                                        <a style="font-size: 10px;" class="btn btn-sm btn-light" @onclick="() => InicializaRotaExcluir(item.Id)"><i class="fas fa-trash-alt"></i></a>
+        @foreach (var item in ModelsTmp)
+        {
+            <div class="mb-2">
+                <Card ID="" Position="left" Cor="@item.ColorBorder">
+                    <div class="m-2">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2 mb-2">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 small">
+                                        <small><label asp-for="" class="small mb-0 text-muted">Data</label></small>
                                     </div>
-                                </td>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                                        <label class="small">@item.DataEscala?.ToString("dd/MM/yyyy")</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 small">
+                                        <small><label asp-for="" class="small mb-0 text-muted">Turno</label></small>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                                        <label class="small">@item.Turno</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 small">
+                                        <small><label asp-for="" class="small mb-0 text-muted">Horarios</label></small>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                                        <label class="small">@item.HoraTurno</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl mb-2">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 small">
+                                        <small><label asp-for="" class="small mb-0 text-muted">Cliente</label></small>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                                        <label class="small">@item.Cliente</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl mb-2">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 small">
+                                        <small><label asp-for="" class="small mb-0 text-muted">Funcionarios</label></small>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+
+                                        @if (!Equals(item.ListaFuncionarios, null) && item.ListaFuncionarios.Count > 0)
+                                        {
+                                            var Nome = item.ListaFuncionarios.Aggregate((x, y) => x + ", " + y);
+                                            <label class="small">@Nome</label>
+                                        }
+                                        else
+                                        {
+                                            <label class="small">Sem Funcionarios adicionado !</label>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2 text-end">
+                                <div class="btn-group" role="group" aria-label="">
+                                    <a class="btn btn-sm btn-light" @onclick="() => InicializaRotaVisualizar(item.Id)"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-sm btn-light" @onclick="() => InicializaRotaEditar(item.Id)"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-sm btn-light" @onclick="() => InicializaRotaExcluir(item.Id)"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </Card>
             </div>
-        </div>
+        }
     }
     else
     {
-        <div class="alert alert-primary text-center mt-2 small fw-bold">
-            Sem informação !
-        </div>
+        @if (!RealizandoBusca)
+        {
+            <div class="alert alert-primary text-center mt-2 small fw-bold">
+                Sem informação !
+            </div>
+        }
     }
+
+    @if (RealizandoBusca)
+    {
+        <Card Position="top" Cor="lightgray" Size="1px">
+            <div class="m-2 pb-2">
+                <div class="d-flex align-items-center small" style="color: #4682B4;">
+                    <strong>Realizando a busca aguarde...</strong>
+                    <div class="spinner-border ms-auto" style="color: #4682B4;" role="status" aria-hidden="true"></div>
+                </div>
+            </div>
+        </Card>
+    }
+
 
 </section>

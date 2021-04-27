@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using Models.View;
 using PontoEletronicoWeb.Client.Pages.Utils;
 using System;
@@ -100,6 +101,11 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
             ExcluirID = ID;
 
             StateHasChanged();
+
+            await Task.Delay(500);
+
+            await JS.InvokeVoidAsync("FocoInativar");
+
         }
 
         public async void ConfirmaExclusao()

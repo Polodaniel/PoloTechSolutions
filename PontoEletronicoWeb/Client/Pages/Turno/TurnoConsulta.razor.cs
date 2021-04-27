@@ -101,6 +101,11 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
             ExcluirID = ID;
 
             StateHasChanged();
+
+            await Task.Delay(500);
+
+            await JS.InvokeVoidAsync("FocoInativar");
+
         }
 
         public async void ConfirmaExclusao()
