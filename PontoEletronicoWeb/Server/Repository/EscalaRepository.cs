@@ -15,6 +15,7 @@ namespace PontoEletronicoWeb.Server.Repository
     public interface IEscalaRepository : ICadastroBase<Escala, EscalaView>
     {
         Task<List<EscalaView>> RetornaListViewEscala(FiltroEscala filtro);
+        Task<List<EscalaFuncionario>> RetornaEscalaFuncionario(int Id);
     }
     #endregion
 
@@ -68,7 +69,33 @@ namespace PontoEletronicoWeb.Server.Repository
 
             await contexto.SaveChangesAsync();
 
-            return objeto;
+            return new Escala();
+        }
+        #endregion
+
+        #region Listar
+        public override async Task<Escala> SelecionarAsync(int id)
+        {
+            var Novo = new Escala();
+
+            var model = await dbSet.Include(x => x.Funcionarios)
+                                        .ThenInclude(x => x.Funcionario)
+                                   .Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            
+            Novo.Id = model.Id;
+            Novo.Status = model.Status;
+            Novo.UsuarioId = model.UsuarioId;
+            Novo.DtaAtualizacao = model.DtaAtualizacao;
+            Novo.DataEscala = model.DataEscala;
+            Novo.TurnoId = model.TurnoId;
+            Novo.ClienteId = model.ClienteId;
+            //Novo.Funcionarios = model.Funcionarios;
+            Novo.UsuarioId = model.UsuarioId;
+
+            IsNull(Novo);
+
+            return Novo;
         }
         #endregion
 
@@ -113,10 +140,17 @@ namespace PontoEletronicoWeb.Server.Repository
                 Turno = escala.Turno.Descricao,
                 HoraTurno = string.Concat(escala.Turno.HoraInicio.ToShortTimeString(), " - ", escala.Turno.HoraioFim.ToShortTimeString()),
                 Cliente = escala.Cliente.Nome,
-                ListaFuncionarios = escala.Funcionarios.Select(y => y.Funcionario.Nome).ToList()
+                ListaFuncionarios = escala.Funcionarios.Where(x => x.Status == true).Select(y => y.Funcionario.Nome).ToList()
             }).ToList();
 
             return await Task.FromResult(lstView);
+        }
+
+        public async Task<List<EscalaFuncionario>> RetornaEscalaFuncionario(int id) 
+        {
+            var result = await contexto.EscalaFuncionario.Where(x => x.EscalaId == id && x.Status == true).ToListAsync();
+
+            return result;
         }
         #endregion
     }

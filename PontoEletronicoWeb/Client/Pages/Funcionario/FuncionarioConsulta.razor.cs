@@ -14,6 +14,9 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
         #region Inject
         [Inject]
         protected NavigationManager Navigation { get; set; }
+
+        [Inject]
+        protected IJSRuntime JS { get; set; }
         #endregion
 
         #region Parametros

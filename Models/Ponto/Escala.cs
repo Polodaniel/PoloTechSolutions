@@ -41,7 +41,7 @@ namespace Models.Ponto
             {
                 Id = this.Id,
                 Status = this.Status,
-                DataEscala = this.DataEscala,
+                DataEscala = this.DataEscala
             };
 
         public void Update(Escala Model, int usuarioId)

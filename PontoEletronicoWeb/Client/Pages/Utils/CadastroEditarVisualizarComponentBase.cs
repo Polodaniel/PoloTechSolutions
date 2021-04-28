@@ -86,6 +86,7 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
 
         private int counter = 30;
 
+        public int TimerCounter = 30;
 
         #endregion
 
@@ -119,6 +120,8 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
                         ColorMesagemOperacao = "bg-success";
                         MensagemOperacao = "Salvo com Sucesso !";
 
+                        TimerCounter = 30;
+
                         StateHasChanged();
                     }
                     else if (Operacao == TipoOperacao.Edicao)
@@ -147,7 +150,7 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
             }
         }
 
-        private async Task<HttpResponseMessage> ExecutaOperacao(StringContent modelContent)
+        protected async Task<HttpResponseMessage> ExecutaOperacao(StringContent modelContent)
         {
             HttpResponseMessage httpResponse = new HttpResponseMessage();
 
@@ -188,7 +191,7 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
             {
                 _timer.Enabled = false;
                 SalvoComSucesso = false;
-                counter = 30;
+                counter = TimerCounter;
             }
 
             InvokeAsync(StateHasChanged);

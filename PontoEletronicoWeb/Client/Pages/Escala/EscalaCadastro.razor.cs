@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using PontoEletronicoWeb.Shared.Enum;
 using System.Net.Http.Json;
-
-using EscalaModel = Models.Ponto.Escala;
 using Models.Ponto;
 using Microsoft.AspNetCore.Components.Web;
+using System.Text.Json;
+using System.Net.Http;
+using System.Text;
+
 using static PontoEletronicoWeb.Client.Pages.Utils.ValidacaoLista;
+using EscalaModel = Models.Ponto.Escala;
 
 namespace PontoEletronicoWeb.Client.Pages.Escala
 {
@@ -31,7 +34,7 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         protected string SearchText { get; set; }
         protected string SearchTextDois { get; set; }
 
-        public List<FuncionarioView> ListaFuncionarioAdicionados { get; set; }
+        public List<EscalaFuncionario> ListaFuncionarioAdicionados { get; set; }
         public string ApiTurno { get; }
         public string ApiCliente { get; }
         public string ApiFuncionario { get; }
@@ -70,15 +73,19 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
                 StateHasChanged();
             }
         }
+        public TipoEscala TipoEscala { get; set; } = TipoEscala.Diario;
+        public int MesSelecionado { get; set; } = 1;
 
+        public List<EscalaModel> ListaEscalaMes { get; set; }
         #endregion
 
         public EscalaCadastroBase()
         {
             #region Instancia Nova
             model = new EscalaModel();
+            ListaEscalaMes = new List<EscalaModel>();
 
-            ListaFuncionarioAdicionados = new List<FuncionarioView>();
+            ListaFuncionarioAdicionados = new List<EscalaFuncionario>();
             #endregion
 
             #region Define as Rotas
@@ -127,14 +134,40 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
             #endregion
 
             #region ID
+
             if (ID > 0)
             {
+                model = new EscalaModel();
+
                 model = await Http.GetFromJsonAsync<EscalaModel>($"{Api}/{ID}");
+
+                ListaFuncionarioAdicionados = await Http.GetFromJsonAsync<List<EscalaFuncionario>>($"{Api}/EscalaFuncionario/{ID}");
+
                 NomePagina = "Editar";
                 Operacao = TipoOperacao.Edicao;
-                //MontarObjetoGravado(model);
+
+                MontarObjetoGravado(model);
             }
+
             #endregion
+        }
+
+        private void MontarObjetoGravado(EscalaModel model)
+        {
+            if (!Equals(ListaFuncionarioAdicionados, null) && ListaFuncionarioAdicionados.Count > 0)
+            {
+                model.Funcionarios = ListaFuncionarioAdicionados;
+
+                foreach (var item in model.Funcionarios)
+                {
+                    var funcionario = ListaFuncionarios.Where(x => x.Id == item.FuncionarioId).FirstOrDefault();
+
+                    if (!Equals(funcionario, null))
+                        funcionario.Selecionado = true;
+                }
+            }
+
+            StateHasChanged();
         }
 
         protected void ChangeSelectedItens(FuncionarioView Obj, bool IsSelected)
@@ -149,6 +182,14 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
 
         public void RemoverFuncionario(FuncionarioView funcinario) =>
             funcinario.Selecionado = !funcinario.Selecionado;
+
+        public void RemoverFuncionarioEdicao(FuncionarioView funcinario)
+        {
+            funcinario.Selecionado = !funcinario.Selecionado;
+            funcinario.Status = false;
+
+            StateHasChanged();
+        }
 
         protected void FilterText(ChangeEventArgs args)
         {
@@ -220,21 +261,154 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
             if (!ValidaInformacoes())
                 return;
 
-            MontaObjetoSalvar();
+            if (TipoEscala == TipoEscala.Diario)
+            {
+                MontaObjetoSalvar();
 
-            await SalvarEditar();
+                await SalvarEditar();
+            }
+            else if (TipoEscala == TipoEscala.Mensal)
+            {
+                var Lista = MontarObjetoMesSalvar();
+
+                if (ValidacaoList.ListaValida(Lista))
+                    foreach (var item in Lista)
+                        await SalvarEditarMes(item);
+            }
+        }
+
+        protected async Task SalvarEditarMes(EscalaModel item)
+        {
+            try
+            {
+                var modelJson = JsonSerializer.Serialize(item);
+
+                var modelContent = new StringContent(modelJson, Encoding.UTF8, AppJson);
+
+                var httpResponse = await ExecutaOperacao(modelContent);
+
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    StateHasChanged();
+
+                    await Task.Delay(700);
+
+                    var modelObj = JsonSerializer.Deserialize<EscalaModel>(
+                        await httpResponse.Content.ReadAsStringAsync()
+                        , new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    if (Operacao == TipoOperacao.Novo)
+                    {
+                        SalvoComSucesso = true;
+
+                        ColorMesagemOperacao = "bg-success";
+                        MensagemOperacao = $"Escala de {item.DataEscala.ToShortDateString()} foi salvada com sucesso !";
+
+                        TimerCounter = 60;
+
+                        StateHasChanged();
+                    }
+                    else if (Operacao == TipoOperacao.Edicao)
+                    {
+                        StateHasChanged();
+
+                        var URI = string.Concat(Navigation.BaseUri, RotaConsulta);
+                        Navigation.NavigateTo(URI);
+                    }
+                }
+                else
+                {
+                    ColorMesagemOperacao = "bg-danger";
+                    MensagemOperacao = "Ops ! Não foi possivel estar salvando. ";
+
+                    ErroRetorno = await httpResponse.Content.ReadAsStringAsync();
+
+                    MensagemOperacao = string.Concat(MensagemOperacao, " ", ErroRetorno);
+
+                    StateHasChanged();
+                }
+
+                NovaInstanciaModel();
+
+                StateHasChanged();
+            }
+            catch (Exception erro)
+            {
+                var msgErro = erro.Message;
+            }
+        }
+
+        private List<EscalaModel> MontarObjetoMesSalvar()
+        {
+            ListaEscalaMes = new List<EscalaModel>();
+
+            var FuncionarioSelecionado = ListaFuncionarios.Where(x => x.Selecionado == true).ToList();
+
+            var PrimeiroDiaMes = new DateTime(DateTime.Now.Year, MesSelecionado, 1);
+            var UltimoDiaMes = new DateTime(DateTime.Now.Year, MesSelecionado, DateTime.DaysInMonth(DateTime.Now.Year, MesSelecionado));
+
+            if (ValidacaoList.ListaValida(FuncionarioSelecionado))
+            {
+                for (int i = 1; i <= UltimoDiaMes.Day; i++)
+                {
+                    var NovaEscala = new EscalaModel();
+
+                    NovaEscala.DataEscala = new DateTime(DateTime.Now.Year, MesSelecionado, i);
+
+                    NovaEscala.ClienteId = model.ClienteId;
+                    NovaEscala.Cliente = model.Cliente;
+
+                    NovaEscala.TurnoId = model.TurnoId;
+                    NovaEscala.Turno = model.Turno;
+
+                    NovaEscala.Status = true;
+
+                    FuncionarioSelecionado.ForEach(funcionario =>
+                    {
+                        NovaEscala.Funcionarios.Add(new EscalaFuncionario(funcionario));
+                    });
+
+                    ListaEscalaMes.Add(NovaEscala);
+                }
+            }
+
+            return ListaEscalaMes;
         }
 
         private void MontaObjetoSalvar()
         {
             var FuncionarioSelecionado = ListaFuncionarios.Where(x => x.Selecionado == true).ToList();
 
-            if (ValidacaoList.ListaValida(FuncionarioSelecionado))
+            if (Operacao == TipoOperacao.Novo)
             {
-                FuncionarioSelecionado.ForEach(funcionario =>
+                if (ValidacaoList.ListaValida(FuncionarioSelecionado))
                 {
-                    model.Funcionarios.Add(new EscalaFuncionario(funcionario));
-                });
+                    FuncionarioSelecionado.ForEach(funcionario =>
+                    {
+                        model.Funcionarios.Add(new EscalaFuncionario(funcionario));
+                    });
+                }
+            }
+            else if (Operacao == TipoOperacao.Edicao)
+            {
+                if (ValidacaoList.ListaValida(FuncionarioSelecionado))
+                {
+                    foreach (var item in model.Funcionarios)
+                    {
+                        var funcionario = ListaFuncionarios.Where(x => x.Id == item.FuncionarioId).FirstOrDefault();
+                        
+                        if (!Equals(funcionario, null)) 
+                            item.Status = funcionario.Status;
+                    }
+
+                    foreach (var item in FuncionarioSelecionado)
+                    {
+                        var funcionario = model.Funcionarios.Where(x => x.FuncionarioId == item.Id).FirstOrDefault();
+
+                        if (Equals(funcionario, null))
+                            model.Funcionarios.Add(new EscalaFuncionario(item));
+                    }
+                }
             }
         }
 
@@ -247,15 +421,15 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
             ErroFuncionario = false;
             #endregion
 
-            #region Variavel de Controle
-            var result = true;
-            #endregion
-
             #region Validações
-            if (string.IsNullOrEmpty(model.DataEscala.ToString()))
+
+            if (TipoEscala == TipoEscala.Diario)
             {
-                ErroDataEscala = true;
-                return false;
+                if (string.IsNullOrEmpty(model.DataEscala.ToString()))
+                {
+                    ErroDataEscala = true;
+                    return false;
+                }
             }
 
             if (model.ClienteId == 0)
@@ -280,10 +454,14 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         {
             model = new EscalaModel();
             model.Status = true;
+            ListaEscalaMes = new List<EscalaModel>();
 
             Turno = new TurnoView();
 
             ListaFuncionarios.ForEach(x => x.Selecionado = false);
+
+            MesSelecionado = 1;
+            TipoEscala = TipoEscala.Diario;
 
             #region Atualizar View
             StateHasChanged();

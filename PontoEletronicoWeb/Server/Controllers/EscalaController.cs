@@ -40,5 +40,20 @@ namespace PontoEletronicoWeb.Server.Controllers
             }
         }
 
+        [HttpGet("EscalaFuncionario/{id}")]
+        public async virtual Task<ActionResult> EscalaFuncionario(int id)
+        {
+            try
+            {
+                var result = await EscalaRepository.RetornaEscalaFuncionario(id);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ocorreu ao selecionar item. \n {ex.Message}");
+            }
+        }
+
     }
 }

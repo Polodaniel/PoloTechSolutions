@@ -27,6 +27,7 @@ namespace PontoEletronicoWeb.Server.Data
         public DbSet<FolhaPonto> FolhaPonto { get; set; }
         public DbSet<Funcionario> Funcionario { get; set; }
         public DbSet<Turno> Turno { get; set; }
+        public DbSet<EscalaFuncionario> EscalaFuncionario { get; set; }
         #endregion
     }
 }

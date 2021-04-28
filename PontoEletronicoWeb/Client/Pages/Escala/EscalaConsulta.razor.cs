@@ -17,6 +17,9 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         #region Inject
         [Inject]
         protected NavigationManager Navigation { get; set; }
+
+        [Inject]
+        protected IJSRuntime JS { get; set; }
         #endregion
 
         #region Parametros

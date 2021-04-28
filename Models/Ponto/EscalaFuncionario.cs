@@ -12,8 +12,10 @@ namespace Models.Ponto
 {
     public class EscalaFuncionario : BaseModelDominio, IDominio<EscalaFuncionario>, ISelectView<EscalaFuncionarioView>
     {
-        public EscalaFuncionario() =>
+        public EscalaFuncionario() 
+        {
             DtaAtualizacao = DateTime.Now;
+        }
 
         public EscalaFuncionario(FuncionarioView funcionario)
         {

@@ -30,8 +30,6 @@ function FecharModal(ID) {
 function FocoInativar() {
     var element = document.getElementById('excluiralert');
 
-    console.log(element);
-
     element.scrollIntoView({
         behavior: 'auto',
         block: 'center',

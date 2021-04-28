@@ -15,7 +15,19 @@ namespace Models.View
             get => PossuiBiometria ? "Sim" : "Não";
         }
 
-        public bool Selecionado { get; set; }
+        private bool _selecionado;
+
+        public bool Selecionado 
+        { 
+            get => _selecionado;
+            set 
+            {
+                _selecionado = value;
+
+                if (value)
+                    Status = value;
+            } 
+        }
 
         public string Display { get; set; }
         public string DisplayDois { get; set; }
