@@ -157,21 +157,21 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
 
                             if (Chance > 0)
                             {
-                                var _func = new FuncionariosController().BuscarFuncionario(item.Id);
+                                //var _func = new FuncionariosController().BuscarFuncionario(item.Id);
 
-                                if (!Equals(_func, null))
-                                {
-                                    txtCodigo.Text = _func.Codigo.ToString();
-                                    txtNome.Text = _func.Nome;
-                                    txtBiometria.Text = _func.PossuiBiometriaString;
-                                    txtStaus.Text = _func.DesativadoString;
+                                //if (!Equals(_func, null))
+                                //{
+                                //    txtCodigo.Text = _func.Codigo.ToString();
+                                //    txtNome.Text = _func.Nome;
+                                //    txtBiometria.Text = _func.PossuiBiometriaString;
+                                //    txtStaus.Text = _func.DesativadoString;
 
-                                    Localizado = true;
+                                //    Localizado = true;
 
-                                    MarcarPonto(_func);
+                                //    MarcarPonto(_func);
 
-                                    LimparInputs();
-                                }
+                                //    LimparInputs();
+                                //}
                             }
                         }
 
@@ -245,7 +245,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
                 pgbLoad.MarqueeAnimationSpeed = 1;
             }));
 
-            ListaFuncionarios = MontaListaCandidaxtos(new FuncionariosController().BuscaFuncionariosBiometria());
+            //ListaFuncionarios = MontaListaCandidaxtos(new FuncionariosController().BuscaFuncionariosBiometria());
 
             pgbLoad.BeginInvoke(new Action(() =>
             {

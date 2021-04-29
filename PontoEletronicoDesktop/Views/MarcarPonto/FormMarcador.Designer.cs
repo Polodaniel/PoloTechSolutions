@@ -30,7 +30,6 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMarcador));
             this.bkwBiometria = new System.ComponentModel.BackgroundWorker();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -91,6 +90,13 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
             this.pnlCentral.Controls.Add(this.panel8);
             this.pnlCentral.Controls.Add(this.panel1);
             this.pnlCentral.Size = new System.Drawing.Size(740, 384);
+            this.pnlCentral.Controls.SetChildIndex(this.panel1, 0);
+            this.pnlCentral.Controls.SetChildIndex(this.panel8, 0);
+            this.pnlCentral.Controls.SetChildIndex(this.panel2, 0);
+            // 
+            // lblBottom
+            // 
+            this.lblBottom.Location = new System.Drawing.Point(237, 5);
             // 
             // bkwBiometria
             // 
@@ -98,7 +104,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.panel5);
@@ -154,7 +160,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
             // 
             // txtNome
             // 
-            this.txtNome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtNome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNome.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
             this.txtNome.Location = new System.Drawing.Point(69, 36);
@@ -248,7 +254,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
             // 
             // panel8
             // 
-            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel8.Controls.Add(this.panel10);
@@ -281,7 +287,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
             // 
             // lblHora
             // 
-            this.lblHora.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.lblHora.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblHora.AutoSize = true;
             this.lblHora.Font = new System.Drawing.Font("Arial", 80F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -332,19 +338,9 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
             // 
             // ImgDigitos
             // 
-            this.ImgDigitos.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgDigitos.ImageStream")));
+            this.ImgDigitos.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.ImgDigitos.ImageSize = new System.Drawing.Size(16, 16);
             this.ImgDigitos.TransparentColor = System.Drawing.Color.White;
-            this.ImgDigitos.Images.SetKeyName(0, "0.png");
-            this.ImgDigitos.Images.SetKeyName(1, "1.png");
-            this.ImgDigitos.Images.SetKeyName(2, "2.png");
-            this.ImgDigitos.Images.SetKeyName(3, "3.png");
-            this.ImgDigitos.Images.SetKeyName(4, "4.png");
-            this.ImgDigitos.Images.SetKeyName(5, "5.png");
-            this.ImgDigitos.Images.SetKeyName(6, "6.png");
-            this.ImgDigitos.Images.SetKeyName(7, "7.png");
-            this.ImgDigitos.Images.SetKeyName(8, "8.png");
-            this.ImgDigitos.Images.SetKeyName(9, "9.png");
-            this.ImgDigitos.Images.SetKeyName(10, "dot.png");
             // 
             // panel2
             // 
