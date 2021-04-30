@@ -11,7 +11,7 @@ namespace Models.View
         public EscalaView() =>
             ListaFuncionarios = new List<string>();
 
-        public DateTime? DataEscala { get; set; }
+        public DateTime? DataInicio { get; set; }
         public string Turno { get; set; }
         public string HoraTurno { get; set; }
         public string Cliente { get; set; }
@@ -23,10 +23,10 @@ namespace Models.View
             {
                 var result = "darkgray";
 
-                if (DataEscala.HasValue)
+                if (DataInicio.HasValue)
                 {
                     var DataAtul = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-                    var DataEscalaAtual = new DateTime(DataEscala.Value.Year, DataEscala.Value.Month, DataEscala.Value.Day);
+                    var DataEscalaAtual = new DateTime(DataInicio.Value.Year, DataInicio.Value.Month, DataInicio.Value.Day);
 
                     if (DataEscalaAtual == DataAtul)
                         result = "darkgreen";
@@ -39,5 +39,7 @@ namespace Models.View
                 return result;
             }
         }
+
+        public DateTime DataFim { get; internal set; }
     }
 }

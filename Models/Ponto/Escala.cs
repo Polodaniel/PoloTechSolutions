@@ -13,10 +13,11 @@ namespace Models.Ponto
         public Escala()
         {
             Funcionarios = new List<EscalaFuncionario>();
-            DataEscala = DateTime.Now;
+            DataInicio = DateTime.Now;
         }
 
-        public DateTime DataEscala { get; set; }
+        public DateTime DataInicio { get; set; }
+        public DateTime DataFim { get; set; }
 
         public int TurnoId { get; set; }
         public Turno Turno { get; set; }
@@ -41,7 +42,8 @@ namespace Models.Ponto
             {
                 Id = this.Id,
                 Status = this.Status,
-                DataEscala = this.DataEscala
+                DataInicio = this.DataInicio,
+                DataFim = this.DataFim
             };
 
         public void Update(Escala Model, int usuarioId)

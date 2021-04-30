@@ -138,7 +138,7 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
                     await result.Content.ReadAsStringAsync()
                     , new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                ModelsTmp = lista.OrderByDescending(x => x.DataEscala).ToList();
+                ModelsTmp = lista.OrderByDescending(x => x.DataInicio).ToList();
 
                 Console.WriteLine(ModelsTmp);
             }

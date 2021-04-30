@@ -87,7 +87,7 @@ namespace PontoEletronicoWeb.Server.Repository
             Novo.Status = model.Status;
             Novo.UsuarioId = model.UsuarioId;
             Novo.DtaAtualizacao = model.DtaAtualizacao;
-            Novo.DataEscala = model.DataEscala;
+            Novo.DataInicio = model.DataInicio;
             Novo.TurnoId = model.TurnoId;
             Novo.ClienteId = model.ClienteId;
             //Novo.Funcionarios = model.Funcionarios;
@@ -118,10 +118,10 @@ namespace PontoEletronicoWeb.Server.Repository
                     query = query.Where(x => x.Status == true);
 
                 if (filtro.DataInicio.HasValue)
-                    query = query.Where(x => x.DataEscala >= filtro.DataInicio.Value);
+                    query = query.Where(x => x.DataInicio >= filtro.DataInicio.Value);
 
                 if (filtro.DataFim.HasValue)
-                    query = query.Where(x => x.DataEscala <= filtro.DataFim.Value);
+                    query = query.Where(x => x.DataInicio <= filtro.DataFim.Value);
 
                 if (filtro.TurnoId > 0)
                     query = query.Where(x => x.TurnoId == filtro.TurnoId);
@@ -136,7 +136,7 @@ namespace PontoEletronicoWeb.Server.Repository
             {
                 Id = escala.Id,
                 Status = escala.Status,
-                DataEscala = escala.DataEscala,
+                DataInicio = escala.DataInicio,
                 Turno = escala.Turno.Descricao,
                 HoraTurno = string.Concat(escala.Turno.HoraInicio.ToShortTimeString(), " - ", escala.Turno.HoraioFim.ToShortTimeString()),
                 Cliente = escala.Cliente.Nome,

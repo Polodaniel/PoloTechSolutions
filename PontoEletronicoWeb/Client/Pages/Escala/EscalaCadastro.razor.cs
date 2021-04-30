@@ -302,7 +302,7 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
                         SalvoComSucesso = true;
 
                         ColorMesagemOperacao = "bg-success";
-                        MensagemOperacao = $"Escala de {item.DataEscala.ToShortDateString()} foi salvada com sucesso !";
+                        MensagemOperacao = $"Escala de {item.DataInicio.ToShortDateString()} foi salvada com sucesso !";
 
                         TimerCounter = 60;
 
@@ -353,7 +353,7 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
                 {
                     var NovaEscala = new EscalaModel();
 
-                    NovaEscala.DataEscala = new DateTime(DateTime.Now.Year, MesSelecionado, i);
+                    NovaEscala.DataInicio = new DateTime(DateTime.Now.Year, MesSelecionado, i);
 
                     NovaEscala.ClienteId = model.ClienteId;
                     NovaEscala.Cliente = model.Cliente;
@@ -425,7 +425,7 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
 
             if (TipoEscala == TipoEscala.Diario)
             {
-                if (string.IsNullOrEmpty(model.DataEscala.ToString()))
+                if (string.IsNullOrEmpty(model.DataInicio.ToString()))
                 {
                     ErroDataEscala = true;
                     return false;
