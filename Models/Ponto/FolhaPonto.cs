@@ -10,7 +10,7 @@ namespace Models.Ponto
 {
     public class FolhaPonto : BaseModelDominio, IDominio<FolhaPonto>, ISelectView<FolhaPontoView>
     {
-        public DateTime DtaEscala { get; set; }
+        public DateTime DataRegistroPonto { get; set; }
         public int EscalaId { get; set; }
 
         [ForeignKey(nameof(EscalaId))]
@@ -26,12 +26,11 @@ namespace Models.Ponto
 
         public override void IsValid()
         {
-            throw new NotImplementedException();
         }
 
         public FolhaPontoView SelectView()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public void Update(FolhaPonto Model, int usuarioId)

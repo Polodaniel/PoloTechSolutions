@@ -1,4 +1,6 @@
-﻿using Models.Ponto;
+﻿using Microsoft.AspNetCore.Mvc;
+using Models.ModelView;
+using Models.Ponto;
 using Models.View.Ponto;
 using PontoEletronicoWeb.Server.Data;
 using PontoEletronicoWeb.Shared.Interfaces;
@@ -12,7 +14,7 @@ namespace PontoEletronicoWeb.Server.Repository
     #region Interface
     public interface IFolhaPontoRepository : ICadastroBase<FolhaPonto, FolhaPontoView>
     {
-
+        Task<ActionResult<bool>> RegistraPonto(RegistraPonto registro);
     }
     #endregion  
 
@@ -23,5 +25,13 @@ namespace PontoEletronicoWeb.Server.Repository
         {
         }
         #endregion
+
+        public async Task<ActionResult<bool>> RegistraPonto(RegistraPonto registro)
+        {
+
+            return await Task.FromResult(true);
+        }
+
+
     }
 }
