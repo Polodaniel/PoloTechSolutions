@@ -355,6 +355,8 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
 
                     NovaEscala.DataInicio = new DateTime(DateTime.Now.Year, MesSelecionado, i);
 
+                    NovaEscala.DataFim = Turno.PerNoite ? NovaEscala.DataInicio.AddDays(1) : NovaEscala.DataInicio;
+
                     NovaEscala.ClienteId = model.ClienteId;
                     NovaEscala.Cliente = model.Cliente;
 
@@ -381,6 +383,8 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
 
             if (Operacao == TipoOperacao.Novo)
             {
+                model.DataFim = Turno.PerNoite ? model.DataInicio.AddDays(1) : model.DataInicio;
+
                 if (ValidacaoList.ListaValida(FuncionarioSelecionado))
                 {
                     FuncionarioSelecionado.ForEach(funcionario =>
