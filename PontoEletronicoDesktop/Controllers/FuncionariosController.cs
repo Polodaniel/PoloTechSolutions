@@ -40,5 +40,10 @@ namespace PontoEletronicoDesktop.Controllers
 
             return ListaFuncionarios;
         }
+
+        internal Funcionario Selecionar(int codigoFuncionario)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

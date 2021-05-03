@@ -8,6 +8,11 @@ namespace PontoEletronicoDesktop.Models
 {
     public class Funcionario : BaseModel
     {
+        public Funcionario()
+        {
+            Biometrias = new List<Biometria>();
+        }
+
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public string Rg { get; set; }

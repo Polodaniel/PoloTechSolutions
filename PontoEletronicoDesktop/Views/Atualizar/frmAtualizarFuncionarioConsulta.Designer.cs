@@ -61,13 +61,17 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             // 
             this.pnlCentralCRUD.Controls.Add(this.grade);
             this.pnlCentralCRUD.Padding = new System.Windows.Forms.Padding(6);
-            this.pnlCentralCRUD.Size = new System.Drawing.Size(726, 360);
+            this.pnlCentralCRUD.Size = new System.Drawing.Size(726, 335);
             // 
             // btnEditar
             // 
             this.btnEditar.FlatAppearance.BorderSize = 0;
             this.btnEditar.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.AppWorkspace;
             this.btnEditar.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.AppWorkspace;
+            // 
+            // pgbLoad
+            // 
+            this.pgbLoad.Location = new System.Drawing.Point(9, 335);
             // 
             // btnFechar
             // 
@@ -100,7 +104,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.grade.Name = "grade";
             this.grade.RowHeadersVisible = false;
             this.grade.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grade.Size = new System.Drawing.Size(714, 348);
+            this.grade.Size = new System.Drawing.Size(714, 323);
             this.grade.TabIndex = 0;
             // 
             // frmAtualizarFuncionarioConsulta

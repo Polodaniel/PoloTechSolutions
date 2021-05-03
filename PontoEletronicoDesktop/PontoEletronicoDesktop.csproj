@@ -65,6 +65,12 @@
     <Compile Include="Models\View\FuncionarioViewDesktop.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Atualizar\frmAtualizarFuncionarioCadastro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Atualizar\frmAtualizarFuncionarioCadastro.Designer.cs">
+      <DependentUpon>frmAtualizarFuncionarioCadastro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Atualizar\frmAtualizarFuncionarioConsulta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,11 +111,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Views\Atualizar\frmAtualizarFuncionarioCadastro.resx">
+      <DependentUpon>frmAtualizarFuncionarioCadastro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Atualizar\frmAtualizarFuncionarioConsulta.resx">
       <DependentUpon>frmAtualizarFuncionarioConsulta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Base\BaseCRUD.resx">
       <DependentUpon>BaseCRUD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Base\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Princial\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
@@ -128,7 +140,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\iconAtualizar.png" />
   </ItemGroup>
@@ -184,6 +195,12 @@
     <Content Include="ftrScanAPI.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LeitorFS\LeitorFS.csproj">
+      <Project>{A79EB6E4-F017-4B05-9B53-F194FA943175}</Project>
+      <Name>LeitorFS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

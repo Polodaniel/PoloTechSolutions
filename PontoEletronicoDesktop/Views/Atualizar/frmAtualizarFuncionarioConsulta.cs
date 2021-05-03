@@ -33,6 +33,8 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             grade.Rows.Clear();
             grade.Columns.Clear();
             grade.Refresh();
+
+            ListaFuncionarios = null;
         }
 
         protected override void btnBusca_Click(object sender, EventArgs e)
@@ -50,25 +52,35 @@ namespace PontoEletronicoDesktop.Views.Atualizar
                 return;
             }
 
-            //var Cod = Convert.ToInt32(grade.CurrentRow.Cells[nameof(Funcionario.Codigo)].Value);
+            var Id = Convert.ToInt32(grade.CurrentRow.Cells[nameof(Funcionario.Id)].Value);
 
-            //var form = new FormAtualizarCadastroCadastro(Cod);
-            //form.Dock = DockStyle.Fill;
-            //form.TopLevel = false;
-            //form.Visible = true;
+            var FuncionarioSelecionado = ListaFuncionarios.Where(x => x.Id == Id).FirstOrDefault();
 
-            //var Principal = this.ParentForm;
-            //var pnlContentPrincipal = Principal.Controls.Find("pnlPrincipal", true).FirstOrDefault();
-            //pnlContentPrincipal.Controls.Clear();
-            //pnlContentPrincipal.Refresh();
-            //pnlContentPrincipal.Controls.Add(form);
+            if (!Equals(FuncionarioSelecionado, null))
+            {
+                var form = new frmAtualizarFuncionarioCadastro(FuncionarioSelecionado);
+                form.Dock = DockStyle.Fill;
+                form.TopLevel = false;
+                form.Visible = true;
 
-            //form.Show();
+                var Principal = this.ParentForm;
+                var pnlContentPrincipal = Principal.Controls.Find("pnlPrincipal", true).FirstOrDefault();
+                pnlContentPrincipal.Controls.Clear();
+                pnlContentPrincipal.Refresh();
+                pnlContentPrincipal.Controls.Add(form);
 
-            //Principal.Refresh();
-            //pnlContentPrincipal.Refresh();
-            //this.Close();
+                form.Show();
+
+                Principal.Refresh();
+                pnlContentPrincipal.Refresh();
+                this.Close();
+            }
+            else
+                MessageBox.Show("Ops! Não foi possivel identificar o Funcionario.", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
+
+        protected override void btnLimpar_Click(object sender, EventArgs e) =>
+            LimparGrid();
 
         private async void bkwBuscar_DoWork(object sender, DoWorkEventArgs e)
         {
