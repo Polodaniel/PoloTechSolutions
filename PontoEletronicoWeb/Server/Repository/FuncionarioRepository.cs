@@ -28,6 +28,15 @@ namespace PontoEletronicoWeb.Server.Repository
         }
         #endregion
 
+        //public async override Task<Funcionario> SelecionarAsync(int id)
+        //{
+        //    var model = await dbSet.Include(x => x.Biometrias).Where(x => x.Id == id).FirstOrDefaultAsync();
+
+        //    IsNull(model);
+
+        //    return model;
+        //}
+
         public async Task<List<FuncionarioViewDesktop>> GetFuncionariosViewDesktop(bool? ativos)
         {
             var queryFunc = dbSetAsQueryable.Include(x => x.Biometrias).AsQueryable();

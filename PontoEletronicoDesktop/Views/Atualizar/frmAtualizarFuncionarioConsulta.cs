@@ -110,13 +110,13 @@ namespace PontoEletronicoDesktop.Views.Atualizar
                 for (var i = 00; i < grade.Columns.Count; i++)
                     grade.Columns[i].Visible = false;
 
-                grade.Columns[nameof(Funcionario.Id)].HeaderText = "Código";
-                grade.Columns[nameof(Funcionario.Id)].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                grade.Columns[nameof(Funcionario.Id)].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                grade.Columns[nameof(Funcionario.Id)].Visible = true;
-                grade.Columns[nameof(Funcionario.Id)].ReadOnly = true;
-                grade.Columns[nameof(Funcionario.Id)].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                grade.Columns[nameof(Funcionario.Id)].DisplayIndex = 0;
+                grade.Columns[nameof(Funcionario.CodigoString)].HeaderText = "Código";
+                grade.Columns[nameof(Funcionario.CodigoString)].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                grade.Columns[nameof(Funcionario.CodigoString)].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                grade.Columns[nameof(Funcionario.CodigoString)].Visible = true;
+                grade.Columns[nameof(Funcionario.CodigoString)].ReadOnly = true;
+                grade.Columns[nameof(Funcionario.CodigoString)].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                grade.Columns[nameof(Funcionario.CodigoString)].DisplayIndex = 0;
 
                 grade.Columns[nameof(Funcionario.Nome)].HeaderText = "Nome";
                 grade.Columns[nameof(Funcionario.Nome)].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;

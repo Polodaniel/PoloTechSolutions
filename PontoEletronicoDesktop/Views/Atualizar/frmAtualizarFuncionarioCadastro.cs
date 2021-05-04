@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,12 +46,45 @@ namespace PontoEletronicoDesktop.Views.Atualizar
         {
             if (!Equals(Funcionario, null))
             {
-                lblCodigoFuncionario.Text = Funcionario.Id.ToString();
+                lblCodigoFuncionario.Text = Funcionario.CodigoString;
                 lblNomeFuncionario.Text = Funcionario.Nome.ToString();
 
                 lblCodigoFuncionario.Visible = true;
                 lblNomeFuncionario.Visible = true;
+
+                if (!Equals(Funcionario.Biometrias, null) && Funcionario.Biometrias.Count() > 0)
+                {
+                    var DedoEsquerdo = Funcionario.Biometrias.Where(x => x.Dedo == DedoBiometria.IndicadorEsquerdo).FirstOrDefault();
+
+                    if (!Equals(DedoEsquerdo, null))
+                    {
+                        pbBiometriaEsquerdo.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pbBiometriaEsquerdo.Image = byteArrayToImage(DedoEsquerdo.BiometriaImg);
+
+                        btnBiometriaEsquerdo.Enabled = false;
+                    }
+
+                    var DedoDireito = Funcionario.Biometrias.Where(x => x.Dedo == DedoBiometria.IndicadorDireito).FirstOrDefault();
+
+                    if (!Equals(DedoDireito, null))
+                    {
+                        pbBiometriaDireito.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pbBiometriaDireito.Image = byteArrayToImage(DedoEsquerdo.BiometriaImg);
+
+                        btnBiometriaDireito.Enabled = false;
+                    }
+
+                    if (!Equals(DedoEsquerdo, null) && !Equals(DedoDireito, null))
+                        btnSalvar.Enabled = false;
+                }
             }
+        }
+
+        private Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
         }
 
         private void btnBiometriaEsquerdo_Click(object sender, EventArgs e)
@@ -135,31 +169,6 @@ namespace PontoEletronicoDesktop.Views.Atualizar
         protected override void btnSalvar_Click(object sender, EventArgs e) =>
             bkwSalvar.RunWorkerAsync();
 
-        //private async Task btnSalvar_ClickAsync(object sender, EventArgs e)
-        //{
-        //    bkwBuscar.RunWorkerAsync();
-
-        //    if (!VerificaDigital())
-        //    {
-        //        MessageBox.Show("Ops! Faltou  cadastrar alguma digital, verifique e tente novamente.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        return;
-        //    }
-
-        //    using (Request _app = new Request())
-        //    {
-        //        var result = await _app.PostCadastroFuncionario(Funcionario);
-
-        //        if (result)
-        //        {
-        //            MessageBox.Show("Informações Atualizada com Sucesso !", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-        //            this.Close();
-        //        }
-        //        else
-        //            MessageBox.Show("Ops! Ocorreu um erro ao salvar.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //}
-
         private bool VerificaDigital()
         {
             var result = true;
@@ -200,9 +209,6 @@ namespace PontoEletronicoDesktop.Views.Atualizar
                 if (result)
                 {
                     MessageBox.Show("Informações Atualizada com Sucesso !", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    pnlCentralCRUD.Enabled = true;
-                    btnSalvar.Enabled = true;
                 }
                 else
                     MessageBox.Show("Ops! Ocorreu um erro ao salvar.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -211,6 +217,8 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             pgbLoad.BeginInvoke(new Action(() =>
             {
                 pgbLoad.Visible = false;
+                pnlCentralCRUD.Enabled = false;
+                btnSalvar.Enabled = false;
             }));
         }
     }

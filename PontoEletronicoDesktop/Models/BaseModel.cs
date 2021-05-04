@@ -12,5 +12,10 @@ namespace PontoEletronicoDesktop.Models
         [Key]
         public int Id { get; set; }
         public bool Status { get; set; }
+
+        public string CodigoString
+        {
+            get => Id.ToString().PadLeft(4, '0');
+        }
     }
 }

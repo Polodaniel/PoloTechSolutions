@@ -31,11 +31,6 @@ namespace PontoEletronicoDesktop.Views.Atualizar
         private void InitializeComponent()
         {
             this.bkwBiometria = new System.ComponentModel.BackgroundWorker();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.lblCodigo = new System.Windows.Forms.Label();
-            this.lblCodigoFuncionario = new System.Windows.Forms.Label();
-            this.lblNomeFuncionario = new System.Windows.Forms.Label();
-            this.lblNome = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -60,11 +55,16 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.pnlTituloBiometria = new System.Windows.Forms.Panel();
             this.lblBiometria = new System.Windows.Forms.Label();
             this.bkwSalvar = new System.ComponentModel.BackgroundWorker();
+            this.pnlDadosFuncionario = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.lblCodigo = new System.Windows.Forms.Label();
+            this.lblCodigoFuncionario = new System.Windows.Forms.Label();
+            this.lblNomeFuncionario = new System.Windows.Forms.Label();
+            this.lblNome = new System.Windows.Forms.Label();
             this.pnlBotoesCRUD.SuspendLayout();
             this.pnlBotoesBusca.SuspendLayout();
             this.pnlCentralCRUD.SuspendLayout();
             this.pnlCentral.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -80,6 +80,8 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             ((System.ComponentModel.ISupportInitialize)(this.pbBiometriaEsquerdo)).BeginInit();
             this.pnlBotaoBiometria.SuspendLayout();
             this.pnlTituloBiometria.SuspendLayout();
+            this.pnlDadosFuncionario.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlBotoesCRUD
@@ -107,7 +109,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             // pnlCentralCRUD
             // 
             this.pnlCentralCRUD.Controls.Add(this.tableLayoutPanel1);
-            this.pnlCentralCRUD.Controls.Add(this.panel5);
+            this.pnlCentralCRUD.Controls.Add(this.pnlDadosFuncionario);
             this.pnlCentralCRUD.Padding = new System.Windows.Forms.Padding(5);
             this.pnlCentralCRUD.Size = new System.Drawing.Size(758, 359);
             // 
@@ -141,57 +143,6 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             // 
             this.bkwBiometria.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bkwBiometria_DoWork);
             // 
-            // panel5
-            // 
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.lblCodigo);
-            this.panel5.Controls.Add(this.lblCodigoFuncionario);
-            this.panel5.Controls.Add(this.lblNomeFuncionario);
-            this.panel5.Controls.Add(this.lblNome);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(5, 5);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(748, 60);
-            this.panel5.TabIndex = 7;
-            // 
-            // lblCodigo
-            // 
-            this.lblCodigo.AutoSize = true;
-            this.lblCodigo.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCodigo.Location = new System.Drawing.Point(3, 8);
-            this.lblCodigo.Name = "lblCodigo";
-            this.lblCodigo.Size = new System.Drawing.Size(49, 15);
-            this.lblCodigo.TabIndex = 0;
-            this.lblCodigo.Text = "Código:";
-            // 
-            // lblCodigoFuncionario
-            // 
-            this.lblCodigoFuncionario.AutoSize = true;
-            this.lblCodigoFuncionario.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCodigoFuncionario.Location = new System.Drawing.Point(59, 9);
-            this.lblCodigoFuncionario.Name = "lblCodigoFuncionario";
-            this.lblCodigoFuncionario.Size = new System.Drawing.Size(0, 15);
-            this.lblCodigoFuncionario.TabIndex = 1;
-            // 
-            // lblNomeFuncionario
-            // 
-            this.lblNomeFuncionario.AutoSize = true;
-            this.lblNomeFuncionario.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNomeFuncionario.Location = new System.Drawing.Point(59, 34);
-            this.lblNomeFuncionario.Name = "lblNomeFuncionario";
-            this.lblNomeFuncionario.Size = new System.Drawing.Size(0, 15);
-            this.lblNomeFuncionario.TabIndex = 3;
-            // 
-            // lblNome
-            // 
-            this.lblNome.AutoSize = true;
-            this.lblNome.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNome.Location = new System.Drawing.Point(3, 34);
-            this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(43, 15);
-            this.lblNome.TabIndex = 2;
-            this.lblNome.Text = "Nome:";
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
@@ -200,11 +151,11 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.tableLayoutPanel1.Controls.Add(this.panel6, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(5, 65);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(5, 74);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(748, 289);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(748, 280);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // panel6
@@ -214,7 +165,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(377, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(368, 283);
+            this.panel6.Size = new System.Drawing.Size(368, 274);
             this.panel6.TabIndex = 7;
             // 
             // panel7
@@ -225,7 +176,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(366, 281);
+            this.panel7.Size = new System.Drawing.Size(366, 272);
             this.panel7.TabIndex = 5;
             // 
             // panel8
@@ -236,14 +187,14 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 29);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(366, 218);
+            this.panel8.Size = new System.Drawing.Size(366, 209);
             this.panel8.TabIndex = 6;
             // 
             // panel9
             // 
             this.panel9.BackColor = System.Drawing.Color.DimGray;
             this.panel9.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel9.Location = new System.Drawing.Point(0, 217);
+            this.panel9.Location = new System.Drawing.Point(0, 208);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(366, 1);
             this.panel9.TabIndex = 9;
@@ -254,7 +205,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel10.Location = new System.Drawing.Point(0, 1);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(366, 217);
+            this.panel10.Size = new System.Drawing.Size(366, 208);
             this.panel10.TabIndex = 8;
             // 
             // pbBiometriaDireito
@@ -262,7 +213,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.pbBiometriaDireito.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbBiometriaDireito.Location = new System.Drawing.Point(0, 0);
             this.pbBiometriaDireito.Name = "pbBiometriaDireito";
-            this.pbBiometriaDireito.Size = new System.Drawing.Size(366, 217);
+            this.pbBiometriaDireito.Size = new System.Drawing.Size(366, 208);
             this.pbBiometriaDireito.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbBiometriaDireito.TabIndex = 0;
             this.pbBiometriaDireito.TabStop = false;
@@ -281,7 +232,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.panel12.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel12.Controls.Add(this.btnBiometriaDireito);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel12.Location = new System.Drawing.Point(0, 247);
+            this.panel12.Location = new System.Drawing.Point(0, 238);
             this.panel12.Name = "panel12";
             this.panel12.Padding = new System.Windows.Forms.Padding(3);
             this.panel12.Size = new System.Drawing.Size(366, 34);
@@ -332,7 +283,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(368, 283);
+            this.panel2.Size = new System.Drawing.Size(368, 274);
             this.panel2.TabIndex = 6;
             // 
             // pnlBiometria
@@ -343,7 +294,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.pnlBiometria.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlBiometria.Location = new System.Drawing.Point(0, 0);
             this.pnlBiometria.Name = "pnlBiometria";
-            this.pnlBiometria.Size = new System.Drawing.Size(366, 281);
+            this.pnlBiometria.Size = new System.Drawing.Size(366, 272);
             this.pnlBiometria.TabIndex = 5;
             // 
             // pnlImagemBiometria
@@ -354,14 +305,14 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.pnlImagemBiometria.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlImagemBiometria.Location = new System.Drawing.Point(0, 29);
             this.pnlImagemBiometria.Name = "pnlImagemBiometria";
-            this.pnlImagemBiometria.Size = new System.Drawing.Size(366, 218);
+            this.pnlImagemBiometria.Size = new System.Drawing.Size(366, 209);
             this.pnlImagemBiometria.TabIndex = 6;
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.DimGray;
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 217);
+            this.panel4.Location = new System.Drawing.Point(0, 208);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(366, 1);
             this.panel4.TabIndex = 9;
@@ -372,7 +323,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 1);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(366, 217);
+            this.panel3.Size = new System.Drawing.Size(366, 208);
             this.panel3.TabIndex = 8;
             // 
             // pbBiometriaEsquerdo
@@ -380,7 +331,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.pbBiometriaEsquerdo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbBiometriaEsquerdo.Location = new System.Drawing.Point(0, 0);
             this.pbBiometriaEsquerdo.Name = "pbBiometriaEsquerdo";
-            this.pbBiometriaEsquerdo.Size = new System.Drawing.Size(366, 217);
+            this.pbBiometriaEsquerdo.Size = new System.Drawing.Size(366, 208);
             this.pbBiometriaEsquerdo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbBiometriaEsquerdo.TabIndex = 0;
             this.pbBiometriaEsquerdo.TabStop = false;
@@ -399,7 +350,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.pnlBotaoBiometria.BackColor = System.Drawing.Color.WhiteSmoke;
             this.pnlBotaoBiometria.Controls.Add(this.btnBiometriaEsquerdo);
             this.pnlBotaoBiometria.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBotaoBiometria.Location = new System.Drawing.Point(0, 247);
+            this.pnlBotaoBiometria.Location = new System.Drawing.Point(0, 238);
             this.pnlBotaoBiometria.Name = "pnlBotaoBiometria";
             this.pnlBotaoBiometria.Padding = new System.Windows.Forms.Padding(3);
             this.pnlBotaoBiometria.Size = new System.Drawing.Size(366, 34);
@@ -447,6 +398,67 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             // 
             this.bkwSalvar.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bkwSalvar_DoWork);
             // 
+            // pnlDadosFuncionario
+            // 
+            this.pnlDadosFuncionario.Controls.Add(this.panel5);
+            this.pnlDadosFuncionario.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlDadosFuncionario.Location = new System.Drawing.Point(5, 5);
+            this.pnlDadosFuncionario.Name = "pnlDadosFuncionario";
+            this.pnlDadosFuncionario.Padding = new System.Windows.Forms.Padding(5);
+            this.pnlDadosFuncionario.Size = new System.Drawing.Size(748, 69);
+            this.pnlDadosFuncionario.TabIndex = 4;
+            // 
+            // panel5
+            // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.lblCodigo);
+            this.panel5.Controls.Add(this.lblCodigoFuncionario);
+            this.panel5.Controls.Add(this.lblNomeFuncionario);
+            this.panel5.Controls.Add(this.lblNome);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel5.Location = new System.Drawing.Point(5, 5);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(738, 60);
+            this.panel5.TabIndex = 8;
+            // 
+            // lblCodigo
+            // 
+            this.lblCodigo.AutoSize = true;
+            this.lblCodigo.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCodigo.Location = new System.Drawing.Point(3, 8);
+            this.lblCodigo.Name = "lblCodigo";
+            this.lblCodigo.Size = new System.Drawing.Size(49, 15);
+            this.lblCodigo.TabIndex = 0;
+            this.lblCodigo.Text = "Código:";
+            // 
+            // lblCodigoFuncionario
+            // 
+            this.lblCodigoFuncionario.AutoSize = true;
+            this.lblCodigoFuncionario.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCodigoFuncionario.Location = new System.Drawing.Point(59, 9);
+            this.lblCodigoFuncionario.Name = "lblCodigoFuncionario";
+            this.lblCodigoFuncionario.Size = new System.Drawing.Size(0, 15);
+            this.lblCodigoFuncionario.TabIndex = 1;
+            // 
+            // lblNomeFuncionario
+            // 
+            this.lblNomeFuncionario.AutoSize = true;
+            this.lblNomeFuncionario.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNomeFuncionario.Location = new System.Drawing.Point(59, 34);
+            this.lblNomeFuncionario.Name = "lblNomeFuncionario";
+            this.lblNomeFuncionario.Size = new System.Drawing.Size(0, 15);
+            this.lblNomeFuncionario.TabIndex = 3;
+            // 
+            // lblNome
+            // 
+            this.lblNome.AutoSize = true;
+            this.lblNome.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNome.Location = new System.Drawing.Point(3, 34);
+            this.lblNome.Name = "lblNome";
+            this.lblNome.Size = new System.Drawing.Size(43, 15);
+            this.lblNome.TabIndex = 2;
+            this.lblNome.Text = "Nome:";
+            // 
             // frmAtualizarFuncionarioCadastro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -459,8 +471,6 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.pnlBotoesBusca.ResumeLayout(false);
             this.pnlCentralCRUD.ResumeLayout(false);
             this.pnlCentral.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
@@ -480,17 +490,15 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.pnlBotaoBiometria.ResumeLayout(false);
             this.pnlTituloBiometria.ResumeLayout(false);
             this.pnlTituloBiometria.PerformLayout();
+            this.pnlDadosFuncionario.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.ComponentModel.BackgroundWorker bkwBiometria;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label lblCodigo;
-        private System.Windows.Forms.Label lblCodigoFuncionario;
-        private System.Windows.Forms.Label lblNomeFuncionario;
-        private System.Windows.Forms.Label lblNome;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel7;
@@ -515,5 +523,11 @@ namespace PontoEletronicoDesktop.Views.Atualizar
         private System.Windows.Forms.Panel pnlTituloBiometria;
         private System.Windows.Forms.Label lblBiometria;
         private System.ComponentModel.BackgroundWorker bkwSalvar;
+        private System.Windows.Forms.Panel pnlDadosFuncionario;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label lblCodigo;
+        private System.Windows.Forms.Label lblCodigoFuncionario;
+        private System.Windows.Forms.Label lblNomeFuncionario;
+        private System.Windows.Forms.Label lblNome;
     }
 }

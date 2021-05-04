@@ -21,7 +21,7 @@ namespace PontoEletronicoWeb.Server.Attributes
             #region Verifirica se possui alguma chave
             if (!context.HttpContext.Request.Headers.TryGetValue(ApiKey.ApiKeyName, out var extractedApiKey))
             {
-                // Não encontrou
+                // Não encontrou api_key
                 context.Result = new ContentResult()
                 {
                     //401 - Unauthorized

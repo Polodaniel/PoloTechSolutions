@@ -35,6 +35,8 @@ namespace PontoEletronicoDesktop.Controllers
                 Funcionario.PossuiBiometria = x.PossuiBiometria;
                 Funcionario.Status = x.Status;
 
+                Funcionario.Biometrias = x.Biometrias;
+
                 ListaFuncionarios.Add(Funcionario);
             });
 
