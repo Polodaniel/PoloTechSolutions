@@ -14,14 +14,8 @@ namespace PontoEletronicoWeb.Server.Service
     {
         public static string GenerateToken(Autentifica aut)
         { 
-           
-
-            //Chave secreta => somente o servidor contem está chave
-            //Convertemos está chave para bytes
             var key = Encoding.ASCII.GetBytes("fwergweqfklbnnjiijbhucfyt58918/*4/ogihdfg$¨&$%¨&@¨*$)(¨%*$*#");
 
-            //SecurityTokenDescriptor => Contém as informaçoes do token/ de como ele será configurado
-            //Ele é dividido em 3 partes : Subject, Expires e Signing Credentials
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]//Definimos o que vamos deixar disponivel para a api,

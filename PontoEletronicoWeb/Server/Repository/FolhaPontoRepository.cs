@@ -15,6 +15,7 @@ namespace PontoEletronicoWeb.Server.Repository
     public interface IFolhaPontoRepository : ICadastroBase<FolhaPonto, FolhaPontoView>
     {
         Task<ActionResult<bool>> RegistraPonto(RegistraPonto registro);
+        Task<bool>VerificaBiometria( VerificaBiometriaModelView biometriaModelView);
     }
     #endregion  
 
@@ -32,6 +33,10 @@ namespace PontoEletronicoWeb.Server.Repository
             return await Task.FromResult(true);
         }
 
-
+        public async Task<bool> VerificaBiometria(VerificaBiometriaModelView biometriaModelView)
+        {
+            //Verifica aqui
+            return false;
+        }
     }
 }

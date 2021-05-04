@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.ModelView;
 using Models.View.Desktop;
+using PontoEletronicoWeb.Server.Attributes;
 using PontoEletronicoWeb.Server.Repository;
 using PontoEletronicoWeb.Server.Service;
 using System;
@@ -12,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace PontoEletronicoWeb.Server.Controllers
 {
-    [AllowAnonymous]
+
+    [ApiKey]
     [ApiController]
     [Route("api/desktop/[controller]")]
     public class BiometriaController : ControllerBase
@@ -27,66 +29,24 @@ namespace PontoEletronicoWeb.Server.Controllers
             this.contextAccessor = contextAccessor;
         #endregion
 
-        #region Teste Autentica
-        [AllowAnonymous]
-        [HttpPost("autentica")]
-        public async Task<ActionResult<dynamic>> Autentica(Autentifica aut)
-        {
-            try
-            {
-                //var user = UserRepository.Get(model.Username, model.Password);
-
-                if (aut == null)
-                    return NotFound(new { message = "Usuário ou senha inválidos" });
-
-                var token = TokenService.GenerateToken(aut);
-
-                var retorno = new
-                {
-                    aut = aut,
-                    token = token
-                };
-
-                return await Task.FromResult(retorno);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Ocorreu erro ao Listar. \n {ex.Message}");
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpGet("autentica")]
+        #region Teste Autentica    
+        [HttpGet("teste")]
         public async Task<ActionResult<dynamic>> TESTE()
         {
             try
             {
                 //new Autentifica() { KeyIndentidade = 123456, Empresa = "Teste" }
 
-                return await Task.FromResult(new RegistraPonto());
+                return await Task.FromResult(new VerificaBiometriaModelView());
             }
             catch (Exception ex)
             {
                 return BadRequest($"Ocorreu erro ao Listar. \n {ex.Message}");
             }
-        }
-
-        [HttpGet("Autorizado")]
-        public async Task<ActionResult<dynamic>> TESTE2()
-        {
-            try
-            {
-                return await Task.FromResult("Autorizado");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Ocorreu erro ao Listar. \n {ex.Message}");
-            }
-        }
+        }       
         #endregion
 
         #region  Rotas DeskTop
-        [AllowAnonymous]
         [HttpGet("funcionario")]
         public async Task<ActionResult<List<FuncionarioViewDesktop>>> GetFuncionariosView([FromServices] IFuncionarioRepository funcionarioRepository)
         {
@@ -100,7 +60,6 @@ namespace PontoEletronicoWeb.Server.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpPost("funcionario")]
         public async Task<ActionResult<bool>> PostSalvarBiometrias([FromServices] IBiometriaRepository biometriaRepository, FuncionarioBiometrias funcionarioBiometrias)
         {
@@ -116,7 +75,6 @@ namespace PontoEletronicoWeb.Server.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpDelete("funcionario")]
         public async Task<ActionResult<dynamic>> DeleteBiometrias([FromServices] IBiometriaRepository biometriaRepository, int CodFuncionario)
         {
@@ -133,7 +91,6 @@ namespace PontoEletronicoWeb.Server.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpPost("registra/ponto")]
         public async Task<ActionResult<dynamic>> PostRegistraPonto([FromServices] IFolhaPontoRepository folhaPontoRepository, RegistraPonto registro)
         {
@@ -143,6 +100,19 @@ namespace PontoEletronicoWeb.Server.Controllers
                     return Forbid();
 
                 return await Task.FromResult(folhaPontoRepository.RegistraPonto(registro));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ocorreu erro ao Listar. \n {ex.Message}");
+            }
+        }
+
+        [HttpPost("verifica/biometria")]
+        public async Task<ActionResult<bool>> GetFuncionariosView([FromServices] IFolhaPontoRepository folhaPontoRepository, VerificaBiometriaModelView biometriaModelView)
+        {
+            try
+            {
+                return await folhaPontoRepository.VerificaBiometria(biometriaModelView);
             }
             catch (Exception ex)
             {
