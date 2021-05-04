@@ -15,11 +15,11 @@ namespace PontoEletronicoWeb.Server.Controllers
     [AllowAnonymous]
     [ApiController]
     [Route("api/desktop/[controller]")]
-    public class BiometriaController: ControllerBase
+    public class BiometriaController : ControllerBase
     {
         #region Atributos
         private IHttpContextAccessor contextAccessor;
-        
+
         #endregion
 
         #region Construtor
@@ -102,11 +102,13 @@ namespace PontoEletronicoWeb.Server.Controllers
 
         [AllowAnonymous]
         [HttpPost("funcionario")]
-        public async Task<ActionResult<dynamic>> PostSalvarBiometrias([FromServices] IBiometriaRepository biometriaRepository, FuncionarioBiometrias funcionarioBiometrias)
+        public async Task<ActionResult<bool>> PostSalvarBiometrias([FromServices] IBiometriaRepository biometriaRepository, FuncionarioBiometrias funcionarioBiometrias)
         {
             try
             {
-                return await Task.FromResult(biometriaRepository.SalvarAsync(funcionarioBiometrias));
+                var result = await biometriaRepository.SalvarAsync(funcionarioBiometrias);
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {

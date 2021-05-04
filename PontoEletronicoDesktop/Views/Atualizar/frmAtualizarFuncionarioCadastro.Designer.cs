@@ -59,6 +59,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.btnBiometriaEsquerdo = new System.Windows.Forms.Button();
             this.pnlTituloBiometria = new System.Windows.Forms.Panel();
             this.lblBiometria = new System.Windows.Forms.Label();
+            this.bkwSalvar = new System.ComponentModel.BackgroundWorker();
             this.pnlBotoesCRUD.SuspendLayout();
             this.pnlBotoesBusca.SuspendLayout();
             this.pnlCentralCRUD.SuspendLayout();
@@ -442,6 +443,10 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.lblBiometria.TabIndex = 3;
             this.lblBiometria.Text = "Biometria - Indicador Esquerdo";
             // 
+            // bkwSalvar
+            // 
+            this.bkwSalvar.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bkwSalvar_DoWork);
+            // 
             // frmAtualizarFuncionarioCadastro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -509,5 +514,6 @@ namespace PontoEletronicoDesktop.Views.Atualizar
         public System.Windows.Forms.Button btnBiometriaEsquerdo;
         private System.Windows.Forms.Panel pnlTituloBiometria;
         private System.Windows.Forms.Label lblBiometria;
+        private System.ComponentModel.BackgroundWorker bkwSalvar;
     }
 }

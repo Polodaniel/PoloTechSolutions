@@ -60,14 +60,14 @@ namespace PontoEletronicoDesktop.Views.Base
             // 
             // lblBottom
             // 
-            this.lblBottom.Location = new System.Drawing.Point(230, 5);
+            this.lblBottom.Location = new System.Drawing.Point(248, 5);
             // 
             // pnlCentralCRUD
             // 
             this.pnlCentralCRUD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCentralCRUD.Location = new System.Drawing.Point(9, 0);
             this.pnlCentralCRUD.Name = "pnlCentralCRUD";
-            this.pnlCentralCRUD.Size = new System.Drawing.Size(726, 360);
+            this.pnlCentralCRUD.Size = new System.Drawing.Size(726, 335);
             this.pnlCentralCRUD.TabIndex = 0;
             // 
             // pnlCRUD
@@ -78,7 +78,7 @@ namespace PontoEletronicoDesktop.Views.Base
             this.pnlCRUD.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlCRUD.Location = new System.Drawing.Point(735, 0);
             this.pnlCRUD.Name = "pnlCRUD";
-            this.pnlCRUD.Size = new System.Drawing.Size(36, 366);
+            this.pnlCRUD.Size = new System.Drawing.Size(36, 341);
             this.pnlCRUD.TabIndex = 1;
             // 
             // btnFechar
@@ -92,7 +92,7 @@ namespace PontoEletronicoDesktop.Views.Base
             this.btnFechar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnFechar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnFechar.Image = global::PontoEletronicoDesktop.Properties.Resources.iconFechar;
-            this.btnFechar.Location = new System.Drawing.Point(0, 331);
+            this.btnFechar.Location = new System.Drawing.Point(0, 306);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(36, 35);
             this.btnFechar.TabIndex = 17;
@@ -107,7 +107,7 @@ namespace PontoEletronicoDesktop.Views.Base
             this.pnlBotoesCRUD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlBotoesCRUD.Location = new System.Drawing.Point(0, 76);
             this.pnlBotoesCRUD.Name = "pnlBotoesCRUD";
-            this.pnlBotoesCRUD.Size = new System.Drawing.Size(36, 290);
+            this.pnlBotoesCRUD.Size = new System.Drawing.Size(36, 265);
             this.pnlBotoesCRUD.TabIndex = 1;
             // 
             // btnEditar
@@ -212,7 +212,7 @@ namespace PontoEletronicoDesktop.Views.Base
             // pgbLoad
             // 
             this.pgbLoad.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pgbLoad.Location = new System.Drawing.Point(9, 360);
+            this.pgbLoad.Location = new System.Drawing.Point(9, 335);
             this.pgbLoad.Name = "pgbLoad";
             this.pgbLoad.Size = new System.Drawing.Size(726, 6);
             this.pgbLoad.TabIndex = 2;

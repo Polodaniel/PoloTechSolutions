@@ -19,29 +19,44 @@ namespace PontoEletronicoWeb.Server.Repository
     }
     #endregion
 
-    public class BiometriaRepository : BaseRepository<Biometria, Biometria>,IBiometriaRepository
+    public class BiometriaRepository : BaseRepository<Biometria, Biometria>, IBiometriaRepository
     {
         #region Construtor
         public BiometriaRepository(ApplicationDbContext context) : base(context)
         {
         }
 
-        
+
         #endregion
 
         public async Task<bool> SalvarAsync(FuncionarioBiometrias funcionarioBiometrias)
         {
             try
             {
-                var entidade = dbSet.AddRangeAsync(funcionarioBiometrias.Biometrias);
-                await contexto.SaveChangesAsync();
+                var biometrias = funcionarioBiometrias.Biometrias;
+
+                if (!Equals(biometrias, null) && biometrias.Count > 0)
+                {
+                    var funcionario = await contexto.Funcionario.Include(x => x.Biometrias)
+                                                            .FirstAsync(x => x.Id == funcionarioBiometrias.CodFuncionario);
+
+                    if (!Equals(funcionario, null))
+                    {
+                        funcionario.PossuiBiometria = true;
+                        funcionario.Biometrias.AddRange(biometrias);
+
+                        //await dbSet.AddRangeAsync(biometrias);
+                        await contexto.SaveChangesAsync();
+                    }
+                }
 
                 return await Task.FromResult(true);
             }
-            catch 
+            catch (Exception erro)
             {
+                var msgErro = erro.Message;
                 return await Task.FromResult(false);
-            }           
+            }
         }
 
         public async Task<bool> ExcluirBiometriasAsync(int CodFuncionario)

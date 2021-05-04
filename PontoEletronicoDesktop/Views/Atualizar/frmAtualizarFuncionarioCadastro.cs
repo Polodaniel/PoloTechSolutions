@@ -43,15 +43,13 @@ namespace PontoEletronicoDesktop.Views.Atualizar
 
         protected override void OnShown(EventArgs e)
         {
-            if (CodigoFuncionario != 0)
+            if (!Equals(Funcionario, null))
             {
-                Funcionario = _App.Selecionar(CodigoFuncionario);
+                lblCodigoFuncionario.Text = Funcionario.Id.ToString();
+                lblNomeFuncionario.Text = Funcionario.Nome.ToString();
 
-                if (!Equals(Funcionario, null))
-                {
-                    lblCodigoFuncionario.Text = Funcionario.Id.ToString();
-                    lblNomeFuncionario.Text = Funcionario.Nome.ToString();
-                }
+                lblCodigoFuncionario.Visible = true;
+                lblNomeFuncionario.Visible = true;
             }
         }
 
@@ -124,7 +122,7 @@ namespace PontoEletronicoDesktop.Views.Atualizar
                     pbBiometriaEsquerdo.Image = biometria;
                 }));
             }
-            else if (Equals(dedoSelecionado, DedoBiometria.IndicadorDireito)) 
+            else if (Equals(dedoSelecionado, DedoBiometria.IndicadorDireito))
             {
                 pbBiometriaDireito.BeginInvoke(new Action(() =>
                 {
@@ -134,18 +132,86 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             }
         }
 
-        protected override void btnSalvar_Click(object sender, EventArgs e)
+        protected override void btnSalvar_Click(object sender, EventArgs e) =>
+            bkwSalvar.RunWorkerAsync();
+
+        //private async Task btnSalvar_ClickAsync(object sender, EventArgs e)
+        //{
+        //    bkwBuscar.RunWorkerAsync();
+
+        //    if (!VerificaDigital())
+        //    {
+        //        MessageBox.Show("Ops! Faltou  cadastrar alguma digital, verifique e tente novamente.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+
+        //    using (Request _app = new Request())
+        //    {
+        //        var result = await _app.PostCadastroFuncionario(Funcionario);
+
+        //        if (result)
+        //        {
+        //            MessageBox.Show("Informações Atualizada com Sucesso !", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        //            this.Close();
+        //        }
+        //        else
+        //            MessageBox.Show("Ops! Ocorreu um erro ao salvar.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
+        private bool VerificaDigital()
         {
             var result = true;
 
-            if (result)
-            {
-                MessageBox.Show("Informações Atualizada com Sucesso !", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                this.Close();
-            }
+            if (!Equals(Funcionario.Biometrias, null) && Funcionario.Biometrias.Count > 0)
+                result = true;
             else
-                MessageBox.Show("Ops! Ocorreu um erro ao salvar.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                result = false;
+
+            return result;
+        }
+
+        private async void bkwSalvar_DoWork(object sender, DoWorkEventArgs e)
+        {
+            pgbLoad.BeginInvoke(new Action(() =>
+            {
+                pgbLoad.Visible = true;
+                pgbLoad.Style = ProgressBarStyle.Marquee;
+                pgbLoad.MarqueeAnimationSpeed = 1;
+            }));
+
+            if (!VerificaDigital())
+            {
+                MessageBox.Show("Ops! Faltou  cadastrar alguma digital, verifique e tente novamente.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                pgbLoad.BeginInvoke(new Action(() =>
+                {
+                    pgbLoad.Visible = false;
+                }));
+
+                return;
+            }
+
+            using (Request _app = new Request())
+            {
+                var result = await _app.PostCadastroFuncionario(Funcionario);
+
+                if (result)
+                {
+                    MessageBox.Show("Informações Atualizada com Sucesso !", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    pnlCentralCRUD.Enabled = true;
+                    btnSalvar.Enabled = true;
+                }
+                else
+                    MessageBox.Show("Ops! Ocorreu um erro ao salvar.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            pgbLoad.BeginInvoke(new Action(() =>
+            {
+                pgbLoad.Visible = false;
+            }));
         }
     }
 }

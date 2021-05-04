@@ -28,6 +28,24 @@ namespace Models.Cadastros
         [NotMapped]
         public string Descricao { get; set; }
 
+        #region Propriedades Não Mapeadas
+        
+        [NotMapped]
+        public string ImagemPessoaBase64
+        {
+            get
+            {
+                var stringBase64 = string.Empty;
+
+                if (!Equals(BiometriaImg, null))
+                    stringBase64 = string.Concat("data:image/png;base64,", Convert.ToBase64String(BiometriaImg));
+
+                return stringBase64;
+            }
+        }
+        #endregion
+
+
         #region Metodos Dominio
         public Biometria GetModel() =>
             this;

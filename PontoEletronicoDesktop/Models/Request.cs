@@ -45,5 +45,34 @@ namespace PontoEletronicoDesktop.Models
             return ListaFuncionarios;
         }
 
+        public async Task<bool> PostCadastroFuncionario(Funcionario funcionario)
+        {
+            var result = false;
+
+            using (var cliente = new HttpClient())
+            {
+                var URL = "api/desktop/Biometria/funcionario";
+
+                cliente.BaseAddress = new Uri(API);
+
+                var NovoRegistro = new FuncionarioBiometrias();
+
+                NovoRegistro.CodFuncionario = funcionario.Id;
+                NovoRegistro.Biometrias = funcionario.Biometrias;
+
+                var json = JsonConvert.SerializeObject(NovoRegistro);
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var request = await cliente.PostAsync(URL, content);
+
+                var retorno = await request.Content.ReadAsStringAsync();
+
+                result = JsonConvert.DeserializeObject<bool>(retorno);
+
+            }
+
+            return result;
+        }
     }
 }
