@@ -25,8 +25,6 @@ namespace PontoEletronicoWeb.Server.Repository
         public BiometriaRepository(ApplicationDbContext context) : base(context)
         {
         }
-
-
         #endregion
 
         public async Task<bool> SalvarAsync(FuncionarioBiometrias funcionarioBiometrias)

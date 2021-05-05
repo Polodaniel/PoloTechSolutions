@@ -43,7 +43,7 @@ namespace PontoEletronicoWeb.Server.Controllers
             {
                 return BadRequest($"Ocorreu erro ao Listar. \n {ex.Message}");
             }
-        }       
+        }
         #endregion
 
         #region  Rotas DeskTop
@@ -112,7 +112,9 @@ namespace PontoEletronicoWeb.Server.Controllers
         {
             try
             {
-                return await folhaPontoRepository.VerificaBiometria(biometriaModelView);
+                var result = await folhaPontoRepository.GravarPonto(biometriaModelView);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {

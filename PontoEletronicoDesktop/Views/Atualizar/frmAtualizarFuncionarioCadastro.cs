@@ -23,7 +23,6 @@ namespace PontoEletronicoDesktop.Views.Atualizar
 
         private readonly FuncionariosController _App = new FuncionariosController();
 
-        private int CodigoFuncionario = 0;
         private Funcionario Funcionario;
 
         public frmAtualizarFuncionarioCadastro(Funcionario funcionarioSelecionado)

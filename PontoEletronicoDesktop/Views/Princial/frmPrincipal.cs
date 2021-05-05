@@ -1,4 +1,5 @@
 ﻿using PontoEletronicoDesktop.Views.Atualizar;
+using PontoEletronicoDesktop.Views.MarcarPonto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -51,12 +52,12 @@ namespace PontoEletronicoDesktop.Views.Princial
 
             LimparFormPrincipal();
 
-            //var form = new FormMarcador("Marcar o Ponto");
-            //form.Dock = DockStyle.Fill;
-            //form.TopLevel = false;
-            //form.Visible = true;
+            var form = new frmMarcarPonto("Marcar o Ponto");
+            form.Dock = DockStyle.Fill;
+            form.TopLevel = false;
+            form.Visible = true;
 
-            //pnlPrincipal.Controls.Add(form);
+            pnlPrincipal.Controls.Add(form);
         }
 
         private void InicializaAtualizaCadastro()

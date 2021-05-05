@@ -37,6 +37,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SourceAFIS, Version=1.7.0.41358, Culture=neutral, PublicKeyToken=b195ffd29617dfb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\SourceAFIS.1.7\lib\net451\SourceAFIS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -44,6 +47,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,6 +66,7 @@
     <Compile Include="Models\Funcionario.cs" />
     <Compile Include="Models\FuncionarioBiometrias.cs" />
     <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\VerificaBiometriaModelView.cs" />
     <Compile Include="Models\View\BaseView.cs" />
     <Compile Include="Models\View\FuncionarioView.cs" />
     <Compile Include="Models\View\FuncionarioViewDesktop.cs" />
@@ -90,6 +95,12 @@
     </Compile>
     <Compile Include="Views\Base\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MarcarPonto\frmMarcarPonto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MarcarPonto\frmMarcarPonto.Designer.cs">
+      <DependentUpon>frmMarcarPonto.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Princial\frmInicio.cs">
       <SubType>Form</SubType>
@@ -124,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Base\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MarcarPonto\frmMarcarPonto.resx">
+      <DependentUpon>frmMarcarPonto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Princial\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>

@@ -26,7 +26,7 @@ namespace PontoEletronicoDesktop.Controllers
         {
             var ListaFuncionarios = new List<Funcionario>();
 
-            resultConvert.ForEach(x => 
+            resultConvert.ForEach(x =>
             {
                 var Funcionario = new Funcionario();
 
@@ -46,6 +46,6 @@ namespace PontoEletronicoDesktop.Controllers
         internal Funcionario Selecionar(int codigoFuncionario)
         {
             throw new NotImplementedException();
-        }
+        } 
     }
 }

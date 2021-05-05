@@ -82,5 +82,26 @@ namespace PontoEletronicoDesktop.Models
 
             return result;
         }
+
+        internal async Task<bool> PostMarcacaoPonto(VerificaBiometriaModelView obj)
+        {
+            var result = false;
+
+            var URL = "api/desktop/Biometria/verifica/biometria";
+
+            cliente.BaseAddress = new Uri(API);
+
+            var json = JsonConvert.SerializeObject(obj);
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var request = await cliente.PostAsync(URL, content);
+
+            var retorno = await request.Content.ReadAsStringAsync();
+
+            result = JsonConvert.DeserializeObject<bool>(retorno);
+
+            return result;
+        }
     }
 }
