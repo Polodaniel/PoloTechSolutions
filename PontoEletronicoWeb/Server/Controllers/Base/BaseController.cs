@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PontoEletronicoWeb.Server.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BaseController : ControllerBase

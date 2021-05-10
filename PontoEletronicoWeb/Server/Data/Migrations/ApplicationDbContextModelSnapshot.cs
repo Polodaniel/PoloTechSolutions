@@ -350,6 +350,9 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
                     b.Property<bool>("PossuiBiometria")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Rg")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -401,11 +404,17 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DtaAtualizacao")
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataFim")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FuncionarioId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DtaAtualizacao")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -418,14 +427,14 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioId");
+                    b.HasIndex("ClienteId");
 
                     b.HasIndex("TurnoId");
 
                     b.ToTable("Escala");
                 });
 
-            modelBuilder.Entity("Models.Ponto.FolhaPonto", b =>
+            modelBuilder.Entity("Models.Ponto.EscalaFuncionario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -435,7 +444,38 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
                     b.Property<DateTime>("DtaAtualizacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DtaEscala")
+                    b.Property<int>("EscalaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FuncionarioId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EscalaId");
+
+                    b.HasIndex("FuncionarioId");
+
+                    b.ToTable("EscalaFuncionario");
+                });
+
+            modelBuilder.Entity("Models.Ponto.FolhaPonto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DataRegistroPonto")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DtaAtualizacao")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EscalaId")
@@ -588,9 +628,9 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
 
             modelBuilder.Entity("Models.Ponto.Escala", b =>
                 {
-                    b.HasOne("Models.Cadastros.Funcionario", "Funcionario")
+                    b.HasOne("Models.Cadastros.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -600,9 +640,28 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Funcionario");
+                    b.Navigation("Cliente");
 
                     b.Navigation("Turno");
+                });
+
+            modelBuilder.Entity("Models.Ponto.EscalaFuncionario", b =>
+                {
+                    b.HasOne("Models.Ponto.Escala", "Escala")
+                        .WithMany("Funcionarios")
+                        .HasForeignKey("EscalaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Cadastros.Funcionario", "Funcionario")
+                        .WithMany()
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Escala");
+
+                    b.Navigation("Funcionario");
                 });
 
             modelBuilder.Entity("Models.Ponto.FolhaPonto", b =>
@@ -627,6 +686,11 @@ namespace PontoEletronicoWeb.Server.Data.Migrations
             modelBuilder.Entity("Models.Cadastros.Funcionario", b =>
                 {
                     b.Navigation("Biometrias");
+                });
+
+            modelBuilder.Entity("Models.Ponto.Escala", b =>
+                {
+                    b.Navigation("Funcionarios");
                 });
 #pragma warning restore 612, 618
         }

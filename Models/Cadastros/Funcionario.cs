@@ -1,5 +1,4 @@
-﻿using 
-    Models;
+﻿using Models;
 using Models.Interfaces;
 using Models.View;
 using System;
@@ -19,6 +18,7 @@ namespace Models.Cadastros
 
         public string Nome { get; set; }
         public string Cpf { get; set; }
+        public string Rg { get; set; }
         public string Pis { get; set; }
         public bool PossuiBiometria { get; set; }
         public List<Biometria> Biometrias { get; set; }

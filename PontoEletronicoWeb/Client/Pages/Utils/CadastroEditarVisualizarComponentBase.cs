@@ -65,7 +65,28 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
 
         public string ColorMesagemOperacao { get; set; }
 
-        public bool SalvoComSucesso { get; set; }
+        private bool salvoComSucesse;
+
+        public bool SalvoComSucesso
+        {
+            get => salvoComSucesse;
+            set
+            {
+                if (value)
+                {
+                    salvoComSucesse = value;
+                    ExecutarTimer(400);
+                }
+                else
+                    salvoComSucesse = value;
+            }
+        }
+
+        private System.Timers.Timer _timer;
+
+        private int counter = 30;
+
+        public int TimerCounter = 30;
 
         #endregion
 
@@ -99,6 +120,8 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
                         ColorMesagemOperacao = "bg-success";
                         MensagemOperacao = "Salvo com Sucesso !";
 
+                        TimerCounter = 30;
+
                         StateHasChanged();
                     }
                     else if (Operacao == TipoOperacao.Edicao)
@@ -127,7 +150,7 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
             }
         }
 
-        private async Task<HttpResponseMessage> ExecutaOperacao(StringContent modelContent)
+        protected async Task<HttpResponseMessage> ExecutaOperacao(StringContent modelContent)
         {
             HttpResponseMessage httpResponse = new HttpResponseMessage();
 
@@ -149,6 +172,31 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
         protected abstract void NovaInstanciaModel();
 
         protected virtual void SetPropertiesInModel(TModel novoModel) { }
+
+        public void ExecutarTimer(double intervalo)
+        {
+            _timer = new System.Timers.Timer(intervalo);
+            _timer.Elapsed += NotifyTimerElapsed;
+            _timer.Enabled = true;
+        }
+
+
+        private void NotifyTimerElapsed(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            if (counter > 0)
+            {
+                counter -= 1;
+            }
+            else
+            {
+                _timer.Enabled = false;
+                SalvoComSucesso = false;
+                counter = TimerCounter;
+            }
+
+            InvokeAsync(StateHasChanged);
+        }
+
         #endregion
     }
 

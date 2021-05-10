@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using Models.View;
 using System;
 using System.Collections.Generic;
@@ -17,8 +16,8 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
         [Inject]
         protected HttpClient Http { get; set; }
 
-        [Inject]
-        protected IJSRuntime JS { get; set; }
+        //[Inject]
+        //protected IJSRuntime JS { get; set; }
         #endregion
 
         #region Propriedades

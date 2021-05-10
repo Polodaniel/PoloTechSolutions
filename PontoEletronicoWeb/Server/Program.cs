@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PontoEletronicoWeb.Server.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

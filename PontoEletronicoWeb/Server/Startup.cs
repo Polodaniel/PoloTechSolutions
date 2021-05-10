@@ -27,6 +27,8 @@ namespace PontoEletronicoWeb.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            ApiKey.Key = Configuration["ApiKey:key"];
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -50,6 +52,7 @@ namespace PontoEletronicoWeb.Server
             services.AddTransient<IClienteRepository, ClienteRepository>();
             services.AddTransient<IFolhaPontoRepository, FolhaPontoRepository>();
             services.AddTransient<IEscalaRepository, EscalaRepository>();
+            services.AddTransient<IEscalaFuncionarioRepository, EscalaFuncionarioRepository>();
             services.AddTransient<ITurnoRepository, TurnoRepository>();
             services.AddTransient<IBiometriaRepository, BiometriaRepository>();
             services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();

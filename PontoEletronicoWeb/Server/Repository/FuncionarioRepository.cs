@@ -1,5 +1,8 @@
-﻿using Models.Cadastros;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Models.Cadastros;
 using Models.View;
+using Models.View.Desktop;
 using PontoEletronicoWeb.Server.Data;
 using PontoEletronicoWeb.Shared.Interfaces;
 using System;
@@ -12,7 +15,7 @@ namespace PontoEletronicoWeb.Server.Repository
     #region Interfaces
     public interface IFuncionarioRepository : ICadastroBase<Funcionario, FuncionarioView>
     {
-
+        Task<List<FuncionarioViewDesktop>> GetFuncionariosViewDesktop(bool? ativos);
     }
     #endregion
 
@@ -24,5 +27,33 @@ namespace PontoEletronicoWeb.Server.Repository
 
         }
         #endregion
+
+        //public async override Task<Funcionario> SelecionarAsync(int id)
+        //{
+        //    var model = await dbSet.Include(x => x.Biometrias).Where(x => x.Id == id).FirstOrDefaultAsync();
+
+        //    IsNull(model);
+
+        //    return model;
+        //}
+
+        public async Task<List<FuncionarioViewDesktop>> GetFuncionariosViewDesktop(bool? ativos)
+        {
+            var queryFunc = dbSetAsQueryable.Include(x => x.Biometrias).AsQueryable();
+
+            if (ativos != null)
+                queryFunc = queryFunc.Where(x => x.Status == ativos);
+
+            return await queryFunc.Select(x => 
+                                          new FuncionarioViewDesktop 
+                                          {
+                                              Id = x.Id,
+                                              Nome = x.Nome,
+                                              PossuiBiometria = x.PossuiBiometria,
+                                              Status = x.Status,
+                                              Biometrias = x.Biometrias
+                                          }).ToListAsync();
+        }
+
     }
 }

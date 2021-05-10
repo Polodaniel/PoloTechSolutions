@@ -14,6 +14,9 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
         #region Inject
         [Inject]
         protected NavigationManager Navigation { get; set; }
+
+        [Inject]
+        protected IJSRuntime JS { get; set; }
         #endregion
 
         #region Parametros
@@ -101,6 +104,11 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
             ExcluirID = ID;
 
             StateHasChanged();
+
+            await Task.Delay(500);
+
+            await JS.InvokeVoidAsync("FocoInativar");
+
         }
 
         public async void ConfirmaExclusao()
