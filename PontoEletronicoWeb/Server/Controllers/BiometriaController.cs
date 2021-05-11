@@ -121,6 +121,20 @@ namespace PontoEletronicoWeb.Server.Controllers
                 return BadRequest($"Ocorreu erro ao Listar. \n {ex.Message}");
             }
         }
+
+        [HttpGet("cliente")]
+        public async Task<ActionResult<List<ClienteViewDesktop>>> GetClientesView([FromServices] IClienteRepository clienteRepository)
+        {
+            try
+            {
+                return await clienteRepository.GetClienteViewDesktop(true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ocorreu erro ao Listar. \n {ex.Message}");
+            }
+        }
+
         #endregion
 
     }

@@ -103,5 +103,25 @@ namespace PontoEletronicoDesktop.Models
 
             return result;
         }
+
+        public async Task<List<Cliente>> GetClientesAsync()
+        {
+            var ListaFuncionarios = new List<Cliente>();
+
+            var URL = "api/desktop/Biometria/cliente";
+
+            cliente.BaseAddress = new Uri(API);
+
+            var request = await cliente.GetAsync(URL);
+
+            var result = await request.Content.ReadAsStringAsync();
+
+            var resultConvert = JsonConvert.DeserializeObject<List<Cliente>>(result);
+
+            if (!Equals(resultConvert, null) && resultConvert.Count > 0)
+                ListaFuncionarios = resultConvert;
+
+            return ListaFuncionarios;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PontoEletronicoDesktop.Views.Atualizar;
+using PontoEletronicoDesktop.Views.Configuracao;
 using PontoEletronicoDesktop.Views.MarcarPonto;
 using System;
 using System.Collections.Generic;
@@ -88,12 +89,12 @@ namespace PontoEletronicoDesktop.Views.Princial
 
             LimparFormPrincipal();
 
-            //var form = new FormConfiguracao("Configuração");
-            //form.Dock = DockStyle.Fill;
-            //form.TopLevel = false;
-            //form.Visible = true;
+            var form = new frmConfiguracao("Configuração");
+            form.Dock = DockStyle.Fill;
+            form.TopLevel = false;
+            form.Visible = true;
 
-            //pnlPrincipal.Controls.Add(form);
+            pnlPrincipal.Controls.Add(form);
         }
 
         private void LimparFormPrincipal() =>

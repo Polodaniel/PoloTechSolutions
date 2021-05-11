@@ -19,7 +19,7 @@ namespace PontoEletronicoWeb.Server.Repository
     }
     #endregion
 
-    public class FuncionarioRepository : BaseRepository<Funcionario,FuncionarioView>, IFuncionarioRepository
+    public class FuncionarioRepository : BaseRepository<Funcionario, FuncionarioView>, IFuncionarioRepository
     {
         #region Construtor
         public FuncionarioRepository(ApplicationDbContext context) : base(context)
@@ -28,15 +28,6 @@ namespace PontoEletronicoWeb.Server.Repository
         }
         #endregion
 
-        //public async override Task<Funcionario> SelecionarAsync(int id)
-        //{
-        //    var model = await dbSet.Include(x => x.Biometrias).Where(x => x.Id == id).FirstOrDefaultAsync();
-
-        //    IsNull(model);
-
-        //    return model;
-        //}
-
         public async Task<List<FuncionarioViewDesktop>> GetFuncionariosViewDesktop(bool? ativos)
         {
             var queryFunc = dbSetAsQueryable.Include(x => x.Biometrias).AsQueryable();
@@ -44,8 +35,8 @@ namespace PontoEletronicoWeb.Server.Repository
             if (ativos != null)
                 queryFunc = queryFunc.Where(x => x.Status == ativos);
 
-            return await queryFunc.Select(x => 
-                                          new FuncionarioViewDesktop 
+            return await queryFunc.Select(x =>
+                                          new FuncionarioViewDesktop
                                           {
                                               Id = x.Id,
                                               Nome = x.Nome,

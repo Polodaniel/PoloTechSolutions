@@ -17,5 +17,10 @@ namespace PontoEletronicoDesktop.Models
         {
             get => Id.ToString().PadLeft(4, '0');
         }
+
+        public string StatusString
+        {
+            get => Status ? "Ativado" : "Desativado";
+        }
     }
 }
