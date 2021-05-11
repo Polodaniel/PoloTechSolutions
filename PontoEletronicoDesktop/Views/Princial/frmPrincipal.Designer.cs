@@ -102,7 +102,6 @@ namespace PontoEletronicoDesktop.Views.Princial
             this.btnConfiguracao.Text = "         Configuração";
             this.btnConfiguracao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnConfiguracao.UseVisualStyleBackColor = false;
-            this.btnConfiguracao.Visible = false;
             this.btnConfiguracao.Click += new System.EventHandler(this.btnConfiguracao_Click);
             // 
             // btnAtualizarCadastro

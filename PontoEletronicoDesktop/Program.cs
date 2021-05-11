@@ -1,4 +1,5 @@
-﻿using PontoEletronicoDesktop.Views.Princial;
+﻿using PontoEletronicoDesktop.Data;
+using PontoEletronicoDesktop.Views.Princial;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,17 @@ namespace PontoEletronicoDesktop
         static void Main()
         {
             Application.EnableVisualStyles();
+            
             Application.SetCompatibleTextRenderingDefault(false);
+
+            BancoDados();
+
             Application.Run(new frmPrincipal());
+        }
+
+        private static void BancoDados() 
+        {
+            SQLConexao.CriarBancoSQLite();
         }
     }
 }
