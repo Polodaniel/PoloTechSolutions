@@ -191,20 +191,12 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
                 if (result)
                 {
                     MessageBox.Show("Informações Atualizada com Sucesso !", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    pbBiometria.Image = null;
                 }
                 else
                     MessageBox.Show("Ops! Ocorreu um erro ao salvar.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            //if (result)
-            //{
-            //    MessageBox.Show("Salvo com Sucesso !");
-
-            //    pbBiometria.Image = null;
-
-            //}
-            //else
-            //    MessageBox.Show("Erro ao Salvar !");
         }
 
         public Bitmap ConverterArrayImagem(byte[] byteArrayIn)
@@ -323,10 +315,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
 
         private void LimparInputs()
         {
-            txtCodigo.Text = string.Empty;
-            txtNome.Text = string.Empty;
-            txtBiometria.Text = string.Empty;
-            txtStaus.Text = string.Empty;
+
         }
         #endregion
 

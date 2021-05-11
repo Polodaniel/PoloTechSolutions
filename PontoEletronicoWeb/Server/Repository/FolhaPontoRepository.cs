@@ -43,17 +43,17 @@ namespace PontoEletronicoWeb.Server.Repository
 
             if (!Equals(Funcionario, null))
             {
-                var FolhaPonto = MontarFolhaPontoAsync(Funcionario, biometriaModelView.DataRegistro);
+                var FolhaPonto = await MontarFolhaPontoAsync(Funcionario, biometriaModelView.DataRegistro);
+
+                if (FolhaPonto)
+                    return true;
             }
 
             return false;
-
-
         }
 
-        private async Task<FolhaPonto> MontarFolhaPontoAsync(Funcionario funcionario, DateTime DataRegistro)
+        private async Task<bool> MontarFolhaPontoAsync(Funcionario funcionario, DateTime DataRegistro)
         {
-            var FolhaPonto = new FolhaPonto();
             var EscalaFuncionario = new EscalaFuncionario();
             var DataFiltro = new DateTime(DataRegistro.Year, DataRegistro.Month, DataRegistro.Day);
 
@@ -61,23 +61,33 @@ namespace PontoEletronicoWeb.Server.Repository
             var query = contexto.EscalaFuncionario
                                         .Include(x => x.Escala)
                                         .Include(x => x.Escala.Turno)
-                                        .Where(x=> x.FuncionarioId == funcionario.Id 
-                                                && DataFiltro >= x.Escala.DataInicio 
-                                                && DataFiltro <= x.Escala.DataFim )
+                                        .Where(x => x.FuncionarioId == funcionario.Id
+                                                && DataFiltro >= x.Escala.DataInicio
+                                                && DataFiltro <= x.Escala.DataFim)
                                        .AsQueryable();
 
             var ListaEscalas = query.ToList();
 
-            if (!Equals(ListaEscalas,null)) 
+            if (!Equals(ListaEscalas, null) && ListaEscalas.Count > 0)
             {
-            
+                if (ListaEscalas.Count == 1)
+                {
+                    var FolhaPonto = new FolhaPonto();
+                    
+                    FolhaPonto.DataRegistroPonto = DataRegistro;
+                    FolhaPonto.FuncionarioId = funcionario.Id;
+                    FolhaPonto.EscalaId = ListaEscalas.FirstOrDefault().EscalaId;
+                    FolhaPonto.Status = true;
+
+                    contexto.FolhaPonto.Add(FolhaPonto);
+
+                    await contexto.SaveChangesAsync();
+
+                    return true;
+                }
             }
 
-            FolhaPonto.DataRegistroPonto = DataRegistro;
-            FolhaPonto.FuncionarioId = funcionario.Id;
-
-
-            return FolhaPonto;
+            return false;
         }
 
         private List<UserDetails> MontaListaCandidadosAsync(List<Biometria> listaFuncionarios)
