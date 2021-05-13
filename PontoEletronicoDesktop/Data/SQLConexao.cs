@@ -33,27 +33,23 @@ namespace PontoEletronicoDesktop.Data
             return SQLiteConnection;
         }
 
-        public static void CriarBancoSQLite()
+        public static async Task<bool> CriarBancoSQLiteAsync()
         {
-            try
-            {
-                var stringConnection = AppDomain.CurrentDomain.BaseDirectory;
+            var stringConnection = AppDomain.CurrentDomain.BaseDirectory;
 
-                ConnectionString = string.Concat(stringConnection, "app.db");
+            ConnectionString = string.Concat(stringConnection, "app.db");
 
-                if (!File.Exists(ConnectionString))
-                {
-                    SQLiteConnection.CreateFile(@"app.db");
-                    CriarTabelaSQlite();
-                }
-            }
-            catch
+            if (!File.Exists(ConnectionString))
             {
-                throw;
+                SQLiteConnection.CreateFile(@"app.db");
+
+                return await CriarTabelaSQliteAsync();
             }
+
+            return true;
         }
 
-        public static void CriarTabelaSQlite()
+        public static async Task<bool> CriarTabelaSQliteAsync()
         {
             try
             {
@@ -71,22 +67,22 @@ namespace PontoEletronicoDesktop.Data
                                       "             [Status] bit NOT NULL );";
 
 
-                    var result = cmd.ExecuteNonQueryAsync();
+                    var result = await cmd.ExecuteNonQueryAsync();
 
-                    var teste = result;
+                    return Equals(result, 0) ? true : false;
 
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                return false;
             }
         }
         #endregion
 
         #region CRUD
 
-        public static Cliente ClientesAtivo()
+        public static async Task<Cliente> ClientesAtivo()
         {
             try
             {
@@ -96,7 +92,7 @@ namespace PontoEletronicoDesktop.Data
 
                     cmd.CommandText = "SELECT Id, Nome, Cep, Logadouro, Numero, Bairro, Cidade, Pais, Status FROM Cliente";
 
-                    var reader = cmd.ExecuteReader();
+                    var reader = await cmd.ExecuteReaderAsync();
 
                     reader.Read();
 
@@ -152,7 +148,6 @@ namespace PontoEletronicoDesktop.Data
             return null;
         }
 
-
         public static int ClienteAdd(Cliente cliente)
         {
             try
@@ -205,6 +200,7 @@ namespace PontoEletronicoDesktop.Data
                 return 0;
             }
         }
+
         #endregion
     }
 }

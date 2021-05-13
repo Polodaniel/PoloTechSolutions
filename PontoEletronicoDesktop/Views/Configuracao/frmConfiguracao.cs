@@ -173,7 +173,7 @@ namespace PontoEletronicoDesktop.Views.Configuracao
             }));
         }
 
-        private void bkwLoad_DoWork(object sender, DoWorkEventArgs e)
+        private async void bkwLoad_DoWork(object sender, DoWorkEventArgs e)
         {
             pgbLoad.BeginInvoke(new Action(() =>
             {
@@ -182,7 +182,7 @@ namespace PontoEletronicoDesktop.Views.Configuracao
                 pgbLoad.MarqueeAnimationSpeed = 1;
             }));
 
-            var ClienteSalvo = new ClientesController().BuscarClienteAtual();
+            var ClienteSalvo = await new ClientesController().BuscarClienteAtual();
 
             pgbLoad.BeginInvoke(new Action(() =>
             {

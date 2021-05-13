@@ -37,11 +37,11 @@ namespace PontoEletronicoDesktop.Controllers
             }
         }
 
-        public Cliente BuscarClienteAtual() 
+        public async Task<Cliente> BuscarClienteAtual()
         {
             try
             {
-                var result = SQLConexao.ClientesAtivo();
+                var result = await SQLConexao.ClientesAtivo();
 
                 return result;
             }

@@ -1,5 +1,6 @@
 ﻿using LeitorFS;
 using PontoEletronicoDesktop.Controllers;
+using PontoEletronicoDesktop.Data;
 using PontoEletronicoDesktop.Models;
 using PontoEletronicoDesktop.Models.View;
 using PontoEletronicoDesktop.Views.Base;
@@ -184,9 +185,16 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
 
         private async Task MarcarPontoAsync(Person item)
         {
+            var ClienteId = 0;
+
+            var Cliente = await SQLConexao.ClientesAtivo();
+
+            if (!Equals(Cliente, null))
+                ClienteId = Cliente.Id;
+
             using (Request _app = new Request())
             {
-                var result = await _app.PostMarcacaoPonto(new VerificaBiometriaModelView(item.Id));
+                var result = await _app.PostMarcacaoPonto(new VerificaBiometriaModelView(item.Id, ClienteId));
 
                 if (result)
                 {
@@ -256,7 +264,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
 
                             var fpCandidato = new Fingerprint();
                             fpCandidato.AsBitmap = new Bitmap(img);
-                        
+
                             Candidato.Fingerprints.Add(fpCandidato);
                         }
 

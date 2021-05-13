@@ -43,7 +43,7 @@ namespace PontoEletronicoWeb.Server.Repository
 
             if (!Equals(Funcionario, null))
             {
-                var FolhaPonto = await MontarFolhaPontoAsync(Funcionario, biometriaModelView.DataRegistro);
+                var FolhaPonto = await MontarFolhaPontoAsync(Funcionario, biometriaModelView.ClienteId, biometriaModelView.DataRegistro);
 
                 if (FolhaPonto)
                     return true;
@@ -52,7 +52,7 @@ namespace PontoEletronicoWeb.Server.Repository
             return false;
         }
 
-        private async Task<bool> MontarFolhaPontoAsync(Funcionario funcionario, DateTime DataRegistro)
+        private async Task<bool> MontarFolhaPontoAsync(Funcionario funcionario, int clienteId, DateTime DataRegistro)
         {
             var EscalaFuncionario = new EscalaFuncionario();
             var DataFiltro = new DateTime(DataRegistro.Year, DataRegistro.Month, DataRegistro.Day);
@@ -62,6 +62,7 @@ namespace PontoEletronicoWeb.Server.Repository
                                         .Include(x => x.Escala)
                                         .Include(x => x.Escala.Turno)
                                         .Where(x => x.FuncionarioId == funcionario.Id
+                                                && x.Escala.ClienteId == clienteId
                                                 && DataFiltro >= x.Escala.DataInicio
                                                 && DataFiltro <= x.Escala.DataFim)
                                        .AsQueryable();
@@ -73,7 +74,7 @@ namespace PontoEletronicoWeb.Server.Repository
                 if (ListaEscalas.Count == 1)
                 {
                     var FolhaPonto = new FolhaPonto();
-                    
+
                     FolhaPonto.DataRegistroPonto = DataRegistro;
                     FolhaPonto.FuncionarioId = funcionario.Id;
                     FolhaPonto.EscalaId = ListaEscalas.FirstOrDefault().EscalaId;
@@ -84,6 +85,22 @@ namespace PontoEletronicoWeb.Server.Repository
                     await contexto.SaveChangesAsync();
 
                     return true;
+                }
+                else
+                {
+                    var ListaEscalaID = ListaEscalas.Select(x => x.Id).ToArray();
+
+                    var FolhasPonto = contexto.FolhaPonto.Where(x => ListaEscalaID.Contains(x.EscalaId)
+                                                                  && x.FuncionarioId == funcionario.Id)
+                                                         .ToList();
+
+                    if (!Equals(FolhasPonto,null) && FolhasPonto.Count > 0) 
+                    {
+                        foreach (var item in FolhasPonto)
+                        {
+                            
+                        }
+                    }
                 }
             }
 
