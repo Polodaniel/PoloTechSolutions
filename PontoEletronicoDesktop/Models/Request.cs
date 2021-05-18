@@ -83,10 +83,8 @@ namespace PontoEletronicoDesktop.Models
             return result;
         }
 
-        internal async Task<bool> PostMarcacaoPonto(VerificaBiometriaModelView obj)
+        public async Task<MarcacaoResultado> PostMarcacaoPonto(VerificaBiometriaModelView obj)
         {
-            var result = false;
-
             var URL = "api/desktop/Biometria/verifica/biometria";
 
             cliente.BaseAddress = new Uri(API);
@@ -99,7 +97,7 @@ namespace PontoEletronicoDesktop.Models
 
             var retorno = await request.Content.ReadAsStringAsync();
 
-            result = JsonConvert.DeserializeObject<bool>(retorno);
+            var result = JsonConvert.DeserializeObject<MarcacaoResultado>(retorno);
 
             return result;
         }

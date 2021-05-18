@@ -36,7 +36,7 @@ namespace PontoEletronicoDesktop.Views.SplashScreen
                 pgbLoad.MarqueeAnimationSpeed = 1;
             }));
 
-            await Task.Delay(10000);
+            await Task.Delay(6000);
 
             var result = await BancoDados();
 

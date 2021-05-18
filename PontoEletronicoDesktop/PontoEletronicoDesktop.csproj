@@ -73,6 +73,7 @@
     <Compile Include="Models\Enum\DedoBiometria.cs" />
     <Compile Include="Models\Funcionario.cs" />
     <Compile Include="Models\FuncionarioBiometrias.cs" />
+    <Compile Include="Models\MarcacaoResultado.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\VerificaBiometriaModelView.cs" />
     <Compile Include="Models\View\BaseView.cs" />

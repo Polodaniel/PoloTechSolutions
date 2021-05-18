@@ -12,6 +12,7 @@ using SourceAFIS;
 using PontoEletronicoWeb.Server.Models;
 using Models.Cadastros;
 using Microsoft.EntityFrameworkCore;
+using Models.View.Desktop;
 
 namespace PontoEletronicoWeb.Server.Repository
 {
@@ -19,7 +20,8 @@ namespace PontoEletronicoWeb.Server.Repository
     public interface IFolhaPontoRepository : ICadastroBase<FolhaPonto, FolhaPontoView>
     {
         Task<ActionResult<bool>> RegistraPonto(RegistraPonto registro);
-        Task<bool> GravarPonto(VerificaBiometriaModelView biometriaModelView);
+
+        Task<MarcacaoResultado> GravarPonto(VerificaBiometriaModelView biometriaModelView);
     }
     #endregion  
 
@@ -37,7 +39,7 @@ namespace PontoEletronicoWeb.Server.Repository
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> GravarPonto(VerificaBiometriaModelView biometriaModelView)
+        public async Task<MarcacaoResultado> GravarPonto(VerificaBiometriaModelView biometriaModelView)
         {
             var Funcionario = await contexto.Funcionario.FindAsync(biometriaModelView.FuncionarioId);
 
@@ -45,17 +47,22 @@ namespace PontoEletronicoWeb.Server.Repository
             {
                 var FolhaPonto = await MontarFolhaPontoAsync(Funcionario, biometriaModelView.ClienteId, biometriaModelView.DataRegistro);
 
-                if (FolhaPonto)
-                    return true;
+                if (FolhaPonto.Resultado)
+                    return FolhaPonto;
+                else
+                    return FolhaPonto;
             }
 
-            return false;
+            var msgSucesso = $"Ops! Não foi localizado a sua digital. Entre em Contato com o Gestor.";
+
+            return new MarcacaoResultado(true, msgSucesso);
         }
 
-        private async Task<bool> MontarFolhaPontoAsync(Funcionario funcionario, int clienteId, DateTime DataRegistro)
+        private async Task<MarcacaoResultado> MontarFolhaPontoAsync(Funcionario funcionario, int clienteId, DateTime DataRegistro)
         {
             var EscalaFuncionario = new EscalaFuncionario();
-            var DataFiltro = new DateTime(DataRegistro.Year, DataRegistro.Month, DataRegistro.Day);
+            var DataFiltro = DataRegistro.Date;
+            var horaFiltro = DataRegistro.TimeOfDay;
 
             // Buscar as Escalas que Pertence ao Funcionario
             var query = contexto.EscalaFuncionario
@@ -67,44 +74,77 @@ namespace PontoEletronicoWeb.Server.Repository
                                                 && DataFiltro <= x.Escala.DataFim)
                                        .AsQueryable();
 
-            var ListaEscalas = query.ToList();
+            var ListaEscalas = await query.ToListAsync();
 
             if (!Equals(ListaEscalas, null) && ListaEscalas.Count > 0)
             {
-                if (ListaEscalas.Count == 1)
+                var idEscala = ListaEscalas.Select(x => new
                 {
+                    x.Id,
+                    DataHoraInicial = x.Escala.DataInicio.AddTicks(x.Escala.Turno.HoraInicio.TimeOfDay.Ticks).AddMinutes(-15),
+                    DataHoraFinal = x.Escala.DataFim.AddTicks(x.Escala.Turno.HoraioFim.TimeOfDay.Ticks).AddMinutes(15),
+                }).Where(x => DataRegistro >= x.DataHoraInicial && DataRegistro <= x.DataHoraFinal)
+                  .Select(x => x.Id).FirstOrDefault();
+
+                var escala = ListaEscalas.FirstOrDefault(x => x.Id == idEscala);
+
+                if (escala != null)
+                {
+                    if (await VerificaMarcacaoRecente(funcionario, DataRegistro, escala))
+                    {
+                        var msgError = $"Ops! {funcionario.Nome}, foi identificado uma marcação de ponto em um perido bem recente. Tente novamente em alguns segundos !";
+
+                        return new MarcacaoResultado(false, msgError);
+                    }
+
                     var FolhaPonto = new FolhaPonto();
 
                     FolhaPonto.DataRegistroPonto = DataRegistro;
                     FolhaPonto.FuncionarioId = funcionario.Id;
-                    FolhaPonto.EscalaId = ListaEscalas.FirstOrDefault().EscalaId;
+                    FolhaPonto.EscalaId = escala.EscalaId;
                     FolhaPonto.Status = true;
 
                     contexto.FolhaPonto.Add(FolhaPonto);
 
                     await contexto.SaveChangesAsync();
 
-                    return true;
+                    var msgSucesso = $"Olá {funcionario.Nome}, seu ponto foi marcado com sucesso !\n\n" +
+                              $"Marcação realizada {DataRegistro.ToString("dd/MM/yyyy - hh:mm:ss")}";
+
+                    return new MarcacaoResultado(true, msgSucesso);
                 }
                 else
                 {
-                    var ListaEscalaID = ListaEscalas.Select(x => x.Id).ToArray();
+                    var msgError = $"Olá {funcionario.Nome}, não foi localizado a escala para você! Entre em contato com seu gestor.";
 
-                    var FolhasPonto = contexto.FolhaPonto.Where(x => ListaEscalaID.Contains(x.EscalaId)
-                                                                  && x.FuncionarioId == funcionario.Id)
-                                                         .ToList();
-
-                    if (!Equals(FolhasPonto,null) && FolhasPonto.Count > 0) 
-                    {
-                        foreach (var item in FolhasPonto)
-                        {
-                            
-                        }
-                    }
+                    return new MarcacaoResultado(false, msgError);
                 }
             }
 
-            return false;
+            var msgSemEscala = $"Olá {funcionario.Nome}, não foi localizado a escala para você! Entre em contato com seu gestor.";
+
+            return new MarcacaoResultado(false, msgSemEscala);
+        }
+
+        private async Task<bool> VerificaMarcacaoRecente(Funcionario funcionario, DateTime dataRegistro, EscalaFuncionario escala)
+        {
+            var result = false;
+
+            var ListaMarcacaoRecente = await contexto.FolhaPonto.Where(x => x.FuncionarioId == funcionario.Id
+                                                                   && x.EscalaId == escala.EscalaId).ToListAsync();
+
+            var MarcacaoRecente = ListaMarcacaoRecente.Select(x => new
+            {
+                x.Id,
+                DataRegistro = x.DataRegistroPonto,
+                DataRegistroFinal = x.DataRegistroPonto.AddMinutes(2)
+            }).Where(x => x.DataRegistroFinal >= dataRegistro).ToList();
+
+
+            if (!Equals(MarcacaoRecente, null) && MarcacaoRecente.Count > 0)
+                result = true;
+
+            return result;
         }
 
         private List<UserDetails> MontaListaCandidadosAsync(List<Biometria> listaFuncionarios)

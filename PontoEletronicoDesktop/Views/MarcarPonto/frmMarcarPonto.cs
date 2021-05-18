@@ -25,7 +25,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
 
         private Timer tmr = new Timer();
 
-        private LeitorFS80 LeitorBiometrico { get; set; }
+        public LeitorFS80 LeitorBiometrico { get; set; }
 
         private static AfisEngine AFIS = new AfisEngine();
 
@@ -196,14 +196,18 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
             {
                 var result = await _app.PostMarcacaoPonto(new VerificaBiometriaModelView(item.Id, ClienteId));
 
-                if (result)
+                if (result.Resultado)
                 {
-                    MessageBox.Show("Informações Atualizada com Sucesso !", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(result.Menssagem, "Marcação do Ponto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     pbBiometria.Image = null;
                 }
                 else
-                    MessageBox.Show("Ops! Ocorreu um erro ao salvar.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                {
+                    MessageBox.Show(result.Menssagem, "Marcação do Ponto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    pbBiometria.Image = null;
+                }
             }
         }
 
@@ -311,6 +315,11 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
         {
             LimparInputs();
 
+            CancelarLeitorBiometrico();
+        }
+
+        public void CancelarLeitorBiometrico()
+        {
             pbBiometria.Image = null;
 
             this.bkwBiometria.WorkerSupportsCancellation = true;
@@ -320,6 +329,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
             else
                 this.bkwBiometria.CancelAsync();
         }
+
 
         private void LimparInputs()
         {

@@ -108,7 +108,7 @@ namespace PontoEletronicoWeb.Server.Controllers
         }
 
         [HttpPost("verifica/biometria")]
-        public async Task<ActionResult<bool>> GetFuncionariosView([FromServices] IFolhaPontoRepository folhaPontoRepository, VerificaBiometriaModelView biometriaModelView)
+        public async Task<ActionResult<MarcacaoResultado>> GetFuncionariosView([FromServices] IFolhaPontoRepository folhaPontoRepository, VerificaBiometriaModelView biometriaModelView)
         {
             try
             {
