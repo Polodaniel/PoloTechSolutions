@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="MudBlazor" Version="5.0.15" />
     <PackageReference Include="SourceAFIS" Version="3.13.0" />
   </ItemGroup>
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MudBlazor.Services;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -25,6 +26,8 @@ namespace PontoEletronicoWeb.Client
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PontoEletronicoWeb.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
+
+            builder.Services.AddMudServices();
 
             await builder.Build().RunAsync();
         }
