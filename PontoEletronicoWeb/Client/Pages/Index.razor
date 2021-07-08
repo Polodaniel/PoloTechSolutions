@@ -2,29 +2,9 @@
 
 @inherits IndexBase
 
-<div class="card p-3">
-    <label class="text-muted small fw-bold">Seja Bem Vindo ao PoloTech Solutions - Ponto Eletrônico</label>
-    <hr class="m-1 mt-2 mb-2" />
-
-    <label class="text-muted small">Versão Beta 1.0</label>
-    <label class="text-muted small">Licença Demo</label>
-
-    @*@{
-        var DataAtual = DateTime.Now;
-        var DataLicenca = new DateTime(2021, 07, 31, 23, 59, 59);
-
-        if (DataAtual <= DataLicenca)
-        {
-            var DiferencaDatas = DataAtual - DataLicenca;
-
-            var horaC = new TimeSpan(DiferencaDatas.Ticks);
-
-            <label class="text-muted small">@string.Concat(string.Concat(horaC.ToString(@"dd"), " dia(s) e ", horaC.ToString(@"hh"), " hora(s) e ", horaC.ToString(@"mm"), " minutos"), " restante(s)")</label>
-        }
-        else
-        {
-            <label class="small text-danger">Licença Expirada. Entre em contato com PoloTech Solutions.</label>
-        }
-    }*@
-
-</div>
+<MudCard Style="background-color: rgba(89, 74, 226, 0.126); color: black; padding: 15px;" Outlined="true">
+    <MudCardContent>
+        <MudText Typo="Typo.h5" Style="color: #ffffff80;">Seja Bem Vindo ao PoloTech Solutions - Ponto Eletrônico</MudText>
+        <MudText Typo="Typo.overline" Style="color: #ffffff80;">Sistema web e aplicativo desktop que registra a jornada de trabalho dos funcionários de modo online. </MudText>
+    </MudCardContent>
+</MudCard>

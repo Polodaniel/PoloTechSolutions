@@ -1,16 +1,19 @@
 ﻿@inherits MenuLateralBase
 
-<MudPaper Width="100%" Class="d-inline-flex py-3" Square="true">
+<MudPaper Width="100%" Class="d-inline-flex py-3" Square="true" Elevation="0" Style="background-color: transparent">
     <MudNavMenu Class="mud-width-full">
-        <MudText Typo="Typo.h6" Class="px-4">Material</MudText>
-        <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Icons</MudText>
+        <MudText Typo="Typo.h6" Class="px-4">Menu</MudText>
+        <MudText Typo="Typo.caption" Class="px-4 mud-text-secondary">Versão </MudText>
         <MudDivider Class="my-2" />
-        <MudNavLink Href="/dashboard" Icon="@Icons.Filled.Dashboard">Dashboard</MudNavLink>
-        <MudNavLink Href="/servers" Icon="@Icons.Filled.Storage">Servers</MudNavLink>
-        <MudNavLink Href="/billing" Icon="@Icons.Filled.Receipt" Disabled="true">Billing</MudNavLink>
-        <MudNavGroup Title="Settings" Icon="@Icons.Filled.Settings" Expanded="true">
-            <MudNavLink Href="/users" Icon="@Icons.Filled.People" IconColor="Color.Success">Users</MudNavLink>
-            <MudNavLink Href="/security" Icon="@Icons.Filled.Security" IconColor="Color.Info">Security</MudNavLink>
+        <MudNavLink Href="/" Icon="@Icons.Rounded.Home">Início</MudNavLink>
+        <MudNavGroup Title="Cadastro" Icon="@Icons.Rounded.Add">
+            <MudNavLink Href="/Turno" Icon="@Icons.Rounded.AccessTime">Turno</MudNavLink>
+            <MudNavLink Href="/Funcionario" Icon="@Icons.Rounded.PeopleAlt">Funcionário</MudNavLink>
+            <MudNavLink Href="/Cliente" Icon="@Icons.Rounded.PeopleAlt">Clientes</MudNavLink>
+        </MudNavGroup>
+        <MudNavGroup Title="Ponto Eletrônico" Icon="@Icons.Rounded.CalendarToday">
+            <MudNavLink Href="/Escala" Icon="@Icons.Rounded.List">Escala</MudNavLink>
+            <MudNavLink Href="/FolhaPonto" Icon="@Icons.Rounded.Description">Folha de Ponto</MudNavLink>
         </MudNavGroup>
     </MudNavMenu>
 </MudPaper>
