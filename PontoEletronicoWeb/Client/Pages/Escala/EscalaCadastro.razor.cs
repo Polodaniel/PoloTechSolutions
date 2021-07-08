@@ -383,6 +383,9 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
 
             if (Operacao == TipoOperacao.Novo)
             {
+                var DataInicio = new DateTime(model.DataInicio.Year, model.DataInicio.Month, model.DataInicio.Day);
+
+                model.DataInicio = DataInicio;
                 model.DataFim = Turno.PerNoite ? model.DataInicio.AddDays(1) : model.DataInicio;
 
                 if (ValidacaoList.ListaValida(FuncionarioSelecionado))

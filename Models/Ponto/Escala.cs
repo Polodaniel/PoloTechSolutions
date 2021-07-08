@@ -13,7 +13,7 @@ namespace Models.Ponto
         public Escala()
         {
             Funcionarios = new List<EscalaFuncionario>();
-            DataInicio = DateTime.Now;
+            DataInicio = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
         }
 
         public DateTime DataInicio { get; set; }

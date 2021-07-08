@@ -1,4 +1,6 @@
-﻿using PontoEletronicoDesktop.Views.Princial;
+﻿using PontoEletronicoDesktop.Data;
+using PontoEletronicoDesktop.Views.Princial;
+using PontoEletronicoDesktop.Views.SplashScreen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +18,13 @@ namespace PontoEletronicoDesktop
         static void Main()
         {
             Application.EnableVisualStyles();
+            
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmPrincipal());
+
+            //Application.Run(new frmPrincipal());
+            Application.Run(new frmSplashScreen());
         }
+
+
     }
 }

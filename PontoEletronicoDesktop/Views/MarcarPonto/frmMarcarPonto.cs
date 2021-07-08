@@ -1,5 +1,6 @@
 ﻿using LeitorFS;
 using PontoEletronicoDesktop.Controllers;
+using PontoEletronicoDesktop.Data;
 using PontoEletronicoDesktop.Models;
 using PontoEletronicoDesktop.Models.View;
 using PontoEletronicoDesktop.Views.Base;
@@ -24,7 +25,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
 
         private Timer tmr = new Timer();
 
-        private LeitorFS80 LeitorBiometrico { get; set; }
+        public LeitorFS80 LeitorBiometrico { get; set; }
 
         private static AfisEngine AFIS = new AfisEngine();
 
@@ -184,27 +185,30 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
 
         private async Task MarcarPontoAsync(Person item)
         {
+            var ClienteId = 0;
+
+            var Cliente = await SQLConexao.ClientesAtivo();
+
+            if (!Equals(Cliente, null))
+                ClienteId = Cliente.Id;
+
             using (Request _app = new Request())
             {
-                var result = await _app.PostMarcacaoPonto(new VerificaBiometriaModelView(item.Id));
+                var result = await _app.PostMarcacaoPonto(new VerificaBiometriaModelView(item.Id, ClienteId));
 
-                if (result)
+                if (result.Resultado)
                 {
-                    MessageBox.Show("Informações Atualizada com Sucesso !", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(result.Menssagem, "Marcação do Ponto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    pbBiometria.Image = null;
                 }
                 else
-                    MessageBox.Show("Ops! Ocorreu um erro ao salvar.", "Atualizar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                {
+                    MessageBox.Show(result.Menssagem, "Marcação do Ponto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    pbBiometria.Image = null;
+                }
             }
-
-            //if (result)
-            //{
-            //    MessageBox.Show("Salvo com Sucesso !");
-
-            //    pbBiometria.Image = null;
-
-            //}
-            //else
-            //    MessageBox.Show("Erro ao Salvar !");
         }
 
         public Bitmap ConverterArrayImagem(byte[] byteArrayIn)
@@ -264,7 +268,7 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
 
                             var fpCandidato = new Fingerprint();
                             fpCandidato.AsBitmap = new Bitmap(img);
-                        
+
                             Candidato.Fingerprints.Add(fpCandidato);
                         }
 
@@ -311,6 +315,11 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
         {
             LimparInputs();
 
+            CancelarLeitorBiometrico();
+        }
+
+        public void CancelarLeitorBiometrico()
+        {
             pbBiometria.Image = null;
 
             this.bkwBiometria.WorkerSupportsCancellation = true;
@@ -321,12 +330,10 @@ namespace PontoEletronicoDesktop.Views.MarcarPonto
                 this.bkwBiometria.CancelAsync();
         }
 
+
         private void LimparInputs()
         {
-            txtCodigo.Text = string.Empty;
-            txtNome.Text = string.Empty;
-            txtBiometria.Text = string.Empty;
-            txtStaus.Text = string.Empty;
+
         }
         #endregion
 

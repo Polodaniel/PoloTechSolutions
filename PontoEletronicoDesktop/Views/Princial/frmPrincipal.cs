@@ -1,4 +1,5 @@
 ﻿using PontoEletronicoDesktop.Views.Atualizar;
+using PontoEletronicoDesktop.Views.Configuracao;
 using PontoEletronicoDesktop.Views.MarcarPonto;
 using System;
 using System.Collections.Generic;
@@ -25,24 +26,78 @@ namespace PontoEletronicoDesktop.Views.Princial
 
             TamanhoProgram();
 
-            InicializaInicio();
+            AdicionarControle(new frmInicio("Início"));
         }
         #endregion
 
         #region Eventos 
-        private void InicializaInicio()
-        {
-            LimparFormPrincipal();
+        //private void InicializaInicio()
+        //{
+        //    LimparFormPrincipal();
 
-            var form = new frmInicio("Início");
-            form.Dock = DockStyle.Fill;
-            form.TopLevel = false;
-            form.Visible = true;
+        //    var form = new frmInicio("Início");
+        //    form.Dock = DockStyle.Fill;
+        //    form.TopLevel = false;
+        //    form.Visible = true;
 
-            pnlPrincipal.Controls.Add(form);
-        }
+        //    pnlPrincipal.Controls.Add(form);
+        //}
 
-        private void InicializaMarcarPonto()
+        //private void InicializaMarcarPonto()
+        //{
+        //    if (!ValidaLicenca())
+        //    {
+        //        MessageBox.Show("Licença Expirada. Entre em contato com PoloTech Solutions.", "Licença", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+
+        //    LimparFormPrincipal();
+
+        //    var form = new frmMarcarPonto("Marcar o Ponto");
+        //    form.Dock = DockStyle.Fill;
+        //    form.TopLevel = false;
+        //    form.Visible = true;
+
+        //    pnlPrincipal.Controls.Add(form);
+        //}
+
+        //private void InicializaAtualizaCadastro()
+        //{
+        //    if (!ValidaLicenca())
+        //    {
+        //        MessageBox.Show("Licença Expirada. Entre em contato com PoloTech Solutions.", "Licença", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+
+        //    LimparFormPrincipal();
+
+        //    var form = new frmAtualizarFuncionarioConsulta("Atualizar Cadastros");
+        //    form.Dock = DockStyle.Fill;
+        //    form.TopLevel = false;
+        //    form.Visible = true;
+
+        //    pnlPrincipal.Controls.Add(form);
+        //}
+
+        //private void InicializaConfiguracao()
+        //{
+        //    if (!ValidaLicenca())
+        //    {
+        //        MessageBox.Show("Licença Expirada. Entre em contato com PoloTech Solutions.", "Licença", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+
+        //    LimparFormPrincipal();
+
+        //    var form = new frmConfiguracao("Configuração");
+        //    form.Dock = DockStyle.Fill;
+        //    form.TopLevel = false;
+        //    form.Visible = true;
+
+        //    pnlPrincipal.Controls.Add(form);
+        //}
+
+        private void AdicionarControle(Form form)
         {
             if (!ValidaLicenca())
             {
@@ -52,7 +107,7 @@ namespace PontoEletronicoDesktop.Views.Princial
 
             LimparFormPrincipal();
 
-            var form = new frmMarcarPonto("Marcar o Ponto");
+            //var form = new frmConfiguracao("Configuração");
             form.Dock = DockStyle.Fill;
             form.TopLevel = false;
             form.Visible = true;
@@ -60,45 +115,19 @@ namespace PontoEletronicoDesktop.Views.Princial
             pnlPrincipal.Controls.Add(form);
         }
 
-        private void InicializaAtualizaCadastro()
+        private void LimparFormPrincipal()
         {
-            if (!ValidaLicenca())
-            {
-                MessageBox.Show("Licença Expirada. Entre em contato com PoloTech Solutions.", "Licença", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            if (pnlPrincipal.Controls.Count > 0)
+                foreach (var control in pnlPrincipal.Controls)
+                {
+                    if (control is frmMarcarPonto)
+                    {
+                        ((frmMarcarPonto)control).CancelarLeitorBiometrico();
+                    }
+                }
 
-            LimparFormPrincipal();
-
-            var form = new frmAtualizarFuncionarioConsulta("Atualizar Cadastros");
-            form.Dock = DockStyle.Fill;
-            form.TopLevel = false;
-            form.Visible = true;
-
-            pnlPrincipal.Controls.Add(form);
-        }
-
-        private void InicializaConfiguracao()
-        {
-            if (!ValidaLicenca())
-            {
-                MessageBox.Show("Licença Expirada. Entre em contato com PoloTech Solutions.", "Licença", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            LimparFormPrincipal();
-
-            //var form = new FormConfiguracao("Configuração");
-            //form.Dock = DockStyle.Fill;
-            //form.TopLevel = false;
-            //form.Visible = true;
-
-            //pnlPrincipal.Controls.Add(form);
-        }
-
-        private void LimparFormPrincipal() =>
             pnlPrincipal.Controls.Clear();
-
+        }
         private void TamanhoProgram()
         {
             var Width = Screen.PrimaryScreen.Bounds.Width;
@@ -114,16 +143,21 @@ namespace PontoEletronicoDesktop.Views.Princial
             Application.Exit();
 
         private void btnInicio_Click(object sender, EventArgs e) =>
-           InicializaInicio();
+           AdicionarControle(new frmInicio("Início"));
+        //InicializaInicio();
 
         private void btnMarcador_Click(object sender, EventArgs e) =>
-            InicializaMarcarPonto();
+            AdicionarControle(new frmMarcarPonto("Marcar o Ponto"));
+        //InicializaMarcarPonto();
 
         private void btnAtualizarCadastro_Click(object sender, EventArgs e) =>
-            InicializaAtualizaCadastro();
+            AdicionarControle(new frmAtualizarFuncionarioConsulta("Atualizar Cadastros"));
+        //InicializaAtualizaCadastro();
 
         private void btnConfiguracao_Click(object sender, EventArgs e) =>
-            InicializaConfiguracao();
+            AdicionarControle(new frmConfiguracao("Configuração"));
+        //InicializaConfiguracao();
+
 
         private void btnSair_Click(object sender, EventArgs e)
         {

@@ -108,7 +108,7 @@ namespace PontoEletronicoWeb.Server.Controllers
         }
 
         [HttpPost("verifica/biometria")]
-        public async Task<ActionResult<bool>> GetFuncionariosView([FromServices] IFolhaPontoRepository folhaPontoRepository, VerificaBiometriaModelView biometriaModelView)
+        public async Task<ActionResult<MarcacaoResultado>> GetFuncionariosView([FromServices] IFolhaPontoRepository folhaPontoRepository, VerificaBiometriaModelView biometriaModelView)
         {
             try
             {
@@ -121,6 +121,20 @@ namespace PontoEletronicoWeb.Server.Controllers
                 return BadRequest($"Ocorreu erro ao Listar. \n {ex.Message}");
             }
         }
+
+        [HttpGet("cliente")]
+        public async Task<ActionResult<List<ClienteViewDesktop>>> GetClientesView([FromServices] IClienteRepository clienteRepository)
+        {
+            try
+            {
+                return await clienteRepository.GetClienteViewDesktop(true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ocorreu erro ao Listar. \n {ex.Message}");
+            }
+        }
+
         #endregion
 
     }

@@ -117,59 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="iconMarcar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconMarcar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Logo!" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Logo!.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconMenu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconMenu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconAtualizar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconAtualizar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Logo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Logo2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconEditar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconEditar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconConfiguracao" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconConfiguracao.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconSave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Logo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Logo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="imgHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\imgHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconBiometria" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconBiometria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconLimpar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconLimpar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconBusca" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconBusca.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconImprimir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImprimir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconInicio" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconInicio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconFechar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconFechar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="imgDigitalOriginal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\imgDigitalOriginal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+  <metadata name="bkwBuscar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="bkwSalvar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>249, 17</value>
+  </metadata>
+  <metadata name="bkwLoad.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>413, 17</value>
+  </metadata>
 </root>

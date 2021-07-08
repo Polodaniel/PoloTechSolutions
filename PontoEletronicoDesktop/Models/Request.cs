@@ -83,10 +83,8 @@ namespace PontoEletronicoDesktop.Models
             return result;
         }
 
-        internal async Task<bool> PostMarcacaoPonto(VerificaBiometriaModelView obj)
+        public async Task<MarcacaoResultado> PostMarcacaoPonto(VerificaBiometriaModelView obj)
         {
-            var result = false;
-
             var URL = "api/desktop/Biometria/verifica/biometria";
 
             cliente.BaseAddress = new Uri(API);
@@ -99,9 +97,29 @@ namespace PontoEletronicoDesktop.Models
 
             var retorno = await request.Content.ReadAsStringAsync();
 
-            result = JsonConvert.DeserializeObject<bool>(retorno);
+            var result = JsonConvert.DeserializeObject<MarcacaoResultado>(retorno);
 
             return result;
+        }
+
+        public async Task<List<Cliente>> GetClientesAsync()
+        {
+            var ListaFuncionarios = new List<Cliente>();
+
+            var URL = "api/desktop/Biometria/cliente";
+
+            cliente.BaseAddress = new Uri(API);
+
+            var request = await cliente.GetAsync(URL);
+
+            var result = await request.Content.ReadAsStringAsync();
+
+            var resultConvert = JsonConvert.DeserializeObject<List<Cliente>>(result);
+
+            if (!Equals(resultConvert, null) && resultConvert.Count > 0)
+                ListaFuncionarios = resultConvert;
+
+            return ListaFuncionarios;
         }
     }
 }

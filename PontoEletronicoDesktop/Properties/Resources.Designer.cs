@@ -193,6 +193,16 @@ namespace PontoEletronicoDesktop.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap imgDigitalOriginal {
+            get {
+                object obj = ResourceManager.GetObject("imgDigitalOriginal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap imgHome {
             get {
                 object obj = ResourceManager.GetObject("imgHome", resourceCulture);

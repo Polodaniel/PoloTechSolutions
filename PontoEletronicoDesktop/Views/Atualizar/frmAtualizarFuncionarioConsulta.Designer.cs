@@ -69,10 +69,6 @@ namespace PontoEletronicoDesktop.Views.Atualizar
             this.btnEditar.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.AppWorkspace;
             this.btnEditar.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.AppWorkspace;
             // 
-            // pgbLoad
-            // 
-            this.pgbLoad.Location = new System.Drawing.Point(9, 335);
-            // 
             // btnFechar
             // 
             this.btnFechar.FlatAppearance.BorderSize = 0;
