@@ -8,7 +8,9 @@
 <RemoteAuthenticatorView Action="@Action">
 
     <LoggingIn>
-        <p style="color: white;">LoggingIn</p>
+        <MudContainer>
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+        </MudContainer>
     </LoggingIn>
 
     <CompletingLoggingIn>
@@ -18,30 +20,34 @@
     </CompletingLoggingIn>
 
     <CompletingLogOut>
-        <p style="color: white;">CompletingLogOut</p>
+        <MudContainer>
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+        </MudContainer>
     </CompletingLogOut>
 
     <LogInFailed>
-        <p style="color: white;">CompletingLogOut</p>
+        <MudContainer>
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+        </MudContainer>
     </LogInFailed>
 
     <LogOut>
-        <p style="color: white;">LogOut</p>
+        <MudContainer>
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+        </MudContainer>
     </LogOut>
 
     <CompletingLogOut>
-        <p style="color: white;">CompletingLogOut</p>
+        <MudContainer>
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+        </MudContainer>
     </CompletingLogOut>
 
-    <UserProfile>
-        <p style="color: white;">UserProfile</p>
-    </UserProfile>
-
-        <LogOutSucceeded>
-            <div>
-                @{ Navigation.NavigateTo(Navigation.BaseUri.ToString()); }
-            </div>
-        </LogOutSucceeded>
+    <LogOutSucceeded>
+        <div>
+            @{ Navigation.NavigateTo(Navigation.BaseUri.ToString()); }
+        </div>
+    </LogOutSucceeded>
 
 </RemoteAuthenticatorView>
 
