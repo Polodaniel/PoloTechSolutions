@@ -94,6 +94,10 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
             Navigation.NavigateTo(URI);
         }
 
+        public string searchString = "";
+        public TurnoView selectedItem = null;
+        public HashSet<TurnoView> selectedItems = new HashSet<TurnoView>();
+
         public async void InicializaRotaExcluir(int ID)
         {
             FlagVisualizaMessage = !FlagVisualizaMessage;
@@ -136,6 +140,16 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
 
                 StateHasChanged();
             }
+        }
+
+        public bool FilterFunc(TurnoView element)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.Descricao.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            
+            return false;
         }
 
         //protected override async Task OnAfterRenderAsync(bool firstRender)
