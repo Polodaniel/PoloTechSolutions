@@ -5,6 +5,7 @@
 
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
+@inject IJSRuntime JS
 
 
 <MudThemeProvider Theme="currentTheme" />
@@ -24,8 +25,8 @@
 
         <AuthorizeView>
             <Authorized>
-                <MudMenu Dense="true" Label="@context.User.Identity.Name" Variant="Variant.Filled" Color="Color.Info" Direction="Direction.Bottom" OffsetX="true" FullWidth="true">
-                    <MudMenuItem Style="font-size: 11px;" OnClick="@(() => RedirecionaRota("authentication/logout"))">Atualizar</MudMenuItem>
+                <MudMenu Dense="true" Label="@context.User.Identity.Name" Variant="Variant.Filled" Color="Color.Primary" Direction="Direction.Bottom" OffsetX="true" FullWidth="true">
+                    <MudMenuItem Style="font-size: 11px;" OnClick="@(AtualizarSistema)">Atualizar</MudMenuItem>
                     <MudMenuItem Style="font-size: 11px;" OnClick="@(() => RedirecionaRota("authentication/logout"))">Sair</MudMenuItem>
                 </MudMenu>
             </Authorized>
@@ -48,7 +49,30 @@
     </MudMainContent>
 </MudLayout>
 
+<MudMessageBox @ref="mbox" Title="Atualizar" CancelText="Cancelar">
+    <MessageContent>
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="12" lg="12" xl="12" Class="p-0 pl-3">
+                <MudText Typo="Typo.body2">
+                    Ao atualizar o sistema a pagina será recarregada.
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12" lg="12" xl="12" Class="p-0 pl-3 pb-3">
+                <MudText Typo="Typo.body2">
+                    <strong>Deseja continuar ?</strong>
+                </MudText>
+            </MudItem>
+        </MudGrid>
+    </MessageContent>
+    <YesButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Tertiary">Atualizar</MudButton>
+    </YesButton>
+</MudMessageBox>
+
+
 @code {
+    MudMessageBox mbox { get; set; }
+
     bool _drawerOpen = true;
 
     protected async Task RedirecionaRota(string Rota)
@@ -57,8 +81,18 @@
         Navigation.NavigateTo(Rota);
     }
 
+    public async void AtualizarSistema()
+    {
+        bool? result = await mbox.Show();
+
+        if (!Equals(result, null))
+            if (result == true)
+                await JS.InvokeVoidAsync("AtualizarSistema");
+    }
+
+
     void DrawerToggle() =>
-        _drawerOpen = !_drawerOpen;
+    _drawerOpen = !_drawerOpen;
 
     protected override void OnInitialized() =>
         currentTheme = darkTheme;

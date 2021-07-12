@@ -8,6 +8,12 @@ namespace PontoEletronicoWeb.Client.Shared.Componentes
 {
     public class PageConsultaBase : ComponentBase
     {
+        #region Inject
+        [Inject]
+        public NavigationManager Navigation { get; set; }
+        #endregion
+
+        #region Parametros
         [Parameter]
         public bool DescTipoBotao { get; set; } = true;
 
@@ -16,6 +22,12 @@ namespace PontoEletronicoWeb.Client.Shared.Componentes
 
         [Parameter]
         public string RotaHome { get; set; }
+        #endregion
+
+        #region Eventos
+        public void MoveRoute(string Rota) =>
+            Navigation.NavigateTo(string.Concat(RotaHome, "/", Rota));
+        #endregion
 
     }
 }
