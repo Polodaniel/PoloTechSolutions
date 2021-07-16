@@ -3,10 +3,10 @@
 <div Class="d-flex flex-row-reverse">
     @if (DescTipoBotao)
     {
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => MoveRoute("Novo"))">Novo @NomeTela</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Tertiary" OnClick="@(() => MoveRoute("Novo"))">Novo @NomeTela</MudButton>
     }
     else
     {
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => MoveRoute("Nova"))">Nova @NomeTela</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Tertiary" OnClick="@(() => MoveRoute("Nova"))">Nova @NomeTela</MudButton>
     }
 </div>

@@ -9,7 +9,7 @@
 
 
 <MudThemeProvider Theme="currentTheme" />
-<MudDialogProvider />
+<MudDialogProvider CloseButton="false" NoHeader="false" />
 <MudSnackbarProvider />
 
 <MudLayout>
@@ -25,7 +25,7 @@
 
         <AuthorizeView>
             <Authorized>
-                <MudMenu Dense="true" Label="@context.User.Identity.Name" Variant="Variant.Filled" Color="Color.Primary" Direction="Direction.Bottom" OffsetX="true" FullWidth="true">
+                <MudMenu Dense="true" Label="@context.User.Identity.Name" Variant="Variant.Filled" Color="Color.Tertiary" Direction="Direction.Bottom" OffsetX="true" FullWidth="true">
                     <MudMenuItem Style="font-size: 11px;" OnClick="@(AtualizarSistema)">Atualizar</MudMenuItem>
                     <MudMenuItem Style="font-size: 11px;" OnClick="@(() => RedirecionaRota("authentication/logout"))">Sair</MudMenuItem>
                 </MudMenu>
@@ -37,7 +37,7 @@
     </MudAppBar>
     <AuthorizeView>
         <Authorized>
-            <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+            <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="3" Style="background-color: #ECEFF1;">
                 <MenuLateral />
             </MudDrawer>
         </Authorized>
@@ -94,10 +94,23 @@
     void DrawerToggle() =>
     _drawerOpen = !_drawerOpen;
 
-    protected override void OnInitialized() =>
-        currentTheme = darkTheme;
+    protected override void OnInitialized()
+    {
+        //currentTheme = darkTheme;
+
+        currentTheme = PalettePontoEletronico;
+    }
 
     MudTheme currentTheme = new MudTheme();
+
+    MudTheme PalettePontoEletronico = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            AppbarBackground = "#263238",
+            Tertiary = "#37474F",
+        }
+    };
 
     MudTheme darkTheme = new MudTheme()
     {

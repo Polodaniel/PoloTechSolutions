@@ -23,8 +23,6 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
         [Parameter]
         public string Mensagem { get; set; } = "Excluir o cliente cadastrado";
 
-        public string SubMensagem { get; set; }
-
         [Parameter]
         public string IconMensagem { get; set; }
 
@@ -48,6 +46,10 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
         #endregion
 
         #region Propriedades
+        public string searchString = "";
+
+        public ClienteView selectedItem = null;
+
         private bool _flagVisualizaMessage { get; set; }
 
         protected bool FlagVisualizaMessage
@@ -96,19 +98,21 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
 
         public async void InicializaRotaExcluir(int ID)
         {
-            FlagVisualizaMessage = !FlagVisualizaMessage;
-
             if (!Equals(ModelsTmp, null) && ModelsTmp.Count > 0)
-                SubMensagem = ModelsTmp.Find(x => x.Id == ID).Descricao;
+                SubMensagem = ModelsTmp.Find(x => x.Id == ID).Nome;
 
-            ExcluirID = ID;
+            MontarMessageBox("Deseja excluir o Cliente");
 
-            StateHasChanged();
+            var ResultOperacao = await ConfirmarExclusaoAsync();
 
-            await Task.Delay(500);
+            if (ResultOperacao)
+            {
+                ExcluirID = ID;
 
-            await JS.InvokeVoidAsync("FocoInativar");
+                await RealizaExclusao(ExcluirID);
 
+                StateHasChanged();
+            }
         }
 
         public async void ConfirmaExclusao()
@@ -136,6 +140,16 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
 
                 StateHasChanged();
             }
+        }
+
+        public bool FilterFunc(ClienteView element)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.Nome.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            return false;
         }
     }
 }

@@ -30,23 +30,23 @@ namespace Models.Cadastros
 
         public TurnoView SelectView() =>
         new TurnoView
-            {
-                Id = this.Id,
-                Descricao = this.Descricao,
-                Status = this.Status,
-                HoraInicio = this.HoraInicio,
-                HoraioFim = this.HoraioFim,
-                PerNoite = this.PerNoite
-            };
+        {
+            Id = this.Id,
+            Descricao = this.Descricao,
+            Status = this.Status,
+            HoraInicio = this.HoraInicio,
+            HoraioFim = this.HoraioFim,
+            PerNoite = this.PerNoite
+        };
 
-    public void Update(Turno Model, int usuarioId)
-    {
-        this.Descricao = Model.Descricao;
-        this.HoraInicio = Model.HoraInicio;
-        this.HoraioFim = Model.HoraioFim;
-        this.PerNoite = Model.PerNoite;
-        this.RegistraAlteracao(usuarioId);
+        public void Update(Turno Model, int usuarioId)
+        {
+            this.Descricao = Model.Descricao;
+            this.HoraInicio = Model.HoraInicio;
+            this.HoraioFim = Model.HoraioFim;
+            this.PerNoite = Model.PerNoite;
+            this.RegistraAlteracao(usuarioId);
+        }
+        #endregion
     }
-    #endregion
-}
 }

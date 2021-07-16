@@ -11,6 +11,7 @@ using PontoEletronicoWeb.Shared.Enum;
 using System.Net.Http.Json;
 
 using TurnoModel = Models.Cadastros.Turno;
+using MudBlazor;
 
 namespace PontoEletronicoWeb.Client.Pages.Turno
 {
@@ -26,6 +27,8 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
         #endregion
 
         #region Propriedades
+        public MudTimePicker _picker;
+
         protected bool ErroNomeTurno { get; set; } = false;
 
         protected string ErroMsgNomeTurno { get; set; }

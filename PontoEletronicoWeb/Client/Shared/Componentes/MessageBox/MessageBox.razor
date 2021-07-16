@@ -1,0 +1,12 @@
+﻿@inherits MessageBoxBase
+
+<MudMessageBox @ref="mbox" Title="@Title" CancelText="@CancelText">
+    <MessageContent>
+        <div class="bodyMessage">
+            @Message
+        </div>
+    </MessageContent>
+    <YesButton>
+        <MudButton Variant="Variant.Filled" Color="@ButtomCollor">@ConfirmText</MudButton>
+    </YesButton>
+</MudMessageBox>

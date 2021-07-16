@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Models.View;
+using PontoEletronicoWeb.Client.Shared.Componentes;
+using PontoEletronicoWeb.Client.Shared.Componentes.MessageBox;
+using PontoEletronicoWeb.Shared.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +24,8 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
         #endregion
 
         #region Propriedades
+        public MessageBox MessageBoxRef { get; set; }
+
         public List<U> Models { get; set; }
 
         public List<U> ModelsTmp { get; set; }
@@ -43,6 +48,15 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
 
         protected bool FiltrarListaAutomatico { get; set; } = true;
 
+        #endregion
+
+        #region Propriedades MessageBox
+        public MessageBoxType TypeMessageBox { get; set; }
+        public string SubMensagem { get; set; }
+        public string TitleMessageBox { get; set; }
+        public string TextMessageBox { get; set; }
+        public string ButtomConfirmMessageBox { get; set; }
+        public string ButtomCancelMessageBox { get; set; }
         #endregion
 
         #region Métodos
@@ -130,24 +144,42 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
             }
         }
 
+        public async Task<bool> ConfirmarExclusaoAsync() 
+        {
+            var ResultMessageBox = false;
+
+            MessageBoxRef.AddParameterValues(TypeMessageBox, TitleMessageBox, TextMessageBox, ButtomConfirmMessageBox, ButtomCancelMessageBox);
+
+            StateHasChanged();
+
+            var result = await MessageBoxRef.GetUserResponse();
+
+            if (!Equals(result,null)) 
+                ResultMessageBox = result == true ? true : false;
+
+            return ResultMessageBox;
+        }
+
         protected virtual void ExcluirItemLista(int ID)
         {
             var obj = ModelsTmp.Where(x => x.Id == ID).FirstOrDefault();
 
-            foreach (var item in ModelsTmp)
-            {
-                Console.WriteLine(item.Id);
-                Console.WriteLine(item.Descricao);
-            }
-
             if (!Equals(obj))
             {
                 ModelsTmp.Remove(obj);
-
-                //ModelsTmp = Models;
-
                 StateHasChanged();
             }
+        }
+
+        public void MontarMessageBox(string PreSubMensagem)
+        {
+            TypeMessageBox = MessageBoxType.Information;
+            TitleMessageBox = "Excluir";
+            TextMessageBox = $"{PreSubMensagem} {SubMensagem} ?";
+            ButtomConfirmMessageBox = "Sim";
+            ButtomCancelMessageBox = "Não";
+
+            StateHasChanged();
         }
         #endregion
 

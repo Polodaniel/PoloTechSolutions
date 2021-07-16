@@ -2,6 +2,7 @@
 using Microsoft.JSInterop;
 using Models.View;
 using PontoEletronicoWeb.Client.Pages.Utils;
+using PontoEletronicoWeb.Shared.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,6 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
         #region Parametros
         [Parameter]
         public string Mensagem { get; set; } = "Excluir o turno cadastrado";
-
-        public string SubMensagem { get; set; }
 
         [Parameter]
         public string IconMensagem { get; set; }
@@ -48,23 +47,6 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
         #endregion
 
         #region Propriedades
-        private bool _flagVisualizaMessage { get; set; }
-
-        protected bool FlagVisualizaMessage
-        {
-            get => _flagVisualizaMessage;
-            set
-            {
-                _flagVisualizaMessage = !_flagVisualizaMessage;
-
-                StyleVisualizaMessage = _flagVisualizaMessage ? string.Empty : "display: none;";
-
-                StateHasChanged();
-            }
-        }
-
-        private bool _visualizaMessage { get; set; }
-
         protected string StyleVisualizaMessage { get; set; } = "display: none;";
         #endregion
 
@@ -100,34 +82,21 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
 
         public async void InicializaRotaExcluir(int ID)
         {
-            FlagVisualizaMessage = !FlagVisualizaMessage;
-
             if (!Equals(ModelsTmp, null) && ModelsTmp.Count > 0)
                 SubMensagem = ModelsTmp.Find(x => x.Id == ID).Descricao;
 
-            ExcluirID = ID;
+            MontarMessageBox("Deseja excluir o Turno");
 
-            StateHasChanged();
+            var ResultOperacao = await ConfirmarExclusaoAsync();
 
-            await Task.Delay(500);
+            if (ResultOperacao)
+            {
+                ExcluirID = ID;
 
-            await JS.InvokeVoidAsync("FocoInativar");
+                await RealizaExclusao(ExcluirID);
 
-        }
-
-        public async void ConfirmaExclusao()
-        {
-            await RealizaExclusao(ExcluirID);
-
-            FlagVisualizaMessage = !FlagVisualizaMessage;
-
-            StateHasChanged();
-        }
-
-        public void CancelaExclusao()
-        {
-            FlagVisualizaMessage = !FlagVisualizaMessage;
-            StateHasChanged();
+                StateHasChanged();
+            }
         }
 
         protected override void ExcluirItemLista(int ID)
@@ -148,7 +117,7 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
                 return true;
             if (element.Descricao.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            
+
             return false;
         }
 

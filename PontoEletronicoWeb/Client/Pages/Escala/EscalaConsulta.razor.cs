@@ -26,8 +26,6 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         [Parameter]
         public string Mensagem { get; set; } = "Excluir a escala cadastrado";
 
-        public string SubMensagem { get; set; }
-
         [Parameter]
         public string IconMensagem { get; set; }
 
@@ -39,6 +37,10 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         #endregion
 
         #region Propriedades
+        public string searchString = "";
+
+        public EscalaView selectedItem = null;
+
         protected FiltroEscala Filtro { get; set; }
 
         private bool _flagVisualizaMessage { get; set; }
@@ -152,6 +154,21 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
             StateHasChanged();
         }
 
+        public bool FilterFunc(EscalaView element)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.CodigoString.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.Cliente.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.Turno.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.HoraTurno.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        }
+
         private void MensagemBusca(bool status) =>
             RealizandoBusca = status;
 
@@ -175,19 +192,21 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
 
         public async void InicializaRotaExcluir(int ID)
         {
-            FlagVisualizaMessage = !FlagVisualizaMessage;
-
             if (!Equals(ModelsTmp, null) && ModelsTmp.Count > 0)
                 SubMensagem = ModelsTmp.Find(x => x.Id == ID).Descricao;
 
-            ExcluirID = ID;
+            MontarMessageBox("Deseja excluir a Escala");
 
-            StateHasChanged();
+            var ResultOperacao = await ConfirmarExclusaoAsync();
 
-            await Task.Delay(500);
+            if (ResultOperacao)
+            {
+                ExcluirID = ID;
 
-            await JS.InvokeVoidAsync("FocoInativar");
+                await RealizaExclusao(ExcluirID);
 
+                StateHasChanged();
+            }
         }
 
         public async void ConfirmaExclusao()
@@ -215,6 +234,13 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
 
                 StateHasChanged();
             }
+        }
+
+        public void ShowBtnPress(int Id)
+        {
+            EscalaView tmpEscala = ModelsTmp.First(e => e.Id == Id);
+
+            tmpEscala.ShowDetails = !tmpEscala.ShowDetails;
         }
         #endregion
     }

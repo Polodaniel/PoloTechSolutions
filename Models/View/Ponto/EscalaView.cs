@@ -41,5 +41,7 @@ namespace Models.View
         }
 
         public DateTime DataFim { get; internal set; }
+
+        public bool ShowDetails { get; set; }
     }
 }

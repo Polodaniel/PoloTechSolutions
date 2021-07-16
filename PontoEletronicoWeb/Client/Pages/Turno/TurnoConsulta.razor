@@ -4,20 +4,13 @@
 
 <PageConsulta NomeTela="Turno" RotaHome="Turno" />
 
-<!-- MessageBox -->
-<MessageBox Mensagem="@MensageBox"
-            SubMensagem="@SubMensagem"
-            VisualizaMessage="@FlagVisualizaMessage"
-            ConfirmarCallback="ConfirmaExclusao"
-            CancelarCallback="CancelaExclusao" />
-<!-- Fim MessageBox-->
+<MessageBox @ref="MessageBoxRef" />
 
-
-<section id="ConsultaFuncionarioID">
+<section id="ConsultaTurnoID">
 
     @if (!Equals(ModelsTmp, null) && ModelsTmp.Count > 0)
     {
-        <MudTable Class="mt-2" Items="@ModelsTmp" Dense="true" Hover="true" Bordered="@false" Striped="false" Filter="new Func<TurnoView,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
+        <MudTable Class="mt-2" Items="@ModelsTmp" Elevation="5" Dense="true" Hover="true" Bordered="@false" Striped="false" Filter="new Func<TurnoView,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Consulta de Turnos</MudText>
                 <MudSpacer />
@@ -26,19 +19,19 @@
             <HeaderContent>
                 <MudTh style="width: 50px;">Código</MudTh>
                 <MudTh>Descrição</MudTh>
-                <MudTh>Hora Início</MudTh>
-                <MudTh>Hora Fim</MudTh>
-                <MudTh>PerNoite</MudTh>
-                <MudTh>Status</MudTh>
+                <MudTh style="text-align: center; width:100px;">Hora Início</MudTh>
+                <MudTh style="text-align: center; width:100px;">Hora Fim</MudTh>
+                <MudTh style="text-align: center; width:100px;">PerNoite</MudTh>
+                <MudTh style="text-align: center; width:100px;">Status</MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Código">@context.CodigoString</MudTd>
                 <MudTd DataLabel="Descrição">@context.Descricao</MudTd>
-                <MudTd DataLabel="Hora Início">@context.HoraInicioString</MudTd>
-                <MudTd DataLabel="Hora Fim">@context.HoraFimString</MudTd>
-                <MudTd DataLabel="PerNoite">@context.PerNoiteString</MudTd>
-                <MudTd DataLabel="Situação">@context.Situacao</MudTd>
+                <MudTd DataLabel="Hora Início" Style="text-align: center;">@context.HoraInicioString</MudTd>
+                <MudTd DataLabel="Hora Fim" Style="text-align: center;">@context.HoraFimString</MudTd>
+                <MudTd DataLabel="PerNoite" Style="text-align: center;">@context.PerNoiteString</MudTd>
+                <MudTd DataLabel="Situação" Style="text-align: center;">@context.Situacao</MudTd>
                 <MudTd DataLabel="" Class="d-flex justify-end">
                     <MudButtonGroup Color="Color.Default" Size="Size.Small" Variant="Variant.Outlined">
                         <MudIconButton Icon="@Icons.Material.Rounded.RemoveRedEye" aria-label="delete" OnClick="() => InicializaRotaVisualizar(context.Id)"></MudIconButton>

@@ -7,16 +7,49 @@
 @inherits TurnoCadastroBase
 
 <section>
-    <div>
-        <h5 class="text-muted mb-3">@NomePagina Turno</h5>
-    </div>
+
+    <MudText Typo="Typo.h6">@NomePagina Turno</MudText>
 
     <div>
         <EditForm Model="model" OnValidSubmit="SalvarInformacoes">
             <DataAnnotationsValidator />
 
             <div class="m-2">
-                <div class="row">
+
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12" lg="12" xl="12">
+                        <MudTextField @bind-value="model.Descricao" T="string" Label="Nome" Required="true" RequiredError="O Nome do turno é obrigatório!" />
+                        @if (ErroNomeTurno)
+                        {
+                            <MudText Typo="Typo.caption">
+                                <span class="small text-danger">@ErroMsgNomeTurno</span>
+                            </MudText>
+                        }
+                    </MudItem>
+                </MudGrid>
+
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12" lg="6" xl="6">
+                        <MudTimePicker PickerVariant="PickerVariant.Dialog" @ref="_picker" Label="With action buttons">
+                            <PickerActions>
+                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
+                                <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => _picker.Close())">Ok</MudButton>
+                            </PickerActions>
+                        </MudTimePicker>
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="6" xl="6">
+                        <MudTimePicker PickerVariant="PickerVariant.Dialog" @ref="_picker" Label="With action buttons">
+                            <PickerActions>
+                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
+                                <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => _picker.Close())">Ok</MudButton>
+                            </PickerActions>
+                        </MudTimePicker>
+                    </MudItem>
+                </MudGrid>
+
+                @*<div class="row">
                     <div class="col-xs col-sm col-md col-lg col-xl col-xxl">
                         <div class="form-group mb-2">
                             <small><label asp-for="" class="small mb-0">Nome</label></small>
@@ -32,7 +65,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div>*@
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md col-lg col-xl col-xxl">
