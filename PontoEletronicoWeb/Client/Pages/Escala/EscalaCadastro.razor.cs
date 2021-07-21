@@ -31,7 +31,10 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         #endregion
 
         #region Propriedades
+        public DateTime? DataInicio { get; set; }
+
         protected string SearchText { get; set; }
+
         protected string SearchTextDois { get; set; }
 
         public List<EscalaFuncionario> ListaFuncionarioAdicionados { get; set; }
@@ -73,7 +76,8 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
                 StateHasChanged();
             }
         }
-        public TipoEscala TipoEscala { get; set; } = TipoEscala.Diario;
+        public TipoEscala TipoEscalaEscolhida { get; set; } = TipoEscala.Diario;
+
         public int MesSelecionado { get; set; } = 1;
 
         public List<EscalaModel> ListaEscalaMes { get; set; }
@@ -154,6 +158,8 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
 
         private void MontarObjetoGravado(EscalaModel model)
         {
+            DataInicio = model.DataInicio;
+
             if (!Equals(ListaFuncionarioAdicionados, null) && ListaFuncionarioAdicionados.Count > 0)
             {
                 model.Funcionarios = ListaFuncionarioAdicionados;
@@ -261,13 +267,13 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
             if (!ValidaInformacoes())
                 return;
 
-            if (TipoEscala == TipoEscala.Diario)
+            if (TipoEscalaEscolhida == TipoEscala.Diario)
             {
                 MontaObjetoSalvar();
 
                 await SalvarEditar();
             }
-            else if (TipoEscala == TipoEscala.Mensal)
+            else if (TipoEscalaEscolhida == TipoEscala.Mensal)
             {
                 var Lista = MontarObjetoMesSalvar();
 
@@ -381,6 +387,8 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
         {
             var FuncionarioSelecionado = ListaFuncionarios.Where(x => x.Selecionado == true).ToList();
 
+            model.DataInicio = Convert.ToDateTime(DataInicio);
+
             if (Operacao == TipoOperacao.Novo)
             {
                 var DataInicio = new DateTime(model.DataInicio.Year, model.DataInicio.Month, model.DataInicio.Day);
@@ -430,7 +438,7 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
 
             #region Validações
 
-            if (TipoEscala == TipoEscala.Diario)
+            if (TipoEscalaEscolhida == TipoEscala.Diario)
             {
                 if (string.IsNullOrEmpty(model.DataInicio.ToString()))
                 {
@@ -468,7 +476,7 @@ namespace PontoEletronicoWeb.Client.Pages.Escala
             ListaFuncionarios.ForEach(x => x.Selecionado = false);
 
             MesSelecionado = 1;
-            TipoEscala = TipoEscala.Diario;
+            TipoEscalaEscolhida = TipoEscala.Diario;
 
             #region Atualizar View
             StateHasChanged();

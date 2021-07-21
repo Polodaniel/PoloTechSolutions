@@ -7,91 +7,58 @@
 @inherits FuncionarioCadastroBase
 
 <section>
-    <div>
-        <h5 class="text-muted mb-3">@NomePagina Funcionário</h5>
-    </div>
+    <MessageBox @ref="MessageBoxRef" />
 
-    <div>
-        <EditForm Model="model" OnValidSubmit="SalvarInformacoes">
-            <DataAnnotationsValidator />
+    <MudText Typo="Typo.h6">
+        @NomePagina Funcionário
+    </MudText>
 
-            <div class="m-2">
-                <div class="row">
-                    <div class="col-xs col-sm col-md col-lg col-xl col-xxl">
-                        <div class="form-group mb-2">
-                            <small><label asp-for="" class="small mb-0">Nome</label></small>
-                            <input maxlength="100" @ref="NomeFuncionarioInput" @bind="model.Nome" class="form-control form-control-sm" placeholder="Digite o Nome do Funcionário" />
-                            <div class="small">
-                                <span class="small"><ValidationMessage For="() => model.Nome" /></span>
-                            </div>
-                            @if (ErroNomeFuncionario)
-                            {
-                                <div class="small">
-                                    <span class="small text-danger">@ErroMsgNomeFuncionario</span>
-                                </div>}
+    <EditForm Model="model" OnValidSubmit="SalvarInformacoes">
+        <DataAnnotationsValidator />
 
-                        </div>
-                    </div>
-                </div>
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="12" lg="12" xl="12">
+                <MudTextField T="string"
+                              Label="Nome"
+                              @bind-Value="model.Nome"
+                              For="@(() => model.Nome)"
+                              Required="true" />
+            </MudItem>
+        </MudGrid>
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="4" lg="4" xl="4">
+                <MudTextField T="string"
+                              Label="RG"
+                              @bind-Value="model.Rg"
+                              For="@(() => model.Rg)" />
+            </MudItem>
+            <MudItem xs="12" sm="12" md="4" lg="4" xl="4">
+                <MudTextField T="string"
+                              Label="CPF"
+                              @bind-Value="model.Cpf"
+                              For="@(() => model.Cpf)" />
+            </MudItem>
+            <MudItem xs="12" sm="12" md="4" lg="4" xl="4">
+                <MudTextField T="string"
+                              Label="PIS/Pasep"
+                              @bind-Value="model.Pis"
+                              For="@(() => model.Pis)" />
+            </MudItem>
+        </MudGrid>
 
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md col-lg col-xl col-xxl">
-                        <div class="form-group mb-2">
-                            <small><label asp-for="" class="small mb-0">CPF</label></small>
-                            <InputMaskText TipoMascara="TipoMascara.CPFCNPJ"
-                                           @bind-TextoDigitado="@model.Cpf"
-                                           MaxLength="11"
-                                           RequiredInput="false"
-                                           Placeholder="Digite o CPF do Funcionário">
-                            </InputMaskText>
-                            <div class="small">
-                                <span class="small"><ValidationMessage For="() => model.Cpf" /></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg col-xl col-xxl">
-                        <div class="form-group mb-2">
-                            <small><label asp-for="" class="small mb-0">Pis/Pasep</label></small>
-                            <InputMaskText TipoMascara="TipoMascara.PisPasep"
-                                           @bind-TextoDigitado="@model.Pis"
-                                           MaxLength="11"
-                                           RequiredInput="false"
-                                           Placeholder="Digite o Pis/Pasep do Funcionário">
-                            </InputMaskText>
-
-                            <div class="small">
-                                <span class="small"><ValidationMessage For="() => model.Pis" /></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-1 mb-3">
-                    <div class="col-xs col-sm col-md col-lg col-xl col-xxl d-flex justify-content-end">
-                        <a href="/Funcionario/" class="btn btn-sm btn-outline-warning ms-2">Voltar</a>
-                        <button type="submit" class="btn btn-sm btn-success ms-2">Salvar</button>
-                    </div>
-                </div>
-
-            </div>
-        </EditForm>
-    </div>
-</section>
-
-<!-- Toast -->
-@if (SalvoComSucesso)
-{
-    <div style="position: absolute; top: 60px; right: 5px;">
-        <div class="toast fade show @ColorMesagemOperacao align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body text-light small">
-
-
-                    @MensagemOperacao
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" @onclick="() => SalvoComSucesso = false" aria-label="Close"></button>
-            </div>
+        <div class="d-flex flex-row-reverse mt-2">
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Rounded.Save" Color="Color.Tertiary" Size="Size.Small" ButtonType="ButtonType.Submit">Salvar</MudButton>
+            <MudButton OnClick="RetornarTelaConsulta" Variant="Variant.Outlined" StartIcon="@Icons.Material.Rounded.ArrowBackIos" Color="Color.Warning" Size="Size.Small" Class="mr-2">Voltar</MudButton>
         </div>
-    </div>
-}
-<!-- Fim Toast -->
+    </EditForm>
+
+    <MudOverlay @bind-Visible="OverlayDisplay" DarkBackground="true" ZIndex="9999" AutoClose="false">
+        <MudButton Disabled="true" Color="Color.Transparent" FullWidth="true"></MudButton>
+        <MudAlert Severity="Severity.Normal" Variant="Variant.Filled" NoIcon="true" Elevation="10">
+            <MudText Typo="Typo.h5" Style="color: white;">Salvando... </MudText>
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="" />
+        </MudAlert>
+    </MudOverlay>
+
+
+</section>

@@ -2,6 +2,7 @@
 using Models.View;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Models.Cadastros
@@ -16,6 +17,8 @@ namespace Models.Cadastros
         }
         #endregion
 
+        [Required(ErrorMessage = "O Nome do Cliente é obrigatório !")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "O Nome deve ter no mínimo 1 e no máximo 100 characters !")]
         public string Nome { get; set; }
 
         #region Endereço

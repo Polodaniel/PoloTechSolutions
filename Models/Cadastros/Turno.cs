@@ -2,6 +2,7 @@
 using Models.View;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Models.Cadastros
@@ -15,9 +16,13 @@ namespace Models.Cadastros
         }
         #endregion
 
+        [Required(ErrorMessage = "O Nome do Turno é obrigatório !")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "O Nome deve ter no mínimo 1 e no máximo 100 characters !")]
         public string Descricao { get; set; }
+
         public DateTime HoraInicio { get; set; }
         public DateTime HoraioFim { get; set; }
+
         public bool PerNoite { get; set; }
 
         #region Metodos Dominio

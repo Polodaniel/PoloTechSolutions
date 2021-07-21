@@ -12,6 +12,7 @@ using System.Net.Http.Json;
 
 using TurnoModel = Models.Cadastros.Turno;
 using MudBlazor;
+using System.Globalization;
 
 namespace PontoEletronicoWeb.Client.Pages.Turno
 {
@@ -27,13 +28,7 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
         #endregion
 
         #region Propriedades
-        public MudTimePicker _picker;
 
-        protected bool ErroNomeTurno { get; set; } = false;
-
-        protected string ErroMsgNomeTurno { get; set; }
-
-        protected ElementReference NomeTurnoInput { get; set; }
         #endregion
 
         #region Contrutor
@@ -84,8 +79,7 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender)
-                await NomeTurnoInput.FocusAsync();
+
         }
 
         protected override async void NovaInstanciaModel()
@@ -109,10 +103,6 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
 
         private bool ValidaInformacoes()
         {
-            #region Reseta Variaveis
-            ErroNomeTurno = false;
-            #endregion
-
             #region Variavel de Controle
             var result = true;
             #endregion
@@ -120,9 +110,6 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
             #region Validações
             if (string.IsNullOrEmpty(model.Descricao))
             {
-                ErroNomeTurno = true;
-                ErroMsgNomeTurno = "Informe o nome do turno !";
-
                 return false;
             }
             #endregion
@@ -131,8 +118,6 @@ namespace PontoEletronicoWeb.Client.Pages.Turno
             return true;
             #endregion
         }
-
-
         #endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Models.View;
+using PontoEletronicoWeb.Client.Shared.Componentes.MessageBox;
 using PontoEletronicoWeb.Shared.Enum;
 using System;
 using System.Collections.Generic;
@@ -27,9 +28,7 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
         #endregion
 
         #region Constantes
-
         protected const string AppJson = "application/json";
-
         #endregion
 
         #region Genericos
@@ -88,6 +87,18 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
 
         public int TimerCounter = 30;
 
+        public bool OverlayDisplay { get; set; }
+
+        #region Propriedades MessageBox
+        public MessageBox MessageBoxRef { get; set; }
+        public MessageBoxType TypeMessageBox { get; set; }
+        public string SubMensagem { get; set; }
+        public string TitleMessageBox { get; set; }
+        public string TextMessageBox { get; set; }
+        public string ButtomConfirmMessageBox { get; set; }
+        public string ButtomCancelMessageBox { get; set; }
+        #endregion
+
         #endregion
 
         #region Rotinas
@@ -95,6 +106,8 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
         {
             try
             {
+                OverlayViewUpdate(true);
+
                 var modelJson = JsonSerializer.Serialize(model);
 
                 var modelContent = new StringContent(modelJson, Encoding.UTF8, AppJson);
@@ -113,41 +126,49 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
 
                     if (Operacao == TipoOperacao.Novo)
                     {
-                        SalvoComSucesso = true;
-                        SetPropertiesInModel(modelObj);
-                        NovaInstanciaModel();
+                        OverlayViewUpdate(false);
 
-                        ColorMesagemOperacao = "bg-success";
-                        MensagemOperacao = "Salvo com Sucesso !";
-
-                        TimerCounter = 30;
-
-                        StateHasChanged();
+                        RetornarTelaConsulta();
                     }
                     else if (Operacao == TipoOperacao.Edicao)
                     {
-                        StateHasChanged();
+                        OverlayViewUpdate(false);
 
-                        var URI = string.Concat(Navigation.BaseUri, RotaConsulta);
-                        Navigation.NavigateTo(URI);
+                        RetornarTelaConsulta();
                     }
                 }
                 else
                 {
-                    ColorMesagemOperacao = "bg-danger";
-                    MensagemOperacao = "Ops ! Não foi possivel estar salvando. ";
+                    OverlayViewUpdate(false);
 
                     ErroRetorno = await httpResponse.Content.ReadAsStringAsync();
 
-                    MensagemOperacao = string.Concat(MensagemOperacao, " ", ErroRetorno);
+                    TypeMessageBox = MessageBoxType.Error;
+                    TitleMessageBox = "Erro";
+                    TextMessageBox = string.Concat(MensagemOperacao, " ", ErroRetorno);
+                    ButtomConfirmMessageBox = "OK";
+                    ButtomCancelMessageBox = null;
+
+                    MessageBoxRef.AddParameterValues(TypeMessageBox, TitleMessageBox, TextMessageBox, ButtomConfirmMessageBox, ButtomCancelMessageBox);
 
                     StateHasChanged();
+
+                    await MessageBoxRef.GetUserResponse();
                 }
             }
             catch (Exception erro)
             {
+                OverlayViewUpdate(false);
+
                 var msgErro = erro.Message;
             }
+        }
+
+        public void RetornarTelaConsulta()
+        {
+            var URI = string.Concat(Navigation.BaseUri, RotaConsulta);
+
+            Navigation.NavigateTo(URI);
         }
 
         protected async Task<HttpResponseMessage> ExecutaOperacao(StringContent modelContent)
@@ -195,6 +216,12 @@ namespace PontoEletronicoWeb.Client.Pages.Utils
             }
 
             InvokeAsync(StateHasChanged);
+        }
+
+        public void OverlayViewUpdate(bool Status) 
+        {
+            OverlayDisplay = Status;
+            StateHasChanged();
         }
 
         #endregion

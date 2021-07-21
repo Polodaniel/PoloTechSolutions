@@ -28,13 +28,7 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
         #endregion
 
         #region Propriedades
-        protected bool ErroNomeCliente { get; set; } = false;
-
-        protected string ErroMsgNomeClientes { get; set; }
-
-        protected ElementReference NomeClienteInput { get; set; }
-        protected ElementReference NumeroEnderecoInput { get; set; }
-        protected ElementReference NumeroCepInput { get; set; }
+        public ElementReference NumeroEnderecoInput { get; set; }
         #endregion
 
         #region Contrutor
@@ -85,8 +79,7 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender)
-                await NomeClienteInput.FocusAsync();
+
         }
 
         protected override async void NovaInstanciaModel()
@@ -109,22 +102,13 @@ namespace PontoEletronicoWeb.Client.Pages.Cliente
 
         private bool ValidaInformacoes()
         {
-            #region Reseta Variaveis
-            ErroNomeCliente = false;
-            #endregion
-
             #region Variavel de Controle
             var result = true;
             #endregion
 
             #region Validações
             if (string.IsNullOrEmpty(model.Nome))
-            {
-                ErroNomeCliente = true;
-                ErroMsgNomeClientes = "Informe o nome do cliente !";
-
                 return false;
-            }
             #endregion
 
             #region Return

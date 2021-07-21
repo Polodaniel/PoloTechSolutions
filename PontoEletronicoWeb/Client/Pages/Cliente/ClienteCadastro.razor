@@ -7,93 +7,70 @@
 @inherits ClienteCadastroBase
 
 <section>
-    <div>
-        <h5 class="text-muted mb-3">@NomePagina Cliente</h5>
-    </div>
+    <MessageBox @ref="MessageBoxRef" />
 
-    <div>
-        <EditForm Model="model" OnValidSubmit="SalvarInformacoes">
-            <DataAnnotationsValidator />
+    <MudText Typo="Typo.h6">
+        @NomePagina Cliente
+    </MudText>
 
-            <div class="m-2">
-                <div class="row">
-                    <div class="col-xs col-sm col-md col-lg col-xl col-xxl">
-                        <div class="form-group mb-2">
-                            <small><label asp-for="" class="small mb-0">Nome</label></small>
-                            <input maxlength="100" @ref="NomeClienteInput" @bind="model.Nome" class="form-control form-control-sm" placeholder="Digite o Nome do Funcionário" />
-                            <div class="small">
-                                <span class="small"><ValidationMessage For="() => model.Nome" /></span>
-                            </div>
-                            @if (ErroNomeCliente)
-                            {
-                                <div class="small">
-                                    <span class="small text-danger">@ErroMsgNomeClientes</span>
-                                </div>}
+    <EditForm Model="model" OnValidSubmit="SalvarInformacoes">
+        <DataAnnotationsValidator />
 
-                        </div>
-                    </div>
-                </div>
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="12" lg="12" xl="12">
+                <MudTextField T="string"
+                              Label="Nome"
+                              @bind-Value="model.Nome"
+                              For="@(() => model.Nome)"
+                              Required="true" />
+            </MudItem>
+        </MudGrid>
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="4" lg="4" xl="4">
+                <MudTextField T="string"
+                              Label="Cep"
+                              @bind-Value="model.Cep"
+                              OnBlur="BuscarCEPAsync"
+                              For="@(() => model.Cep)"/>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="7" lg="7" xl="7">
+                <MudTextField T="string"
+                              Label="Rua"
+                              @bind-Value="model.Logadouro"
+                              For="@(() => model.Logadouro)" />
+            </MudItem>
+            <MudItem xs="12" sm="12" md="1" lg="1" xl="1">
+                <MudTextField T="string"
+                              Label="N°"
+                              @bind-Value="model.Numero"
+                              For="@(() => model.Numero)"/>
+            </MudItem>
+        </MudGrid>
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="4" lg="4" xl="4">
+                <MudTextField T="string"
+                              Label="Bairro"
+                              @bind-Value="model.Bairro"
+                              For="@(() => model.Bairro)" />
+            </MudItem>
+            <MudItem xs="12" sm="12" md="7" lg="7" xl="7">
+                <MudTextField T="string"
+                              Label="Cidade"
+                              @bind-Value="model.Cidade"
+                              For="@(() => model.Cidade)" />
+            </MudItem>
+        </MudGrid>
 
-                <div class="row mt-1">
-                    <div class="col-xs-12 col-sm-12 col-md col-lg col-xl col-xxl">
-                        <small><label asp-for="" class="small mb-0">CEP</label></small>
-                        <input maxlength="9"
-                               @onfocusout="BuscarCEPAsync"
-                               @bind-value="model.Cep"
-                               @ref="NumeroCepInput"
-                               type="text"
-                               class="form-control form-control-sm"
-                               placeholder="Digite o CEP do cliente" />
-
-                    </div>
-                </div>
-
-                <div class="row mt-1">
-                    <div class="col-xs-12 col-sm-12 col-md-11 col-lg-11 col-xl-11 col-xxl-11">
-                        <small><label asp-for="" class="small mb-0">Logradouro</label></small>
-                        <input maxlength="100" @bind="model.Logadouro" class="form-control form-control-sm" placeholder="Digite o Logradouro do Cliente" />
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1">
-                        <small><label asp-for="" class="small mb-0">N°</label></small>
-                        <input @ref="NumeroEnderecoInput" maxlength="100" @bind="model.Numero" class="form-control form-control-sm" placeholder="N°" />
-                    </div>
-                </div>
-
-                <div class="row mt-1">
-                    <div class="col-xs-12 col-sm-12 col-md col-lg col-xl col-xxl">
-                        <small><label asp-for="" class="small mb-0">Bairro</label></small>
-                        <input maxlength="100" @bind="model.Bairro" class="form-control form-control-sm" placeholder="Digite o Bairro do Cliente" />
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md col-lg col-xl col-xxl">
-                        <small><label asp-for="" class="small mb-0">Cidade</label></small>
-                        <input maxlength="100" @bind="model.Cidade" class="form-control form-control-sm" placeholder="Digite o Cidade do Cliente" />
-                    </div>
-                </div>
-
-                <div class="row mt-1 mb-3">
-                    <div class="col-xs col-sm col-md col-lg col-xl col-xxl d-flex justify-content-end">
-                        <a href="/Cliente/" class="btn btn-sm btn-outline-warning ms-2">Voltar</a>
-                        <button type="submit" class="btn btn-sm btn-success ms-2">Salvar</button>
-                    </div>
-                </div>
-
-            </div>
-        </EditForm>
-    </div>
-</section>
-
-<!-- Toast -->
-@if (SalvoComSucesso)
-{
-    <div style="position: absolute; top: 60px; right: 5px;">
-        <div class="toast fade show @ColorMesagemOperacao align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body text-light small">
-                    @MensagemOperacao
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" @onclick="() => SalvoComSucesso = false" aria-label="Close"></button>
-            </div>
+        <div class="d-flex flex-row-reverse mt-2">
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Rounded.Save" Color="Color.Tertiary" Size="Size.Small" ButtonType="ButtonType.Submit">Salvar</MudButton>
+            <MudButton OnClick="RetornarTelaConsulta" Variant="Variant.Outlined" StartIcon="@Icons.Material.Rounded.ArrowBackIos" Color="Color.Warning" Size="Size.Small" Class="mr-2">Voltar</MudButton>
         </div>
-    </div>
-}
-<!-- Fim Toast -->
+    </EditForm>
+    <MudOverlay @bind-Visible="OverlayDisplay" DarkBackground="true" ZIndex="9999" AutoClose="false">
+        <MudButton Disabled="true" Color="Color.Transparent" FullWidth="true"></MudButton>
+        <MudAlert Severity="Severity.Normal" Variant="Variant.Filled" NoIcon="true" Elevation="10">
+            <MudText Typo="Typo.h5" Style="color: white;">Salvando... </MudText>
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="" />
+        </MudAlert>
+    </MudOverlay>
+</section>

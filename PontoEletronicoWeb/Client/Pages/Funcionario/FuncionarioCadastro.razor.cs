@@ -26,11 +26,8 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
         #endregion
 
         #region Propriedades
-        protected bool ErroNomeFuncionario { get; set; } = false;
 
-        protected string ErroMsgNomeFuncionario { get; set; }
 
-        protected ElementReference NomeFuncionarioInput { get; set; }
         #endregion
 
         #region Contrutor
@@ -42,7 +39,7 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
 
             #region Define as Rotas
             Api = "api/Funcionario";
-            RotaConsulta = string.Concat("/Funcionario/");
+            RotaConsulta = string.Concat("Funcionario/");
             #endregion
 
             #region Define o Tipo de Operacao
@@ -81,8 +78,7 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender)
-                await NomeFuncionarioInput.FocusAsync();
+
         }
 
         protected override async void NovaInstanciaModel()
@@ -103,23 +99,11 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
             SalvarEditar();
         }
 
-
         private bool ValidaInformacoes()
         {
-            #region Reseta Variaveis
-            ErroNomeFuncionario = false;
-            #endregion
-
-            #region Variavel de Controle
-            var result = true;
-            #endregion
-
             #region Validações
             if (string.IsNullOrEmpty(model.Nome))
             {
-                ErroNomeFuncionario = true;
-                ErroMsgNomeFuncionario = "Informe o nome do funcionário !";
-                
                 return false;
             }
             #endregion
@@ -128,8 +112,6 @@ namespace PontoEletronicoWeb.Client.Pages.Funcionario
             return true;
             #endregion
         }
-
-
         #endregion
     }
 }

@@ -39,9 +39,9 @@
             </MudItem>
         </MudGrid>
     </MudCardContent>
-    <MudCardActions>
-        <MudButton Class="mr-1" Variant="Variant.Outlined" StartIcon="@Icons.Material.Rounded.PhonelinkErase" Color="Color.Warning" OnClick="LimparFiltro">Limpar</MudButton>
+    <MudCardActions Class="d-flex flex-row-reverse">
         <MudButton Class="ml-1" Variant="Variant.Outlined" StartIcon="@Icons.Material.Rounded.Search" Color="Color.Success" OnClick="RealizarBusca">Buscar</MudButton>
+        <MudButton Class="mr-1" Variant="Variant.Outlined" StartIcon="@Icons.Material.Rounded.PhonelinkErase" Color="Color.Warning" OnClick="LimparFiltro">Limpar</MudButton>
     </MudCardActions>
 </MudCard>
 
@@ -51,7 +51,7 @@
 
     @if (!Equals(ModelsTmp, null) && ModelsTmp.Count > 0)
     {
-        <MudTable Items="@ModelsTmp" Virtualize="true" Breakpoint="Breakpoint.Sm" levation="5" Dense="true" Hover="true" Bordered="@false" Striped="false" Filter="new Func<EscalaView,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
+        <MudTable Class="mt-2" Items="@ModelsTmp" Virtualize="true" Breakpoint="Breakpoint.Sm" Elevation="5" Dense="true" Hover="true" Bordered="@false" Striped="false" Filter="new Func<EscalaView,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Consulta de Escalas</MudText>
                 <MudSpacer />
